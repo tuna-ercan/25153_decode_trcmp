@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Constants;
 
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.PIDCoefficients;
 
 public class ShooterConstants {
     public static String RightMotorName = "rightShooter";
@@ -30,6 +31,9 @@ public class ShooterConstants {
     public static double KD_RPM_Middle= KD;
     public static double KD_RPM_Left= KD;
 
+    public static PIDCoefficients LeftPIDCoefficients = new PIDCoefficients(KP, 0, KD);
+    public static PIDCoefficients MiddlePIDCoefficients = new PIDCoefficients(KP, 0, KD);
+    public static PIDCoefficients RightPIDCoefficients = new PIDCoefficients(KP, 0, KD);
 
     public static double MultiplierLeft = 1;
     public static double MultiplierRight = 1;

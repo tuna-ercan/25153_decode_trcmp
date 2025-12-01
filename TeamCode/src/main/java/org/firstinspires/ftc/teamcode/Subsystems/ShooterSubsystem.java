@@ -2,11 +2,16 @@ package org.firstinspires.ftc.teamcode.Subsystems;
 
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
 
+import androidx.annotation.NonNull;
+
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.command.WaitUntilCommand;
+import com.arcrobotics.ftclib.controller.PIDController;
+import com.arcrobotics.ftclib.util.MathUtils;
 import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.PIDCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
@@ -33,6 +38,7 @@ import org.firstinspires.ftc.teamcode.Constants.ShooterConstants;
 import org.firstinspires.ftc.teamcode.Container;
 import org.firstinspires.ftc.teamcode.Positions.BluePositions;
 import org.firstinspires.ftc.teamcode.Positions.RedPositions;
+import org.firstinspires.ftc.teamcode.Utils.ShooterPIDController;
 
 public class ShooterSubsystem extends SubsystemBase {
 
@@ -41,6 +47,11 @@ public class ShooterSubsystem extends SubsystemBase {
     private final DcMotorEx middleMotor;
     private final Servo hoodServo1;
 
+    private final PIDController leftPID;
+    private final PIDController middlePID;
+    private final PIDController rightPID;
+
+    private final double restRpm;
     private final double p1Rpm;
     private final double p2Rpm;
     private final double p3Rpm;
@@ -57,6 +68,13 @@ public class ShooterSubsystem extends SubsystemBase {
     private final Pose p4Pose;
 
     private final Pose focusPoint;
+
+    private double goalRPM;
+    private double goalHood;
+    private double prevLOutput;
+    private double prevMOutput;
+    private double prevROutput;
+    private boolean isReady;
 
     private ShooterStates currentState;
     private ShooterStates lastState;
@@ -81,6 +99,8 @@ public class ShooterSubsystem extends SubsystemBase {
     private final Command reverseAction;
     private final Command shakeAction;
 
+    private final Command waitForReady;
+
     public ShooterSubsystem() {
         leftMotor = hardwareMap.get(DcMotorEx.class, ShooterConstants.LeftMotorName);
         rightMotor = hardwareMap.get(DcMotorEx.class, ShooterConstants.RightMotorName);
@@ -90,6 +110,44 @@ public class ShooterSubsystem extends SubsystemBase {
         leftMotor.setDirection(ShooterConstants.LeftDirection);
         rightMotor.setDirection(ShooterConstants.RightDirection);
         middleMotor.setDirection(ShooterConstants.MiddleDirection);
+
+        middleMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        middleMotor.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+
+        leftMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        leftMotor.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+
+        rightMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        rightMotor.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+
+        leftPID = new ShooterPIDController(ShooterConstants.LeftPIDCoefficients);
+        middlePID = new ShooterPIDController(ShooterConstants.MiddlePIDCoefficients);
+        rightPID = new ShooterPIDController(ShooterConstants.RightPIDCoefficients);
+
+        focusPoint = (Container.isBlue ? BluePositions.SHOOT_FOCUS_POINT : RedPositions.SHOOT_FOCUS_POINT);
+
+        p1Pose = (Container.isBlue ? BluePositions.SHOOT_P1 : RedPositions.SHOOT_P1);
+        p2Pose = (Container.isBlue ? BluePositions.SHOOT_P2 : RedPositions.SHOOT_P2);
+        p3Pose = (Container.isBlue ? BluePositions.SHOOT_P3 : RedPositions.SHOOT_P3);
+        p4Pose = (Container.isBlue ? BluePositions.SHOOT_P4 : RedPositions.SHOOT_P4);
+
+        p1Rpm = calculateRpmFromPose(p1Pose);
+        p2Rpm = calculateRpmFromPose(p2Pose);
+        p3Rpm = calculateRpmFromPose(p3Pose);
+        p4Rpm = calculateRpmFromPose(p4Pose);
+
+        restRpm = ShooterConstants.RestRPM;
+
+        p1Hood = calculateHoodFromPose(p1Pose);
+        p2Hood = calculateHoodFromPose(p2Pose);
+        p3Hood = calculateHoodFromPose(p3Pose);
+        p4Hood = calculateHoodFromPose(p4Pose);
+
+        prevROutput = 0;
+        prevMOutput = 0;
+        prevLOutput = 0;
+
+        waitForReady = new WaitUntilCommand(this::isReady);
 
         currentState = ShooterStates.ZERO;
         lastState = ShooterStates.ZERO;
@@ -113,23 +171,6 @@ public class ShooterSubsystem extends SubsystemBase {
         shootFromPoseAction = new ShooterShootFromPoseAction(this);
         reverseAction = new ShooterReverseAction(this);
         shakeAction = new ShooterShakeAction(this);
-
-        focusPoint = (Container.isBlue ? BluePositions.SHOOT_FOCUS_POINT : RedPositions.SHOOT_FOCUS_POINT);
-
-        p1Pose = (Container.isBlue ? BluePositions.SHOOT_P1 : RedPositions.SHOOT_P1);
-        p2Pose = (Container.isBlue ? BluePositions.SHOOT_P2 : RedPositions.SHOOT_P2);
-        p3Pose = (Container.isBlue ? BluePositions.SHOOT_P3 : RedPositions.SHOOT_P3);
-        p4Pose = (Container.isBlue ? BluePositions.SHOOT_P4 : RedPositions.SHOOT_P4);
-
-        p1Rpm = calculateRpmFromPose(p1Pose);
-        p2Rpm = calculateRpmFromPose(p2Pose);
-        p3Rpm = calculateRpmFromPose(p3Pose);
-        p4Rpm = calculateRpmFromPose(p4Pose);
-
-        p1Hood = calculateHoodFromPose(p1Pose);
-        p2Hood = calculateHoodFromPose(p2Pose);
-        p3Hood = calculateHoodFromPose(p3Pose);
-        p4Hood = calculateHoodFromPose(p4Pose);
     }
 
     @Override
@@ -188,69 +229,89 @@ public class ShooterSubsystem extends SubsystemBase {
     public Command reverseRequest() { return requestReverse; }
     public Command shakeRequest() { return requestShake; }
 
-    public void zero() {
-        setPower(0);
-        // hoodServo1.setPosition(ShooterConstants.zeroPos); // Implement if you have zero pos
-    }
-
-    public void rest() {
-        setPower(0);
-        hoodServo1.setPosition(ShooterConstants.RestHoodPos); 
-    }
-
-    public void shootP1() {
-        // Implement P1 logic
-    }
-
-    public void shootP2() {
-        // Implement P2 logic
-    }
-
-    public void shootP3() {
-        // Implement P3 logic
-    }
-
-    public void shootP4() {
-        // Implement P4 logic
-    }
-
-    public void shootFromPose() {
-        // Implement Pose logic
-    }
-
-    public void reverse() {
-        setPower(-0.3);
-    }
-
-    public void shake() {
-        setPower(0);
-    }
-
     public void setCurrentState(ShooterStates currentState) {
         this.currentState = currentState;
     }
 
-        public double getRightRPM(){
+    private void setGoalRPM(double rpmGoal)
+    {
+        goalRPM = rpmGoal;
+    }
+
+    private void setGoalHood(double hoodGoal)
+    {
+        goalHood = hoodGoal;
+    }
+
+    private void setMotorPowers(double leftPower, double middlePower, double rightPower)
+    {
+        leftMotor.setPower(leftPower);
+        rightMotor.setPower(middlePower);
+        middleMotor.setPower(rightPower);
+
+        prevLOutput = leftPower;
+        prevMOutput = middlePower;
+        prevROutput = rightPower;
+    }
+
+    private void setAllMotorPowers(double power)
+    {
+        setMotorPowers(power, power, power);
+    }
+
+    private void setHoodPosition(double position)
+    {
+        setGoalHood(position);
+        hoodServo1.setPosition(position);
+    }
+
+    public double getRightRPM()
+    {
         return (rightMotor.getVelocity() * 60 / 28);
     }
 
-    private void setPower(double power) {
-        leftMotor.setPower(power);
-        rightMotor.setPower(power);
-        middleMotor.setPower(power);
-    }
-
-    public double getMiddleRPM(){
+    public double getMiddleRPM()
+    {
         return (middleMotor.getVelocity() * 60 / 28);
     }
-    public double getLeftRPM(){
+    public double getLeftRPM()
+    {
         return (leftMotor.getVelocity() * 60 / 28);
+    }
+
+    public double getHoodPosition()
+    {
+        return hoodServo1.getPosition();
+    }
+
+    private void controlMotorRPM(double rpm)
+    {
+        setGoalRPM(rpm);
+
+        double leftRPM = getLeftRPM();
+        double middleRPM = getMiddleRPM();
+        double rightRPM = getRightRPM();
+
+        double leftGoal = goalRPM*ShooterConstants.MultiplierLeft;
+        double middleGoal = goalRPM*ShooterConstants.MultiplierMiddle;
+        double rightGoal = goalRPM*ShooterConstants.MultiplierRight;
+
+        double pidLOutput = leftPID.calculate(leftRPM, leftGoal);
+        double lOutput = MathUtils.clamp(prevLOutput + pidLOutput, -0.6, 1);
+
+        double pidMOutput = middlePID.calculate(middleRPM, middleGoal);
+        double mOutput = MathUtils.clamp(prevMOutput + pidMOutput, -0.6, 1);
+
+        double pidROutput = rightPID.calculate(rightRPM, rightGoal);
+        double rOutput = MathUtils.clamp(prevROutput + pidROutput, -0.6, 1);
+
+        setMotorPowers(lOutput, mOutput,  rOutput);
     }
 
     public boolean checkRPM(double RPM)
     {
-        double mRpm = RPM*ShooterConstants.MultiplierMiddle;
         double lRpm = RPM*ShooterConstants.MultiplierLeft;
+        double mRpm = RPM*ShooterConstants.MultiplierMiddle;
         double rRpm = RPM*ShooterConstants.MultiplierRight;
 
 
@@ -260,7 +321,13 @@ public class ShooterSubsystem extends SubsystemBase {
                         && (Math.abs(lRpm-getLeftRPM()) < ShooterConstants.RpmTol));
     }
 
-    private double calculateRpmFromPose(Pose p)
+    public boolean checkHood(double hood)
+    {
+
+        return (Math.abs(hood - getHoodPosition()) < ShooterConstants.HoodTol);
+    }
+
+    private double calculateRpmFromPose(@NonNull Pose p)
     {
         double robotY = p.getY();
         double robotX = p.getX();
@@ -270,7 +337,7 @@ public class ShooterSubsystem extends SubsystemBase {
         return 2750 + (distance-164)/57.5 * 250; // 2600'ü değiştir, oto şut konumuna göre
     }
 
-    private double calculateHoodFromPose(Pose p)
+    private double calculateHoodFromPose(@NonNull Pose p)
     {
         double robotY = p.getY();
         double robotX = p.getX();
@@ -290,10 +357,96 @@ public class ShooterSubsystem extends SubsystemBase {
         return calculateHoodFromPose(Container.robotPose);
     }
 
-    public Command waitForRPM(double RPM)
+    private boolean isReady()
     {
-        return new WaitUntilCommand(() -> {return checkRPM(RPM);});
+        return isReady;
     }
 
+    private void setIsReady(boolean ready)
+    {
+        isReady = ready;
+    }
+
+    private void setIsReadyByChecking()
+    {
+        setIsReady(checkRPM(goalRPM) && checkHood(goalHood));
+    }
+
+    public void zero()
+    {
+        setAllMotorPowers(0);
+        setGoalRPM(0);
+
+        setHoodPosition(0);
+
+        setIsReady(true);
+    }
+
+    public void rest()
+    {
+        setIsReadyByChecking();
+        setHoodPosition(ShooterConstants.RestHoodPos);
+        controlMotorRPM(ShooterConstants.RestRPM);
+    }
+
+    public void shootP1()
+    {
+        setIsReadyByChecking();
+        setHoodPosition(p1Hood);
+        controlMotorRPM(p1Rpm);
+    }
+
+    public void shootP2()
+    {
+        setIsReadyByChecking();
+        setHoodPosition(p2Hood);
+        controlMotorRPM(p2Rpm);
+    }
+
+    public void shootP3()
+    {
+        setIsReadyByChecking();
+        setHoodPosition(p3Hood);
+        controlMotorRPM(p3Rpm);
+    }
+
+    public void shootP4()
+    {
+        setIsReadyByChecking();
+        setHoodPosition(p4Hood);
+        controlMotorRPM(p4Rpm);
+    }
+
+    public void shootFromPose()
+    {
+        setIsReadyByChecking();
+        setHoodPosition(calculateHoodFromCurrentPose());
+        controlMotorRPM(calculateRpmFromCurrentPose());
+    }
+
+    public void reverse()
+    {
+        setAllMotorPowers(-0.3);
+        setGoalRPM(-1);
+
+        setHoodPosition(0.01);
+
+        setIsReady(true);
+    }
+
+    public void shake()
+    {
+        setAllMotorPowers(0);
+        setGoalRPM(0);
+
+        setHoodPosition(0);
+
+        setIsReady(true);
+    }
+
+    public Command waitForReady()
+    {
+        return waitForReady;
+    }
 
 }
