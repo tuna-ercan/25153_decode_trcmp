@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.Commands.StateRequests.FunnelRequests;
 
 import com.arcrobotics.ftclib.command.CommandBase;
 
-import org.firstinspires.ftc.teamcode.Constants.AllStates;
+import org.firstinspires.ftc.teamcode.Utils.AllStates;
 import org.firstinspires.ftc.teamcode.Subsystems.FunnelSubsystem;
 
 public class FunnelFeedColorRequest extends CommandBase {

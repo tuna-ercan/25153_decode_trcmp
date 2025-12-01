@@ -11,10 +11,8 @@ import com.arcrobotics.ftclib.controller.PIDController;
 import com.arcrobotics.ftclib.util.MathUtils;
 import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.PIDCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Commands.StateActions.ShooterActions.ShooterRestAction;
 import org.firstinspires.ftc.teamcode.Commands.StateActions.ShooterActions.ShooterReverseAction;
 import org.firstinspires.ftc.teamcode.Commands.StateActions.ShooterActions.ShooterShakeAction;
@@ -23,6 +21,7 @@ import org.firstinspires.ftc.teamcode.Commands.StateActions.ShooterActions.Shoot
 import org.firstinspires.ftc.teamcode.Commands.StateActions.ShooterActions.ShooterShootP2Action;
 import org.firstinspires.ftc.teamcode.Commands.StateActions.ShooterActions.ShooterShootP3Action;
 import org.firstinspires.ftc.teamcode.Commands.StateActions.ShooterActions.ShooterShootP4Action;
+import org.firstinspires.ftc.teamcode.Commands.StateActions.ShooterActions.ShooterTestAction;
 import org.firstinspires.ftc.teamcode.Commands.StateActions.ShooterActions.ShooterZeroAction;
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.ShooterRequests.ShooterRestRequest;
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.ShooterRequests.ShooterReverseRequest;
@@ -32,8 +31,9 @@ import org.firstinspires.ftc.teamcode.Commands.StateRequests.ShooterRequests.Sho
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.ShooterRequests.ShooterShootP2Request;
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.ShooterRequests.ShooterShootP3Request;
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.ShooterRequests.ShooterShootP4Request;
+import org.firstinspires.ftc.teamcode.Commands.StateRequests.ShooterRequests.ShooterTestRequest;
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.ShooterRequests.ShooterZeroRequest;
-import org.firstinspires.ftc.teamcode.Constants.AllStates.ShooterStates;
+import org.firstinspires.ftc.teamcode.Utils.AllStates.ShooterStates;
 import org.firstinspires.ftc.teamcode.Constants.ShooterConstants;
 import org.firstinspires.ftc.teamcode.Container;
 import org.firstinspires.ftc.teamcode.Positions.BluePositions;
@@ -45,7 +45,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private final DcMotorEx leftMotor;
     private final DcMotorEx rightMotor;
     private final DcMotorEx middleMotor;
-    private final Servo hoodServo1;
+    private final Servo hoodServo;
 
     private final PIDController leftPID;
     private final PIDController middlePID;
@@ -88,6 +88,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private final Command requestShootFromPose;
     private final Command requestReverse;
     private final Command requestShake;
+    private final Command requestTest;
 
     private final Command zeroAction;
     private final Command restAction;
@@ -98,6 +99,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private final Command shootFromPoseAction;
     private final Command reverseAction;
     private final Command shakeAction;
+    private final Command testAction;
 
     private final Command waitForReady;
 
@@ -105,7 +107,7 @@ public class ShooterSubsystem extends SubsystemBase {
         leftMotor = hardwareMap.get(DcMotorEx.class, ShooterConstants.LeftMotorName);
         rightMotor = hardwareMap.get(DcMotorEx.class, ShooterConstants.RightMotorName);
         middleMotor = hardwareMap.get(DcMotorEx.class, ShooterConstants.MiddleMotorName);
-        hoodServo1 = hardwareMap.get(Servo.class, ShooterConstants.HoodServo1Name);
+        hoodServo = hardwareMap.get(Servo.class, ShooterConstants.HoodServoName);
 
         leftMotor.setDirection(ShooterConstants.LeftDirection);
         rightMotor.setDirection(ShooterConstants.RightDirection);
@@ -161,6 +163,7 @@ public class ShooterSubsystem extends SubsystemBase {
         requestShootFromPose = new ShooterShootFromPoseRequest(this);
         requestReverse = new ShooterReverseRequest(this);
         requestShake = new ShooterShakeRequest(this);
+        requestTest = new ShooterTestRequest(this);
 
         zeroAction = new ShooterZeroAction(this);
         restAction = new ShooterRestAction(this);
@@ -171,6 +174,7 @@ public class ShooterSubsystem extends SubsystemBase {
         shootFromPoseAction = new ShooterShootFromPoseAction(this);
         reverseAction = new ShooterReverseAction(this);
         shakeAction = new ShooterShakeAction(this);
+        testAction = new ShooterTestAction(this);
     }
 
     @Override
@@ -207,6 +211,9 @@ public class ShooterSubsystem extends SubsystemBase {
             case SHAKE:
                 if(!shakeAction.isScheduled()) shakeAction.schedule();
                 break;
+            case TEST:
+                if(!testAction.isScheduled()) testAction.schedule();
+                break;
         }
     }
 
@@ -228,6 +235,7 @@ public class ShooterSubsystem extends SubsystemBase {
     public Command shootFromPoseRequest() { return requestShootFromPose; }
     public Command reverseRequest() { return requestReverse; }
     public Command shakeRequest() { return requestShake; }
+    public Command testRequest() { return requestTest; }
 
     public void setCurrentState(ShooterStates currentState) {
         this.currentState = currentState;
@@ -271,7 +279,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private void setHoodPosition(double position)
     {
         setGoalHood(position);
-        hoodServo1.setPosition(position);
+        hoodServo.setPosition(position);
     }
 
     public double getRightRPM()
@@ -290,7 +298,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public double getHoodPosition()
     {
-        return hoodServo1.getPosition();
+        return hoodServo.getPosition();
     }
 
     private void controlMotorRPM(double rpm)
@@ -451,6 +459,11 @@ public class ShooterSubsystem extends SubsystemBase {
         setHoodPosition(0);
 
         setIsReady(true);
+    }
+
+    public void test()
+    {
+        // Logic for test
     }
 
     public Command waitForReady()

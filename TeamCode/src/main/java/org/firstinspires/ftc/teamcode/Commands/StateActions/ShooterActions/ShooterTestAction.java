@@ -5,28 +5,33 @@ import com.arcrobotics.ftclib.command.CommandBase;
 import org.firstinspires.ftc.teamcode.Utils.AllStates;
 import org.firstinspires.ftc.teamcode.Subsystems.ShooterSubsystem;
 
-public class ShooterReverseAction extends CommandBase {
+public class ShooterTestAction extends CommandBase
+{
+
     private final ShooterSubsystem shooterSubsystem;
     private boolean isFinished = false;
 
-    public ShooterReverseAction(ShooterSubsystem shooterSubsystem) {
-        addRequirements(shooterSubsystem);
+    public ShooterTestAction(ShooterSubsystem shooterSubsystem)
+    {
         this.shooterSubsystem = shooterSubsystem;
+        addRequirements(shooterSubsystem);
     }
 
     @Override
-    public void initialize() {
-        shooterSubsystem.reverse();
+    public void initialize()
+    {
+        shooterSubsystem.test();
     }
 
     @Override
-    public void execute() {
-        shooterSubsystem.reverse();
-        if(!(shooterSubsystem.getState() == AllStates.ShooterStates.REVERSE)) isFinished = true;
+    public void execute()
+    {
+        if(!(shooterSubsystem.getState() == AllStates.ShooterStates.TEST)) isFinished = true;
     }
 
     @Override
-    public boolean isFinished() {
+    public boolean isFinished()
+    {
         return isFinished;
     }
 }

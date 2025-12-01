@@ -5,22 +5,27 @@ import com.arcrobotics.ftclib.command.CommandBase;
 import org.firstinspires.ftc.teamcode.Utils.AllStates;
 import org.firstinspires.ftc.teamcode.Subsystems.ShooterSubsystem;
 
-public class ShooterShootP4Request extends CommandBase {
+public class ShooterTestRequest extends CommandBase
+{
+
     private final ShooterSubsystem shooterSubsystem;
     private boolean isFinished;
 
-    public ShooterShootP4Request(ShooterSubsystem shooterSubsystem) {
+    public ShooterTestRequest(ShooterSubsystem shooterSubsystem)
+    {
         this.shooterSubsystem = shooterSubsystem;
     }
 
     @Override
-    public void initialize() {
-        shooterSubsystem.setState(AllStates.ShooterStates.SHOOT_P4);
+    public void initialize()
+    {
+        shooterSubsystem.setState(AllStates.ShooterStates.TEST);
         isFinished = true;
     }
 
     @Override
-    public boolean isFinished() {
+    public boolean isFinished()
+    {
         return isFinished;
     }
 }

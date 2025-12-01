@@ -5,29 +5,33 @@ import com.arcrobotics.ftclib.command.CommandBase;
 import org.firstinspires.ftc.teamcode.Utils.AllStates;
 import org.firstinspires.ftc.teamcode.Subsystems.FunnelSubsystem;
 
-public class FunnelShakeAction extends CommandBase {
+public class FunnelTestAction extends CommandBase
+{
 
     private final FunnelSubsystem funnelSubsystem;
     private boolean isFinished = false;
 
-    public FunnelShakeAction(FunnelSubsystem funnelSubsystem)
+    public FunnelTestAction(FunnelSubsystem funnelSubsystem)
     {
-        addRequirements(funnelSubsystem);
         this.funnelSubsystem = funnelSubsystem;
+        addRequirements(funnelSubsystem);
     }
 
     @Override
-    public void initialize() {
-        funnelSubsystem.shake();
+    public void initialize()
+    {
+        funnelSubsystem.test();
     }
 
     @Override
-    public void execute() {
-        if(!(funnelSubsystem.getState() == AllStates.FunnelStates.SHAKE)) isFinished = true;
+    public void execute()
+    {
+        if(!(funnelSubsystem.getState() == AllStates.FunnelStates.TEST)) isFinished = true;
     }
 
     @Override
-    public boolean isFinished() {
+    public boolean isFinished()
+    {
         return isFinished;
     }
 }

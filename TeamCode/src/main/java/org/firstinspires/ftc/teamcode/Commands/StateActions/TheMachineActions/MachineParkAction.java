@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.Commands.StateActions.TheMachineActions;
 
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 
-import org.firstinspires.ftc.teamcode.Constants.AllStates;
+import org.firstinspires.ftc.teamcode.Utils.AllStates;
 import org.firstinspires.ftc.teamcode.Subsystems.TheMachineSubsystem;
 
 public class MachineParkAction extends ParallelCommandGroup

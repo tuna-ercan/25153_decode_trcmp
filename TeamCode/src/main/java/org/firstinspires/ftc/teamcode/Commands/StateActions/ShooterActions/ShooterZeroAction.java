@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.Commands.StateActions.ShooterActions;
 
 import com.arcrobotics.ftclib.command.CommandBase;
 
-import org.firstinspires.ftc.teamcode.Constants.AllStates;
+import org.firstinspires.ftc.teamcode.Utils.AllStates;
 import org.firstinspires.ftc.teamcode.Subsystems.ShooterSubsystem;
 
 public class ShooterZeroAction extends CommandBase {

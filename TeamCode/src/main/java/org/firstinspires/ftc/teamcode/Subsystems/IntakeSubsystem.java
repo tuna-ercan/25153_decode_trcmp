@@ -10,11 +10,13 @@ import org.firstinspires.ftc.teamcode.Commands.StateActions.IntakeActions.Intake
 import org.firstinspires.ftc.teamcode.Commands.StateActions.IntakeActions.IntakeIntakeAction;
 import org.firstinspires.ftc.teamcode.Commands.StateActions.IntakeActions.IntakeOuttakeAction;
 import org.firstinspires.ftc.teamcode.Commands.StateActions.IntakeActions.IntakeShakeAction;
+import org.firstinspires.ftc.teamcode.Commands.StateActions.IntakeActions.IntakeTestAction;
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.IntakeRequests.IntakeIdleRequest;
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.IntakeRequests.IntakeIntakeRequest;
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.IntakeRequests.IntakeOuttakeRequest;
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.IntakeRequests.IntakeShakeRequest;
-import org.firstinspires.ftc.teamcode.Constants.AllStates.IntakeStates;
+import org.firstinspires.ftc.teamcode.Commands.StateRequests.IntakeRequests.IntakeTestRequest;
+import org.firstinspires.ftc.teamcode.Utils.AllStates.IntakeStates;
 import org.firstinspires.ftc.teamcode.Constants.IntakeConstants;
 
 /**
@@ -31,11 +33,13 @@ public class IntakeSubsystem extends SubsystemBase {
     private final Command requestIntake;
     private final Command requestOuttake;
     private final Command requestShake;
+    private final Command requestTest;
 
     private final Command idleAction;
     private final Command intakeAction;
     private final Command outtakeAction;
     private final Command shakeAction;
+    private final Command testAction;
 
     /**
      * Creates a new IntakeSubsystem.
@@ -52,11 +56,13 @@ public class IntakeSubsystem extends SubsystemBase {
         requestIntake = new IntakeIntakeRequest(this);
         requestOuttake = new IntakeOuttakeRequest(this);
         requestShake = new IntakeShakeRequest(this);
+        requestTest = new IntakeTestRequest(this);
 
         idleAction = new IntakeIdleAction(this);
         intakeAction = new IntakeIntakeAction(this);
         outtakeAction = new IntakeOuttakeAction(this);
         shakeAction = new IntakeShakeAction(this);
+        testAction = new IntakeTestAction(this);
     }
 
     @Override
@@ -80,6 +86,9 @@ public class IntakeSubsystem extends SubsystemBase {
                 break;
             case SHAKE:
                 if(!shakeAction.isScheduled()) shakeAction.schedule();
+                break;
+            case TEST:
+                if(!testAction.isScheduled()) testAction.schedule();
                 break;
         }
     }
@@ -127,12 +136,16 @@ public class IntakeSubsystem extends SubsystemBase {
         return requestShake;
     }
 
+    public Command testRequest() {
+        return requestTest;
+    }
+
     public void stop() {
         intakeMotor.setPower(0);
     }
 
     public void intake() {
-        intakeMotor.setPower(IntakeConstants.IntakingIntakeCoeffiecent);
+        intakeMotor.setPower(IntakeConstants.IntakeIntakePower);
     }
 
     public void outtake() {
@@ -141,5 +154,9 @@ public class IntakeSubsystem extends SubsystemBase {
 
     public void shake() {
         intakeMotor.setPower(0);
+    }
+
+    public void test() {
+        // Test logic
     }
 }

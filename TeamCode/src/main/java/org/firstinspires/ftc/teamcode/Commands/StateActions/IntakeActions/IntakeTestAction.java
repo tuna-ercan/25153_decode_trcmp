@@ -5,29 +5,33 @@ import com.arcrobotics.ftclib.command.CommandBase;
 import org.firstinspires.ftc.teamcode.Utils.AllStates;
 import org.firstinspires.ftc.teamcode.Subsystems.IntakeSubsystem;
 
-public class IntakeOuttakeAction extends CommandBase {
+public class IntakeTestAction extends CommandBase
+{
 
     private final IntakeSubsystem intakeSubsystem;
     private boolean isFinished = false;
 
-    public IntakeOuttakeAction(IntakeSubsystem intakeSubsystem)
+    public IntakeTestAction(IntakeSubsystem intakeSubsystem)
     {
         this.intakeSubsystem = intakeSubsystem;
         addRequirements(intakeSubsystem);
     }
 
     @Override
-    public void initialize() {
-        intakeSubsystem.outtake();
+    public void initialize()
+    {
+        intakeSubsystem.test();
     }
 
     @Override
-    public void execute() {
-        if(!(intakeSubsystem.getState() == AllStates.IntakeStates.OUTTAKE)) isFinished = true;
+    public void execute()
+    {
+        if(!(intakeSubsystem.getState() == AllStates.IntakeStates.TEST)) isFinished = true;
     }
 
     @Override
-    public boolean isFinished() {
+    public boolean isFinished()
+    {
         return isFinished;
     }
 }

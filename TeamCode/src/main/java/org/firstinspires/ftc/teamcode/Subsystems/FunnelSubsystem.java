@@ -10,13 +10,14 @@ import org.firstinspires.ftc.teamcode.Commands.StateActions.FunnelActions.Funnel
 import org.firstinspires.ftc.teamcode.Commands.StateActions.FunnelActions.FunnelHomeAction;
 import org.firstinspires.ftc.teamcode.Commands.StateActions.FunnelActions.FunnelPrepAction;
 import org.firstinspires.ftc.teamcode.Commands.StateActions.FunnelActions.FunnelShakeAction;
+import org.firstinspires.ftc.teamcode.Commands.StateActions.FunnelActions.FunnelTestAction;
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.FunnelRequests.FunnelFeedRequest;
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.FunnelRequests.FunnelHomeRequest;
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.FunnelRequests.FunnelPrepRequest;
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.FunnelRequests.FunnelShakeRequest;
-import org.firstinspires.ftc.teamcode.Constants.AllStates.FunnelStates;
+import org.firstinspires.ftc.teamcode.Commands.StateRequests.FunnelRequests.FunnelTestRequest;
+import org.firstinspires.ftc.teamcode.Utils.AllStates.FunnelStates;
 import org.firstinspires.ftc.teamcode.Constants.FunnelConstants;
-import org.firstinspires.ftc.teamcode.Container;
 
 /**
  * Subsystem responsible for the funnel mechanism.
@@ -42,11 +43,13 @@ public class FunnelSubsystem extends SubsystemBase
     private final Command requestPrep;
     private final Command requestFeed;
     private final Command requestShake;
+    private final Command requestTest;
 
     private final Command homeAction;
     private final Command prepAction;
     private final Command feedAction;
     private final Command shakeAction;
+    private final Command testAction;
 
     /**
      * Creates a new FunnelSubsystem.
@@ -70,11 +73,13 @@ public class FunnelSubsystem extends SubsystemBase
         requestPrep = new FunnelPrepRequest(this);
         requestFeed = new FunnelFeedRequest(this);
         requestShake = new FunnelShakeRequest(this);
+        requestTest = new FunnelTestRequest(this);
 
         homeAction = new FunnelHomeAction(this);
         prepAction = new FunnelPrepAction(this);
         feedAction = new FunnelFeedAction(this);
         shakeAction = new FunnelShakeAction(this);
+        testAction = new FunnelTestAction(this);
     }
 
     @Override
@@ -103,6 +108,9 @@ public class FunnelSubsystem extends SubsystemBase
                 break;
             case SHAKE:
                 if(!shakeAction.isScheduled()) shakeAction.schedule();
+                break;
+            case TEST:
+                if(!testAction.isScheduled()) testAction.schedule();
                 break;
         }
     }
@@ -148,6 +156,7 @@ public class FunnelSubsystem extends SubsystemBase
     public Command prepRequest() { return requestPrep; }
     public Command feedRequest() { return requestFeed; }
     public Command shakeRequest() { return requestShake; }
+    public Command testRequest() { return requestTest; }
 
     public void home()
     {
@@ -196,6 +205,11 @@ public class FunnelSubsystem extends SubsystemBase
     public void shake()
     {
         // Logic for shake
+    }
+
+    public void test()
+    {
+        // Logic for test
     }
 
     public void setGoalPosLeft(double pos)

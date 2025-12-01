@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.Commands.StateActions.LiftActions;
 
 import com.arcrobotics.ftclib.command.CommandBase;
 
-import org.firstinspires.ftc.teamcode.Constants.AllStates;
+import org.firstinspires.ftc.teamcode.Utils.AllStates;
 import org.firstinspires.ftc.teamcode.Subsystems.LiftSubsystem;
 
 public class LiftShakeAction extends CommandBase {

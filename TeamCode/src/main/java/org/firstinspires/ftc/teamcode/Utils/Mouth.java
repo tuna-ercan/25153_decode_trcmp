@@ -9,6 +9,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.LiftSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.ShooterSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.TheMachineSubsystem;
 
+import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.bylazar.telemetry.PanelsTelemetry;
 import com.bylazar.telemetry.JoinedTelemetry;
 import com.bylazar.telemetry.TelemetryManager;
@@ -26,6 +27,7 @@ public class Mouth {
     private final TelemetryManager.TelemetryWrapper panelsTelemetry;
     private final JoinedTelemetry joinedTelemetry;
 
+    private final CommandScheduler scheduler;
 
     public Mouth(TheMachineSubsystem machineSubsystem, DrivetrainSubsystem drivetrainSubsystem)
     {
@@ -40,6 +42,8 @@ public class Mouth {
 
         panelsTelemetry = PanelsTelemetry.INSTANCE.getFtcTelemetry();
         joinedTelemetry = new JoinedTelemetry(panelsTelemetry, telemetry);
+
+        scheduler = CommandScheduler.getInstance();
     }
 
     public void speak()
@@ -81,6 +85,9 @@ public class Mouth {
         joinedTelemetry.addData("Machine-State", machineSubsystem.getState());
 
         panelsTelemetry.addData("Machine-IsReady", machineSubsystem.isReady());
+
+        // Command Scheduler
+        panelsTelemetry.addData("CommandScheduler", scheduler);
 
 
         joinedTelemetry.update();

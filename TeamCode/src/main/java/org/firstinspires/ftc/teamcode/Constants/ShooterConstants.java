@@ -2,37 +2,38 @@ package org.firstinspires.ftc.teamcode.Constants;
 
 import androidx.annotation.NonNull;
 
+import com.bylazar.configurables.annotations.Configurable;
+import com.bylazar.configurables.annotations.IgnoreConfigurable;
 import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.PIDCoefficients;
 
+@Configurable
 public class ShooterConstants {
+    @IgnoreConfigurable
     public static String RightMotorName = "rightShooter";
+    @IgnoreConfigurable
     public static String LeftMotorName = "leftShooter";
+    @IgnoreConfigurable
     public static String MiddleMotorName = "middleShooter";
+    @IgnoreConfigurable
     public static DcMotorEx.Direction RightDirection = DcMotorSimple.Direction.FORWARD;
+    @IgnoreConfigurable
     public static DcMotorEx.Direction MiddleDirection = DcMotorSimple.Direction.REVERSE;
+    @IgnoreConfigurable
     public static DcMotorEx.Direction LeftDirection = DcMotorSimple.Direction.FORWARD;
-    public static String HoodServo1Name = "hoodServo1";
+    @IgnoreConfigurable
+    public static String HoodServoName = "hoodServo1";
     //public static String HoodServo2Name = "hoodServo2"; //UNCOMMENT IF NEEDED
-    public static double RPMGoal = 0;
 
-
-    public static double MinServo = 0;
-    public static double MaxServo = 0.18;
+    public static double MinHoodPosition = 0;
+    public static double MaxHoodPosition = 0.18;
 
 
     public static double KP = 0.0002 ; //attım
 
     public static double KD = 0.00015; //attım
-
-    public static double KP_RPM_Right = KP; //attım
-    public static double KP_RPM_Middle = KP; //attım
-    public static double KP_RPM_Left = KP; //attım
-    public static double KD_RPM_Right = KD;
-    public static double KD_RPM_Middle= KD;
-    public static double KD_RPM_Left= KD;
 
     public static PIDCoefficients LeftPIDCoefficients = new PIDCoefficients(KP, 0, KD);
     public static PIDCoefficients MiddlePIDCoefficients = new PIDCoefficients(KP, 0, KD);
@@ -43,11 +44,13 @@ public class ShooterConstants {
     public static double MultiplierMiddle = 0.965;
 
     public static double RpmTol = 60;
-    public static double HoodClosedPose;
     public static double HoodTol = 0.0025;
 
     public static double RestRPM = 2000;
     public static double RestHoodPos = 0.0275;
+
+    public static double TestRpm = 2000;
+    public static double TestHoodPos = 0.0275;
 
     public static double CalculateRpmFromDistance(double distance)
     {

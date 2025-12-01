@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Constants;
+package org.firstinspires.ftc.teamcode.Utils;
 
 public class AllStates {
 
@@ -18,7 +18,8 @@ public class AllStates {
         INTAKE,
         OUTTAKE,
         PARK,
-        SHAKE
+        SHAKE,
+        TEST
     }
 
     public enum DrivetrainStates
@@ -26,7 +27,7 @@ public class AllStates {
         IDLE,
         TELEOP,
         TELEOP_PATH,
-        AUTO,
+        AUTO
 
     };
 
@@ -35,7 +36,8 @@ public class AllStates {
         IDLE,
         INTAKE,
         OUTTAKE,
-        SHAKE
+        SHAKE,
+        TEST
     }
 
     public enum FunnelStates
@@ -43,14 +45,16 @@ public class AllStates {
         HOME,
         PREP,
         FEED,
-        SHAKE
+        SHAKE,
+        TEST
     }
 
     public enum LiftStates
     {
         HOME,
         OPEN,
-        SHAKE
+        SHAKE,
+        TEST
 
     }
 
@@ -64,6 +68,7 @@ public class AllStates {
         SHOOT_P4,
         SHOOT_FROM_POSE,
         REVERSE,
-        SHAKE
+        SHAKE,
+        TEST
     }
 }

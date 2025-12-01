@@ -5,29 +5,33 @@ import com.arcrobotics.ftclib.command.CommandBase;
 import org.firstinspires.ftc.teamcode.Utils.AllStates;
 import org.firstinspires.ftc.teamcode.Subsystems.LiftSubsystem;
 
-public class LiftHomeAction extends CommandBase {
+public class LiftTestAction extends CommandBase
+{
 
     private final LiftSubsystem liftSubsystem;
     private boolean isFinished = false;
 
-    public LiftHomeAction(LiftSubsystem liftSubsystem)
+    public LiftTestAction(LiftSubsystem liftSubsystem)
     {
-        addRequirements(liftSubsystem);
         this.liftSubsystem = liftSubsystem;
+        addRequirements(liftSubsystem);
     }
 
     @Override
-    public void initialize() {
-        liftSubsystem.home();
+    public void initialize()
+    {
+        liftSubsystem.test();
     }
 
     @Override
-    public void execute() {
-        if(!(liftSubsystem.getState() == AllStates.LiftStates.HOME)) isFinished = true;
+    public void execute()
+    {
+        if(!(liftSubsystem.getState() == AllStates.LiftStates.TEST)) isFinished = true;
     }
 
     @Override
-    public boolean isFinished() {
+    public boolean isFinished()
+    {
         return isFinished;
     }
 }

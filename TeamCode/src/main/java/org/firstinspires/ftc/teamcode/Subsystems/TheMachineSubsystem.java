@@ -33,8 +33,8 @@ import org.firstinspires.ftc.teamcode.Commands.StateRequests.TheMachineRequests.
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.TheMachineRequests.MachineShootFromP3Request;
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.TheMachineRequests.MachineShootFromP4Request;
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.TheMachineRequests.MachineShootFromPoseRequest;
-import org.firstinspires.ftc.teamcode.Constants.AllStates;
-import org.firstinspires.ftc.teamcode.Constants.AllStates.MachineStates;
+import org.firstinspires.ftc.teamcode.Utils.AllStates;
+import org.firstinspires.ftc.teamcode.Utils.AllStates.MachineStates;
 import org.firstinspires.ftc.teamcode.Constants.TheMachineConstants;
 
 public class TheMachineSubsystem extends SubsystemBase {

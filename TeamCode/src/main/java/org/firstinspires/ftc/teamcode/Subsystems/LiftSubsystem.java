@@ -9,10 +9,12 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.Commands.StateActions.LiftActions.LiftHomeAction;
 import org.firstinspires.ftc.teamcode.Commands.StateActions.LiftActions.LiftOpenAction;
 import org.firstinspires.ftc.teamcode.Commands.StateActions.LiftActions.LiftShakeAction;
+import org.firstinspires.ftc.teamcode.Commands.StateActions.LiftActions.LiftTestAction;
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.LiftRequests.LiftHomeRequest;
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.LiftRequests.LiftOpenRequest;
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.LiftRequests.LiftShakeRequest;
-import org.firstinspires.ftc.teamcode.Constants.AllStates.LiftStates;
+import org.firstinspires.ftc.teamcode.Commands.StateRequests.LiftRequests.LiftTestRequest;
+import org.firstinspires.ftc.teamcode.Utils.AllStates.LiftStates;
 import org.firstinspires.ftc.teamcode.Constants.LiftConstants;
 
 public class LiftSubsystem extends SubsystemBase {
@@ -30,10 +32,12 @@ public class LiftSubsystem extends SubsystemBase {
     private final Command requestHome;
     private final Command requestOpen;
     private final Command requestShake;
+    private final Command requestTest;
 
     private final Command homeAction;
     private final Command openAction;
     private final Command shakeAction;
+    private final Command testAction;
 
     public LiftSubsystem() {
         leftLiftServo = hardwareMap.get(Servo.class, LiftConstants.LeftLiftName);
@@ -47,10 +51,12 @@ public class LiftSubsystem extends SubsystemBase {
         requestHome = new LiftHomeRequest(this);
         requestOpen = new LiftOpenRequest(this);
         requestShake = new LiftShakeRequest(this);
+        requestTest = new LiftTestRequest(this);
 
         homeAction = new LiftHomeAction(this);
         openAction = new LiftOpenAction(this);
         shakeAction = new LiftShakeAction(this);
+        testAction = new LiftTestAction(this);
     }
 
     @Override
@@ -70,6 +76,9 @@ public class LiftSubsystem extends SubsystemBase {
                 break;
             case SHAKE:
                 if(!shakeAction.isScheduled()) shakeAction.schedule();
+                break;
+            case TEST:
+                if(!testAction.isScheduled()) testAction.schedule();
                 break;
         }
     }
@@ -99,6 +108,10 @@ public class LiftSubsystem extends SubsystemBase {
         return requestShake;
     }
 
+    public Command testRequest() {
+        return requestTest;
+    }
+
     public void home() {
         setLeftServo(LiftConstants.HomePos);
         setRightServo(LiftConstants.HomePos);
@@ -112,6 +125,10 @@ public class LiftSubsystem extends SubsystemBase {
     public void shake() {
         setLeftServo(LiftConstants.HomePos);
         setRightServo(LiftConstants.HomePos);
+    }
+
+    public void test() {
+        // Logic for test
     }
 
     public boolean checkPosition() {
