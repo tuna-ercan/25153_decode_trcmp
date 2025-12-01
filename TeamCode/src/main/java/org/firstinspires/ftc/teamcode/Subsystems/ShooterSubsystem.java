@@ -30,7 +30,9 @@ import org.firstinspires.ftc.teamcode.Commands.StateRequests.ShooterRequests.Sho
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.ShooterRequests.ShooterZeroRequest;
 import org.firstinspires.ftc.teamcode.Constants.AllStates.ShooterStates;
 import org.firstinspires.ftc.teamcode.Constants.ShooterConstants;
+import org.firstinspires.ftc.teamcode.Container;
 import org.firstinspires.ftc.teamcode.Positions.BluePositions;
+import org.firstinspires.ftc.teamcode.Positions.RedPositions;
 
 public class ShooterSubsystem extends SubsystemBase {
 
@@ -38,6 +40,23 @@ public class ShooterSubsystem extends SubsystemBase {
     private final DcMotorEx rightMotor;
     private final DcMotorEx middleMotor;
     private final Servo hoodServo1;
+
+    private final double p1Rpm;
+    private final double p2Rpm;
+    private final double p3Rpm;
+    private final double p4Rpm;
+
+    private final double p1Hood;
+    private final double p2Hood;
+    private final double p3Hood;
+    private final double p4Hood;
+
+    private final Pose p1Pose;
+    private final Pose p2Pose;
+    private final Pose p3Pose;
+    private final Pose p4Pose;
+
+    private final Pose focusPoint;
 
     private ShooterStates currentState;
     private ShooterStates lastState;
@@ -94,6 +113,23 @@ public class ShooterSubsystem extends SubsystemBase {
         shootFromPoseAction = new ShooterShootFromPoseAction(this);
         reverseAction = new ShooterReverseAction(this);
         shakeAction = new ShooterShakeAction(this);
+
+        focusPoint = (Container.isBlue ? BluePositions.SHOOT_FOCUS_POINT : RedPositions.SHOOT_FOCUS_POINT);
+
+        p1Pose = (Container.isBlue ? BluePositions.SHOOT_P1 : RedPositions.SHOOT_P1);
+        p2Pose = (Container.isBlue ? BluePositions.SHOOT_P2 : RedPositions.SHOOT_P2);
+        p3Pose = (Container.isBlue ? BluePositions.SHOOT_P3 : RedPositions.SHOOT_P3);
+        p4Pose = (Container.isBlue ? BluePositions.SHOOT_P4 : RedPositions.SHOOT_P4);
+
+        p1Rpm = calculateRpmFromPose(p1Pose);
+        p2Rpm = calculateRpmFromPose(p2Pose);
+        p3Rpm = calculateRpmFromPose(p3Pose);
+        p4Rpm = calculateRpmFromPose(p4Pose);
+
+        p1Hood = calculateHoodFromPose(p1Pose);
+        p2Hood = calculateHoodFromPose(p2Pose);
+        p3Hood = calculateHoodFromPose(p3Pose);
+        p4Hood = calculateHoodFromPose(p4Pose);
     }
 
     @Override
@@ -228,7 +264,6 @@ public class ShooterSubsystem extends SubsystemBase {
     {
         double robotY = p.getY();
         double robotX = p.getX();
-        Pose focusPoint = BluePositions.SHOOT_FOCUS_POINT;
 
         double distance = Math.sqrt(Math.pow(focusPoint.getX()-robotX,2) + Math.pow(focusPoint.getY()-robotY,2))*2.54;
 
@@ -239,11 +274,20 @@ public class ShooterSubsystem extends SubsystemBase {
     {
         double robotY = p.getY();
         double robotX = p.getX();
-        Pose focusPoint = BluePositions.SHOOT_FOCUS_POINT;
 
         double distance = Math.sqrt(Math.pow(focusPoint.getX()-robotX,2) + Math.pow(focusPoint.getY()-robotY,2))*2.54;
 
         return  0.0027 - (0.0025*(int)((distance-164)/20)); // 2600'ü değiştir, oto şut konumuna göre
+    }
+
+    private double calculateRpmFromCurrentPose()
+    {
+        return calculateRpmFromPose(Container.robotPose);
+    }
+
+    private double calculateHoodFromCurrentPose()
+    {
+        return calculateHoodFromPose(Container.robotPose);
     }
 
     public Command waitForRPM(double RPM)
