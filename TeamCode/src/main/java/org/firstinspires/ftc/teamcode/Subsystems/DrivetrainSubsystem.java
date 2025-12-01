@@ -51,8 +51,8 @@ public class DrivetrainSubsystem extends SubsystemBase
         lastState = DrivetrainStates.IDLE;
 
         follower = PedroConstants.createFollower(hardwareMap);
-        if(Container.isBlue) startPose = BluePositions.startPose;
-        else startPose = RedPositions.startPose;
+        if(Container.isBlue) startPose = BluePositions.START_POSE;
+        else startPose = RedPositions.START_POSE;
 
     }
 
@@ -73,7 +73,7 @@ public class DrivetrainSubsystem extends SubsystemBase
         isBusy = follower.isBusy();
 
         Container.robotPose = follower.getPose();
-        stateMachine();
+        //stateMachine();
     }
 
     /**
@@ -87,6 +87,7 @@ public class DrivetrainSubsystem extends SubsystemBase
             case IDLE:
             case TELEOP:
             case AUTO:
+            case TEST:
                 break;
         }
     }
@@ -200,6 +201,18 @@ public class DrivetrainSubsystem extends SubsystemBase
         setState(DrivetrainStates.TELEOP_PATH);
         follower.followPath(pc);
     }
+
+    /**
+     * Commands the drivetrain to follow a path in test mode.
+     * Updates the state to TEST.
+     * @param pc The PathChain to follow.
+     */
+    public void followPathTest(PathChain pc)
+    {
+        setState(DrivetrainStates.TEST);
+        follower.followPath(pc);
+    }
+
 
     /**
      * Updates the Pedro Pathing follower.

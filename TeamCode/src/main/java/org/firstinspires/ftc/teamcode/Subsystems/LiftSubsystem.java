@@ -128,7 +128,8 @@ public class LiftSubsystem extends SubsystemBase {
     }
 
     public void test() {
-        // Logic for test
+        setLeftServo(LiftConstants.TestPos);
+        setRightServo(LiftConstants.TestPos);
     }
 
     public boolean checkPosition() {

@@ -157,6 +157,6 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public void test() {
-        // Test logic
+        intakeMotor.setPower(IntakeConstants.IntakeTestPower);
     }
 }

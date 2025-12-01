@@ -27,7 +27,8 @@ public class AllStates {
         IDLE,
         TELEOP,
         TELEOP_PATH,
-        AUTO
+        AUTO,
+        TEST
 
     };
 

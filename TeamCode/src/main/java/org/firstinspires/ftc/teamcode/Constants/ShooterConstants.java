@@ -8,6 +8,7 @@ import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.PIDCoefficients;
+import com.qualcomm.robotcore.hardware.Servo;
 
 @Configurable
 public class ShooterConstants {
@@ -25,7 +26,8 @@ public class ShooterConstants {
     public static DcMotorEx.Direction LeftDirection = DcMotorSimple.Direction.FORWARD;
     @IgnoreConfigurable
     public static String HoodServoName = "hoodServo1";
-    //public static String HoodServo2Name = "hoodServo2"; //UNCOMMENT IF NEEDED
+    @IgnoreConfigurable
+    public static Servo.Direction HoodServoDirection = Servo.Direction.FORWARD;
 
     public static double MinHoodPosition = 0;
     public static double MaxHoodPosition = 0.18;

@@ -33,6 +33,7 @@ import org.firstinspires.ftc.teamcode.Commands.StateRequests.ShooterRequests.Sho
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.ShooterRequests.ShooterShootP4Request;
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.ShooterRequests.ShooterTestRequest;
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.ShooterRequests.ShooterZeroRequest;
+import org.firstinspires.ftc.teamcode.Constants.FunnelConstants;
 import org.firstinspires.ftc.teamcode.Utils.AllStates.ShooterStates;
 import org.firstinspires.ftc.teamcode.Constants.ShooterConstants;
 import org.firstinspires.ftc.teamcode.Container;
@@ -112,6 +113,7 @@ public class ShooterSubsystem extends SubsystemBase {
         leftMotor.setDirection(ShooterConstants.LeftDirection);
         rightMotor.setDirection(ShooterConstants.RightDirection);
         middleMotor.setDirection(ShooterConstants.MiddleDirection);
+        hoodServo.setDirection(ShooterConstants.HoodServoDirection);
 
         middleMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         middleMotor.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
@@ -463,7 +465,9 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public void test()
     {
-        // Logic for test
+        setIsReadyByChecking();
+        setHoodPosition(ShooterConstants.TestHoodPos);
+        controlMotorRPM(ShooterConstants.TestRpm);
     }
 
     public Command waitForReady()

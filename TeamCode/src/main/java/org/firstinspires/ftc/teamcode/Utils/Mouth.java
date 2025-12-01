@@ -52,6 +52,7 @@ public class Mouth {
         PanelsFieldDrawing.drawRobot(drivetrainSubsystem.getPose());
         PanelsFieldDrawing.sendPacket();
         joinedTelemetry.addData("Drive-State", drivetrainSubsystem.getState());
+        joinedTelemetry.addData("Drive-IsBusy", drivetrainSubsystem.isBusy());
 
         panelsTelemetry.addData("Drive-Pose-X", drivetrainSubsystem.getPose().getX());
         panelsTelemetry.addData("Drive-Pose-Y", drivetrainSubsystem.getPose().getY());

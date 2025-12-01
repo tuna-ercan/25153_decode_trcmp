@@ -64,8 +64,6 @@ public class FunnelSubsystem extends SubsystemBase
         leftServo.setDirection(FunnelConstants.LeftDirection);
         middleServo.setDirection(FunnelConstants.MiddleDirection);
 
-
-
         currentState = FunnelStates.HOME;
         lastState = FunnelStates.HOME;
 
@@ -86,7 +84,6 @@ public class FunnelSubsystem extends SubsystemBase
     public void periodic()
     {
         stateMachine();
-
         isReady = checkPosition();
     }
 
@@ -204,12 +201,16 @@ public class FunnelSubsystem extends SubsystemBase
 
     public void shake()
     {
-        // Logic for shake
+        setRightServo(FunnelConstants.RightHome);
+        setMiddleServo(FunnelConstants.MiddleHome);
+        setLeftServo(FunnelConstants.LeftHome);
     }
 
     public void test()
     {
-        // Logic for test
+        setRightServo(FunnelConstants.RightTest);
+        setMiddleServo(FunnelConstants.MiddleTest);
+        setLeftServo(FunnelConstants.LeftTest);
     }
 
     public void setGoalPosLeft(double pos)
