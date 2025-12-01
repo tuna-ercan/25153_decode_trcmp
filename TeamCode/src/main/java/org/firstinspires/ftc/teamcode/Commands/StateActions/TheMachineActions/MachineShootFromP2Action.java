@@ -14,10 +14,11 @@ public class MachineShootFromP2Action extends ParallelCommandGroup
     public MachineShootFromP2Action(TheMachineSubsystem theMachineSubsystem)
     {
         super(
-                theMachineSubsystem.funnelRequest(AllStates.FunnelStates.FEED),
                 theMachineSubsystem.intakeRequest(AllStates.IntakeStates.IDLE),
                 theMachineSubsystem.liftRequest(AllStates.LiftStates.HOME),
                 theMachineSubsystem.shooterRequest(AllStates.ShooterStates.SHOOT_P2)
+                        .andThen(theMachineSubsystem.waitForShooterToBeReady())
+                        .andThen(theMachineSubsystem.funnelRequest(AllStates.FunnelStates.FEED))
         );
 
         this.theMachineSubsystem = theMachineSubsystem;

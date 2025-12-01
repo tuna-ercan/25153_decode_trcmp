@@ -238,10 +238,19 @@ public class ShooterSubsystem extends SubsystemBase {
         goalRPM = rpmGoal;
     }
 
+    public double getGoalRPM() {
+        return goalRPM;
+    }
+
     private void setGoalHood(double hoodGoal)
     {
         goalHood = hoodGoal;
     }
+
+    public double getGoalHood() {
+        return goalHood;
+    }
+
 
     private void setMotorPowers(double leftPower, double middlePower, double rightPower)
     {
@@ -334,7 +343,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
         double distance = Math.sqrt(Math.pow(focusPoint.getX()-robotX,2) + Math.pow(focusPoint.getY()-robotY,2))*2.54;
 
-        return 2750 + (distance-164)/57.5 * 250; // 2600'ü değiştir, oto şut konumuna göre
+        return ShooterConstants.CalculateRpmFromDistance(distance);
     }
 
     private double calculateHoodFromPose(@NonNull Pose p)
@@ -344,7 +353,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
         double distance = Math.sqrt(Math.pow(focusPoint.getX()-robotX,2) + Math.pow(focusPoint.getY()-robotY,2))*2.54;
 
-        return  0.0027 - (0.0025*(int)((distance-164)/20)); // 2600'ü değiştir, oto şut konumuna göre
+        return  ShooterConstants.CalculateHoodFromDistance(distance);
     }
 
     private double calculateRpmFromCurrentPose()
@@ -357,7 +366,7 @@ public class ShooterSubsystem extends SubsystemBase {
         return calculateHoodFromPose(Container.robotPose);
     }
 
-    private boolean isReady()
+    public boolean isReady()
     {
         return isReady;
     }
@@ -448,5 +457,4 @@ public class ShooterSubsystem extends SubsystemBase {
     {
         return waitForReady;
     }
-
 }

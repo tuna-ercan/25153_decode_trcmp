@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode.Constants;
 
+import androidx.annotation.NonNull;
+
+import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.PIDCoefficients;
@@ -45,4 +48,14 @@ public class ShooterConstants {
 
     public static double RestRPM = 2000;
     public static double RestHoodPos = 0.0275;
+
+    public static double CalculateRpmFromDistance(double distance)
+    {
+        return 2750 + (distance-164)/57.5 * 250; // 2600'ü değiştir, oto şut konumuna göre
+    }
+
+    public static double CalculateHoodFromDistance(double distance)
+    {
+        return  0.0027 - (0.0025*(int)((distance-164)/20)); // 2600'ü değiştir, oto şut konumuna göre
+    }
 }

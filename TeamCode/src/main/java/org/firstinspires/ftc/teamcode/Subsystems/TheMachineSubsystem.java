@@ -35,6 +35,7 @@ import org.firstinspires.ftc.teamcode.Commands.StateRequests.TheMachineRequests.
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.TheMachineRequests.MachineShootFromPoseRequest;
 import org.firstinspires.ftc.teamcode.Constants.AllStates;
 import org.firstinspires.ftc.teamcode.Constants.AllStates.MachineStates;
+import org.firstinspires.ftc.teamcode.Constants.TheMachineConstants;
 
 public class TheMachineSubsystem extends SubsystemBase {
 
@@ -335,8 +336,14 @@ public class TheMachineSubsystem extends SubsystemBase {
         return m_shooter;
     }
 
+    public Command waitForShooterToBeReady()
+    {
+        return m_shooter.waitForReady().withTimeout(TheMachineConstants.timeoutForShooterToBeReady);
+    }
 
-
-
+    public boolean isReady()
+    {
+        return m_shooter.isReady() && m_funnel.isReady() && m_lift.isReady();
+    }
 
 }
