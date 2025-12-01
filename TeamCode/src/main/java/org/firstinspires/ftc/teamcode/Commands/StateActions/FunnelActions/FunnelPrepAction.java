@@ -6,6 +6,10 @@ import org.firstinspires.ftc.teamcode.Utils.AllStates;
 import org.firstinspires.ftc.teamcode.Constants.FunnelConstants;
 import org.firstinspires.ftc.teamcode.Subsystems.FunnelSubsystem;
 
+/**
+ * Action command to move the funnel servos to the PREP position.
+ * This action implements a delayed sequence for servo movement.
+ */
 public class FunnelPrepAction extends CommandBase {
 
     private final FunnelSubsystem funnelSubsystem;
@@ -17,6 +21,10 @@ public class FunnelPrepAction extends CommandBase {
     private final long rightDelay;
     private final long maxDelay;
 
+    /**
+     * Constructor for FunnelPrepAction.
+     * @param funnelSubsystem The funnel subsystem instance.
+     */
     public FunnelPrepAction(FunnelSubsystem funnelSubsystem)
     {
         addRequirements(funnelSubsystem);

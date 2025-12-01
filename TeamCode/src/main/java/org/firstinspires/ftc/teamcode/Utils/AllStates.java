@@ -1,7 +1,13 @@
 package org.firstinspires.ftc.teamcode.Utils;
 
+/**
+ * AllStates class containing enums for the various states of different robot subsystems.
+ */
 public class AllStates {
 
+    /**
+     * States for The Machine (Super-subsystem).
+     */
     public enum MachineStates
     {
         IDLE,
@@ -22,6 +28,9 @@ public class AllStates {
         TEST
     }
 
+    /**
+     * States for the Drivetrain subsystem.
+     */
     public enum DrivetrainStates
     {
         IDLE,
@@ -32,6 +41,9 @@ public class AllStates {
 
     };
 
+    /**
+     * States for the Intake subsystem.
+     */
     public enum IntakeStates
     {
         IDLE,
@@ -41,6 +53,9 @@ public class AllStates {
         TEST
     }
 
+    /**
+     * States for the Funnel subsystem.
+     */
     public enum FunnelStates
     {
         HOME,
@@ -50,6 +65,9 @@ public class AllStates {
         TEST
     }
 
+    /**
+     * States for the Lift subsystem.
+     */
     public enum LiftStates
     {
         HOME,
@@ -59,6 +77,9 @@ public class AllStates {
 
     }
 
+    /**
+     * States for the Shooter subsystem.
+     */
     public enum ShooterStates
     {
         ZERO,

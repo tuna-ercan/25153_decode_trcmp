@@ -102,16 +102,29 @@ public class DrivetrainSubsystem extends SubsystemBase
         currentState = requestedState;
     }
 
+    /**
+     * Creates a PathBuilder from the follower.
+     * @return A new PathBuilder instance.
+     */
     public PathBuilder pathBuilder()
     {
         return follower.pathBuilder();
     }
 
+    /**
+     * Checks if the robot is at the specified pose within tolerances.
+     * @param pose The target pose.
+     * @return True if at pose, false otherwise.
+     */
     public boolean atPose(Pose pose)
     {
         return follower.atPose(pose, DrivetrainConstants.TolX, DrivetrainConstants.TolY, DrivetrainConstants.TolH);
     }
 
+    /**
+     * Checks if the robot has reached the target heading.
+     * @return True if heading error is within tolerance.
+     */
     public boolean headingReached()
     {
         return Math.abs(follower.getHeadingError()) < DrivetrainConstants.TolH;

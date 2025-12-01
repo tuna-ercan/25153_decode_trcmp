@@ -33,7 +33,6 @@ import org.firstinspires.ftc.teamcode.Commands.StateRequests.ShooterRequests.Sho
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.ShooterRequests.ShooterShootP4Request;
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.ShooterRequests.ShooterTestRequest;
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.ShooterRequests.ShooterZeroRequest;
-import org.firstinspires.ftc.teamcode.Constants.FunnelConstants;
 import org.firstinspires.ftc.teamcode.Utils.AllStates.ShooterStates;
 import org.firstinspires.ftc.teamcode.Constants.ShooterConstants;
 import org.firstinspires.ftc.teamcode.Container;
@@ -41,6 +40,10 @@ import org.firstinspires.ftc.teamcode.Positions.BluePositions;
 import org.firstinspires.ftc.teamcode.Positions.RedPositions;
 import org.firstinspires.ftc.teamcode.Utils.ShooterPIDController;
 
+/**
+ * Subsystem responsible for the shooter mechanism.
+ * Controls flywheel motors and hood servo to shoot rings/game elements.
+ */
 public class ShooterSubsystem extends SubsystemBase {
 
     private final DcMotorEx leftMotor;
@@ -104,6 +107,10 @@ public class ShooterSubsystem extends SubsystemBase {
 
     private final Command waitForReady;
 
+    /**
+     * Creates a new ShooterSubsystem.
+     * Initializes motors, servos, PIDs, and calculates preset values.
+     */
     public ShooterSubsystem() {
         leftMotor = hardwareMap.get(DcMotorEx.class, ShooterConstants.LeftMotorName);
         rightMotor = hardwareMap.get(DcMotorEx.class, ShooterConstants.RightMotorName);
@@ -184,6 +191,9 @@ public class ShooterSubsystem extends SubsystemBase {
         stateMachine();
     }
 
+    /**
+     * Executes actions based on the current state of the shooter.
+     */
     public void stateMachine() {
         switch (currentState) {
             case ZERO:
@@ -219,11 +229,19 @@ public class ShooterSubsystem extends SubsystemBase {
         }
     }
 
+    /**
+     * Sets the shooter state and updates the last state.
+     * @param requestedState The new state.
+     */
     public void setState(ShooterStates requestedState) {
         if(currentState != requestedState) lastState = currentState;
         currentState = requestedState;
     }
 
+    /**
+     * Gets the current state of the shooter.
+     * @return The current ShooterStates.
+     */
     public ShooterStates getState() {
         return currentState;
     }
@@ -303,6 +321,10 @@ public class ShooterSubsystem extends SubsystemBase {
         return hoodServo.getPosition();
     }
 
+    /**
+     * Controls the motor RPM using PID controllers.
+     * @param rpm The target RPM.
+     */
     private void controlMotorRPM(double rpm)
     {
         setGoalRPM(rpm);
@@ -327,6 +349,11 @@ public class ShooterSubsystem extends SubsystemBase {
         setMotorPowers(lOutput, mOutput,  rOutput);
     }
 
+    /**
+     * Checks if the current RPM is within tolerance of the goal.
+     * @param RPM The target RPM.
+     * @return True if within tolerance.
+     */
     public boolean checkRPM(double RPM)
     {
         double lRpm = RPM*ShooterConstants.MultiplierLeft;
@@ -340,6 +367,11 @@ public class ShooterSubsystem extends SubsystemBase {
                         && (Math.abs(lRpm-getLeftRPM()) < ShooterConstants.RpmTol));
     }
 
+    /**
+     * Checks if the hood is within tolerance of the goal position.
+     * @param hood The target hood position.
+     * @return True if within tolerance.
+     */
     public boolean checkHood(double hood)
     {
 

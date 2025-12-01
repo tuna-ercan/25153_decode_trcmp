@@ -13,12 +13,21 @@ import org.firstinspires.ftc.teamcode.Positions.BluePositions;
 import org.firstinspires.ftc.teamcode.Positions.RedPositions;
 import org.firstinspires.ftc.teamcode.Subsystems.DrivetrainSubsystem;
 
+/**
+ * Command to drive the robot to Shooting Position 3 (P3).
+ * Uses PedroPathing to generate a path on the fly.
+ */
 public class DriveToShootP3 extends CommandBase {
     private final Supplier<PathChain> path;
     private final Pose goalPosition;
     private final Pose focusPose;
     private final DrivetrainSubsystem m_drive;
     private boolean isFinished;
+
+    /**
+     * Constructor for DriveToShootP3.
+     * @param drive The DrivetrainSubsystem instance.
+     */
     public DriveToShootP3(DrivetrainSubsystem drive)
     {
         this.m_drive = drive;

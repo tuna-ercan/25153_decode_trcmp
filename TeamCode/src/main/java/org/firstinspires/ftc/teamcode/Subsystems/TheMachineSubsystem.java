@@ -37,15 +37,24 @@ import org.firstinspires.ftc.teamcode.Utils.AllStates;
 import org.firstinspires.ftc.teamcode.Utils.AllStates.MachineStates;
 import org.firstinspires.ftc.teamcode.Constants.TheMachineConstants;
 
+/**
+ * TheMachineSubsystem acts as a supervisor or a "super-subsystem" that coordinates
+ * the high-level states and interactions between the individual subsystems:
+ * Intake, Funnel, Lift, and Shooter.
+ */
 public class TheMachineSubsystem extends SubsystemBase {
 
+    // Subsystems managed by The Machine
     private final IntakeSubsystem m_intake;
     private final FunnelSubsystem m_funnel;
     private final LiftSubsystem m_lift;
     private final ShooterSubsystem m_shooter;
+    
+    // State tracking
     private MachineStates currentState;
     private MachineStates lastState;
 
+    // Command requests (triggers for state changes)
     private final Command requestIdle;
     private final Command requestRest;
     private final Command requestPrepP1;
@@ -63,6 +72,7 @@ public class TheMachineSubsystem extends SubsystemBase {
     private final Command requestShake;
 
 
+    // Actions corresponding to states
     private final Command idleAction;
     private final Command restAction;
     private final Command prepP1Action;
@@ -80,8 +90,9 @@ public class TheMachineSubsystem extends SubsystemBase {
     private final Command shakeAction;
 
 
-
-
+    /**
+     * Constructor initializes all subsystems and their corresponding commands.
+     */
     public TheMachineSubsystem()
     {
         m_intake = new IntakeSubsystem();
@@ -92,6 +103,7 @@ public class TheMachineSubsystem extends SubsystemBase {
         currentState = MachineStates.IDLE;
         lastState = MachineStates.IDLE;
 
+        // Initialize requests
         requestIdle = new MachineIdleRequest(this);
         requestRest = new MachineRestRequest(this);
         requestPrepP1 = new MachinePrepP1Request(this);
@@ -108,6 +120,7 @@ public class TheMachineSubsystem extends SubsystemBase {
         requestPark = new MachineParkRequest(this);
         requestShake = new MachineShakeRequest(this);
 
+        // Initialize actions
         idleAction = new MachineIdleAction(this);
         restAction = new MachineRestAction(this);
         prepP1Action = new MachinePrepP1Action(this);
@@ -127,11 +140,19 @@ public class TheMachineSubsystem extends SubsystemBase {
 
     }
 
+    /**
+     * Periodic method called by the scheduler.
+     * Runs the state machine logic.
+     */
     @Override
     public void periodic() {
         stateMachine();
     }
 
+    /**
+     * State machine logic that schedules the appropriate action based on the current state.
+     * If the action for the current state is not running, it schedules it.
+     */
     public void stateMachine()
     {
         switch (currentState)
@@ -185,21 +206,40 @@ public class TheMachineSubsystem extends SubsystemBase {
         }
     }
 
+    /**
+     * Sets the current state of the machine.
+     * Updates the last state before changing.
+     * @param requestedState The new state to set.
+     */
     public void setState(MachineStates requestedState)
     {
         if(currentState != requestedState) lastState = currentState;
         currentState = requestedState;
     }
 
+    /**
+     * Returns the current state of the machine.
+     * @return The current MachineStates.
+     */
     public MachineStates getState()
     {
         return currentState;
     }
+
+    /**
+     * Returns the previous state of the machine.
+     * @return The last MachineStates.
+     */
     public MachineStates getLastState()
     {
         return lastState;
     }
 
+    /**
+     * Returns the command associated with a requested machine state.
+     * @param requestedState The state to get the command for.
+     * @return The Command object, or null if not found.
+     */
     public Command machineRequest(MachineStates requestedState)
     {
         switch (requestedState)
@@ -240,6 +280,11 @@ public class TheMachineSubsystem extends SubsystemBase {
     }
 
 
+    /**
+     * Delegates intake requests to the IntakeSubsystem.
+     * @param requestedState The intake state.
+     * @return The command for the requested intake state.
+     */
     public Command intakeRequest(AllStates.IntakeStates requestedState)
     {
         switch (requestedState)
@@ -257,6 +302,11 @@ public class TheMachineSubsystem extends SubsystemBase {
         }
     }
 
+    /**
+     * Delegates funnel requests to the FunnelSubsystem.
+     * @param requestedState The funnel state.
+     * @return The command for the requested funnel state.
+     */
     public Command funnelRequest(AllStates.FunnelStates requestedState)
     {
         switch (requestedState) {
@@ -274,6 +324,11 @@ public class TheMachineSubsystem extends SubsystemBase {
         }
     }
 
+    /**
+     * Delegates lift requests to the LiftSubsystem.
+     * @param requestedState The lift state.
+     * @return The command for the requested lift state.
+     */
     public Command liftRequest(AllStates.LiftStates requestedState)
     {
         switch (requestedState)
@@ -289,6 +344,11 @@ public class TheMachineSubsystem extends SubsystemBase {
         }
     }
 
+    /**
+     * Delegates shooter requests to the ShooterSubsystem.
+     * @param requestedState The shooter state.
+     * @return The command for the requested shooter state.
+     */
     public Command shooterRequest(AllStates.ShooterStates requestedState)
     {
         switch (requestedState)
@@ -336,11 +396,19 @@ public class TheMachineSubsystem extends SubsystemBase {
         return m_shooter;
     }
 
+    /**
+     * Helper command to wait until the shooter is ready.
+     * @return A command that finishes when the shooter is ready or timeouts.
+     */
     public Command waitForShooterToBeReady()
     {
         return m_shooter.waitForReady().withTimeout(TheMachineConstants.timeoutForShooterToBeReady);
     }
 
+    /**
+     * Checks if all relevant subsystems are ready.
+     * @return true if shooter, funnel, and lift are ready.
+     */
     public boolean isReady()
     {
         return m_shooter.isReady() && m_funnel.isReady() && m_lift.isReady();

@@ -14,11 +14,20 @@ import org.firstinspires.ftc.teamcode.Positions.BluePositions;
 import org.firstinspires.ftc.teamcode.Positions.RedPositions;
 import org.firstinspires.ftc.teamcode.Subsystems.DrivetrainSubsystem;
 
+/**
+ * Command to rotate the robot to aim at the shooting target.
+ * Uses a zero-length path with heading interpolation.
+ */
 public class AimToShoot extends CommandBase {
     private final Supplier<PathChain> path;
     private final Pose focusPose;
     private final DrivetrainSubsystem m_drive;
     private boolean isFinished;
+
+    /**
+     * Constructor for AimToShoot.
+     * @param drive The DrivetrainSubsystem instance.
+     */
     public AimToShoot(DrivetrainSubsystem drive)
     {
         this.m_drive = drive;

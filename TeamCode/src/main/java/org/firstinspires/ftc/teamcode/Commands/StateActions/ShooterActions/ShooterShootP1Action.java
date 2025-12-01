@@ -5,10 +5,18 @@ import com.arcrobotics.ftclib.command.CommandBase;
 import org.firstinspires.ftc.teamcode.Utils.AllStates;
 import org.firstinspires.ftc.teamcode.Subsystems.ShooterSubsystem;
 
+/**
+ * Action command to set the Shooter subsystem to shoot at Position 1 (P1).
+ * Maintains the shooting logic (RPM, hood) during execution.
+ */
 public class ShooterShootP1Action extends CommandBase {
     private final ShooterSubsystem shooterSubsystem;
     private boolean isFinished = false;
 
+    /**
+     * Constructor for ShooterShootP1Action.
+     * @param shooterSubsystem The shooter subsystem instance.
+     */
     public ShooterShootP1Action(ShooterSubsystem shooterSubsystem) {
         addRequirements(shooterSubsystem);
         this.shooterSubsystem = shooterSubsystem;

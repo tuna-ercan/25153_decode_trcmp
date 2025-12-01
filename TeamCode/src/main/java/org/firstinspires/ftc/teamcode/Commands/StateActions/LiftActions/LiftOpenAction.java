@@ -5,11 +5,18 @@ import com.arcrobotics.ftclib.command.CommandBase;
 import org.firstinspires.ftc.teamcode.Utils.AllStates;
 import org.firstinspires.ftc.teamcode.Subsystems.LiftSubsystem;
 
+/**
+ * Action command to move the Lift to the OPEN position.
+ */
 public class LiftOpenAction extends CommandBase {
 
     private final LiftSubsystem liftSubsystem;
     private boolean isFinished = false;
 
+    /**
+     * Constructor for LiftOpenAction.
+     * @param liftSubsystem The lift subsystem instance.
+     */
     public LiftOpenAction(LiftSubsystem liftSubsystem)
     {
         addRequirements(liftSubsystem);

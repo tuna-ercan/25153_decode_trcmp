@@ -6,6 +6,9 @@ import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
+/**
+ * Constants related to the drivetrain hardware and control.
+ */
 @Configurable
 public class DrivetrainConstants {
 
@@ -32,9 +35,24 @@ public class DrivetrainConstants {
             RevHubOrientationOnRobot.LogoFacingDirection.UP,
             RevHubOrientationOnRobot.UsbFacingDirection.LEFT);
 
+    /**
+     * Coefficient for rotation speed in teleop to dampen the rotation.
+     */
     public static double TeleopRotationCoefficient = 0.5;
+    
+    /**
+     * Tolerance for X position in inches.
+     */
     public static double TolX = 2;
+    
+    /**
+     * Tolerance for Y position in inches.
+     */
     public static double TolY = 2;
+    
+    /**
+     * Tolerance for Heading in degrees/radians (depending on implementation, usually radians in PedroPathing).
+     */
     public static double TolH = 0.5;
 
 }

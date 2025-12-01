@@ -5,12 +5,19 @@ import com.arcrobotics.ftclib.command.CommandBase;
 import org.firstinspires.ftc.teamcode.Utils.AllStates;
 import org.firstinspires.ftc.teamcode.Subsystems.FunnelSubsystem;
 
+/**
+ * Action command to test the funnel mechanism.
+ */
 public class FunnelTestAction extends CommandBase
 {
 
     private final FunnelSubsystem funnelSubsystem;
     private boolean isFinished = false;
 
+    /**
+     * Constructor for FunnelTestAction.
+     * @param funnelSubsystem The funnel subsystem instance.
+     */
     public FunnelTestAction(FunnelSubsystem funnelSubsystem)
     {
         this.funnelSubsystem = funnelSubsystem;
