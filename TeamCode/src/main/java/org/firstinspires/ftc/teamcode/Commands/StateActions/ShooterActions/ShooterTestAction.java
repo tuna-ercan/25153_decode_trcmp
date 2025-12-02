@@ -26,6 +26,7 @@ public class ShooterTestAction extends CommandBase
     @Override
     public void execute()
     {
+        shooterSubsystem.test();
         if(!(shooterSubsystem.getState() == AllStates.ShooterStates.TEST)) isFinished = true;
     }
 

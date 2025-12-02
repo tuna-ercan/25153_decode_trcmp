@@ -15,5 +15,4 @@ public class BluePositions {
     public static Pose SHOOT_TEST = new Pose(60, 84);
     public static Pose SHOOT_TEST_FOCUS_POINT = new Pose(8,130);
 
-
 }

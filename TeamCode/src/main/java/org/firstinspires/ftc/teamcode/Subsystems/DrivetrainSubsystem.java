@@ -158,6 +158,22 @@ public class DrivetrainSubsystem extends SubsystemBase
         return follower.getPose();
     }
 
+    public double getHeading()
+    {
+        return follower.getHeading();
+    }
+
+    public PathBuilder getBuilder()
+    {
+        return follower.pathBuilder();
+    }
+
+    public Follower getFollower()
+    {
+        return follower;
+    }
+
+
     /**
      * Sets the teleop drive controls to field-centric mode.
      * @param gamepadEx The gamepad input.
