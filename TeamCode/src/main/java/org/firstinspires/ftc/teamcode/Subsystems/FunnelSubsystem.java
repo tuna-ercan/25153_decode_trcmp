@@ -1,9 +1,9 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
 
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.SubsystemBase;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Commands.StateActions.FunnelActions.FunnelFeedAction;
@@ -55,7 +55,7 @@ public class FunnelSubsystem extends SubsystemBase
      * Creates a new FunnelSubsystem.
      * Initializes servos and commands.
      */
-    public FunnelSubsystem()
+    public FunnelSubsystem(HardwareMap hardwareMap)
     {
         rightServo = hardwareMap.get(Servo.class, FunnelConstants.ServoR);
         leftServo = hardwareMap.get(Servo.class,FunnelConstants.ServoL);

@@ -4,6 +4,7 @@ import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.har
 
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.SubsystemBase;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Commands.StateActions.LiftActions.LiftHomeAction;
@@ -39,7 +40,7 @@ public class LiftSubsystem extends SubsystemBase {
     private final Command shakeAction;
     private final Command testAction;
 
-    public LiftSubsystem() {
+    public LiftSubsystem(HardwareMap hardwareMap) {
         leftLiftServo = hardwareMap.get(Servo.class, LiftConstants.LeftLiftName);
         rightLiftServo = hardwareMap.get(Servo.class, LiftConstants.RightLiftName);
         leftLiftServo.setDirection(LiftConstants.LeftLiftDirection);

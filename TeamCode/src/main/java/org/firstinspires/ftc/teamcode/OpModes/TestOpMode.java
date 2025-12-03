@@ -30,7 +30,7 @@ public class TestOpMode extends CommandOpMode {
     public void initialize()
     {
 
-        m_machine = new TheMachineSubsystem();
+        m_machine = new TheMachineSubsystem(hardwareMap);
         m_drive = new DrivetrainSubsystem();
         mouth = new Mouth(m_machine,m_drive);
 

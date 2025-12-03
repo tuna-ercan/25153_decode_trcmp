@@ -11,6 +11,7 @@ import com.arcrobotics.ftclib.controller.PIDController;
 import com.arcrobotics.ftclib.util.MathUtils;
 import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Commands.StateActions.ShooterActions.ShooterRestAction;
@@ -111,7 +112,7 @@ public class ShooterSubsystem extends SubsystemBase {
      * Creates a new ShooterSubsystem.
      * Initializes motors, servos, PIDs, and calculates preset values.
      */
-    public ShooterSubsystem() {
+    public ShooterSubsystem(HardwareMap hardwareMap) {
         leftMotor = hardwareMap.get(DcMotorEx.class, ShooterConstants.LeftMotorName);
         rightMotor = hardwareMap.get(DcMotorEx.class, ShooterConstants.RightMotorName);
         middleMotor = hardwareMap.get(DcMotorEx.class, ShooterConstants.MiddleMotorName);

@@ -5,6 +5,7 @@ import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.har
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.Commands.StateActions.IntakeActions.IntakeIdleAction;
 import org.firstinspires.ftc.teamcode.Commands.StateActions.IntakeActions.IntakeIntakeAction;
@@ -45,7 +46,7 @@ public class IntakeSubsystem extends SubsystemBase {
      * Creates a new IntakeSubsystem.
      * Initializes the intake motor and commands.
      */
-    public IntakeSubsystem() {
+    public IntakeSubsystem(HardwareMap hardwareMap) {
         intakeMotor = hardwareMap.get(DcMotor.class, IntakeConstants.IntakeMotorName);
         intakeMotor.setDirection(IntakeConstants.IntakeMotorDirection);
 

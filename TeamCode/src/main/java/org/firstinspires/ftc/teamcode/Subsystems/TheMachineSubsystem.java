@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Subsystems;
 
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.SubsystemBase;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.Commands.StateActions.TheMachineActions.MachineIdleAction;
 import org.firstinspires.ftc.teamcode.Commands.StateActions.TheMachineActions.MachineIntakeAction;
@@ -93,12 +94,12 @@ public class TheMachineSubsystem extends SubsystemBase {
     /**
      * Constructor initializes all subsystems and their corresponding commands.
      */
-    public TheMachineSubsystem()
+    public TheMachineSubsystem(HardwareMap hardwareMap)
     {
-        m_intake = new IntakeSubsystem();
-        m_funnel = new FunnelSubsystem();
-        m_lift = new LiftSubsystem();
-        m_shooter = new ShooterSubsystem();
+        m_intake = new IntakeSubsystem(hardwareMap);
+        m_funnel = new FunnelSubsystem(hardwareMap);
+        m_lift = new LiftSubsystem(hardwareMap);
+        m_shooter = new ShooterSubsystem(hardwareMap);
 
         currentState = MachineStates.IDLE;
         lastState = MachineStates.IDLE;
