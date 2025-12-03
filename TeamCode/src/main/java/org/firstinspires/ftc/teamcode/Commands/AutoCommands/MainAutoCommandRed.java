@@ -24,7 +24,7 @@ public class MainAutoCommandRed extends SequentialCommandGroup {
         Paths paths = new Paths(drivetrain.getFollower());
 
         addCommands(
-                theMachineSubsystem.machineRequest(PREP_P1),
+                theMachineSubsystem.prepP1Request(),
                 new FollowPathAuto(drivetrain, paths.firstPathShootP1)
         );
     }

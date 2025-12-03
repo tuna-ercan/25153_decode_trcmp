@@ -235,50 +235,80 @@ public class TheMachineSubsystem extends SubsystemBase {
         return lastState;
     }
 
-    /**
-     * Returns the command associated with a requested machine state.
-     * @param requestedState The state to get the command for.
-     * @return The Command object, or null if not found.
-     */
-    public Command machineRequest(MachineStates requestedState)
+    public Command idleRequest()
     {
-        switch (requestedState)
-        {
-            case IDLE:
-                return requestIdle;
-            case REST:
-                return requestRest;
-            case PREP_P1:
-                return requestPrepP1;
-            case PREP_P2:
-                return requestPrepP2;
-            case PREP_P3:
-                return requestPrepP3;
-            case PREP_P4:
-                return requestPrepP4;
-            case SHOOT_FROM_P1:
-                return requestShootFromP1;
-            case SHOOT_FROM_P2:
-                return requestShootFromP2;
-            case SHOOT_FROM_P3:
-                return requestShootFromP3;
-            case SHOOT_FROM_P4:
-                return requestShootFromP4;
-            case SHOOT_FROM_POSE:
-                return requestShootFromPose;
-            case INTAKE:
-                return requestIntake;
-            case OUTTAKE:
-                return requestOuttake;
-            case PARK:
-                return requestPark;
-            case SHAKE:
-                return requestShake;
-            default:
-                return null;
-        }
+        return requestIdle;
     }
 
+    public Command restRequest()
+    {
+        return requestRest;
+    }
+
+    public Command intakeRequest()
+    {
+        return requestIntake;
+    }
+
+    public Command outtakeRequest()
+    {
+        return requestOuttake;
+    }
+
+    public Command parkRequest()
+    {
+        return requestPark;
+    }
+
+    public Command shakeRequest()
+    {
+        return requestShake;
+    }
+
+    public Command shootFromPoseRequest()
+    {
+        return requestShootFromPose;
+    }
+
+    public Command shootFromP1Request()
+    {
+        return requestShootFromP1;
+    }
+
+    public Command shootFromP2Request()
+    {
+        return requestShootFromP2;
+    }
+
+    public Command shootFromP3Request()
+    {
+        return requestShootFromP3;
+    }
+
+    public Command shootFromP4Request()
+    {
+        return requestShootFromP4;
+    }
+
+    public Command prepP1Request()
+    {
+        return requestPrepP1;
+    }
+
+    public Command prepP2Request()
+    {
+        return requestPrepP2;
+    }
+
+    public Command prepP3Request()
+    {
+        return requestPrepP3;
+    }
+
+    public Command prepP4Request()
+    {
+        return requestPrepP4;
+    }
 
     /**
      * Delegates intake requests to the IntakeSubsystem.

@@ -9,29 +9,21 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Subsystems.DrivetrainSubsystem;
+import org.firstinspires.ftc.teamcode.Subsystems.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.TheMachineSubsystem;
 import org.firstinspires.ftc.teamcode.Utils.AllStates;
 import org.firstinspires.ftc.teamcode.Utils.Mouth;
-@TeleOp(name = "BLUE-TELEOP")
-public class TeleopBlue extends CommandOpMode {
-    private TheMachineSubsystem m_machine;
-    private DrivetrainSubsystem m_drive;
-    private Mouth mouth;
 
+@TeleOp(name = "TEST_SUBSYSTEM")
+public class TestOpModeForSubsystem extends CommandOpMode {
+
+    private IntakeSubsystem m_intake;
     private GamepadEx gamepadEx1;
     private GamepadEx gamepadEx2;
-
-    public Command initOpCommand;
-
-    public Command periodicOpCommand;
-
     @Override
     public void initialize()
     {
-
-        m_machine = new TheMachineSubsystem();
-        m_drive = new DrivetrainSubsystem();
-        mouth = new Mouth(m_machine,m_drive);
+        m_intake = new IntakeSubsystem();
 
         gamepadEx1 = new GamepadEx(gamepad1);
         gamepadEx2 = new GamepadEx(gamepad2);
@@ -39,23 +31,12 @@ public class TeleopBlue extends CommandOpMode {
         configureBindingsGamepad1();
         configureBindingsGamepad2();
 
-        initOpCommand = new InstantCommand(() -> {
-            m_drive.startTeleopDrive();
-        });
-
-        periodicOpCommand = new RunCommand(() -> {
-            mouth.speak();
-        });
-
-        schedule(
-                initOpCommand.andThen(periodicOpCommand),
-                m_machine.idleRequest());
+        schedule();
     }
 
     public void configureBindingsGamepad1() {
-        m_drive.setTeleopDriveFieldCentric(gamepadEx1);
         gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_STICK_BUTTON)
-                .whenPressed(m_machine.intakeRequest());
+                .whenPressed(m_intake.intakeRequest());
     }
     public void configureBindingsGamepad2() {
 

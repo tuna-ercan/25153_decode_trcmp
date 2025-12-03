@@ -50,7 +50,7 @@ public class TestOpMode extends CommandOpMode {
 
         schedule(
                 initOpCommand.andThen(periodicOpCommand),
-                m_machine.machineRequest(AllStates.MachineStates.IDLE));
+                m_machine.idleRequest());
     }
 
     public void configureBindingsGamepad1() {
