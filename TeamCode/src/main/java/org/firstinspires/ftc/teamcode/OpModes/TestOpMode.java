@@ -56,7 +56,7 @@ public class TestOpMode extends CommandOpMode {
     public void configureBindingsGamepad1() {
         m_drive.setTeleopDriveFieldCentric(gamepadEx1);
         gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_STICK_BUTTON)
-                .whenPressed(m_machine.machineRequest(AllStates.MachineStates.INTAKE));
+                .whenPressed(m_machine.intakeRequest(AllStates.IntakeStates.INTAKE));
     }
     public void configureBindingsGamepad2() {
 
