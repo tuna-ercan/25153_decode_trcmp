@@ -284,8 +284,8 @@ public class ShooterSubsystem extends SubsystemBase {
     private void setMotorPowers(double leftPower, double middlePower, double rightPower)
     {
         leftMotor.setPower(leftPower);
-        rightMotor.setPower(middlePower);
-        middleMotor.setPower(rightPower);
+        middleMotor.setPower(middlePower);
+        rightMotor.setPower(rightPower);
 
         prevLOutput = leftPower;
         prevMOutput = middlePower;

@@ -1,8 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.bylazar.configurables.annotations.Configurable;
 import com.pedropathing.geometry.Pose;
 
 import org.firstinspires.ftc.teamcode.Utils.AllStates;
+
+import java.util.List;
 
 /**
  * Container class to hold global variables and states for the robot.
@@ -17,6 +20,12 @@ public class Container
     public static boolean isBlue = true;
 
     public static boolean isTeleop = true;
+
+    /**
+     * Current shooting combination
+     * Updated by the LimelightHandler.
+     */
+    public static String colorCombination = null;
 
     /**
      * Current pose of the robot on the field.

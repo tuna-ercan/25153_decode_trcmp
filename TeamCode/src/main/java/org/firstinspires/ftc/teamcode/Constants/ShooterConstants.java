@@ -18,11 +18,9 @@ public class ShooterConstants {
     public static String LeftMotorName = "leftShooter";
     @IgnoreConfigurable
     public static String MiddleMotorName = "middleShooter";
-    @IgnoreConfigurable
-    public static DcMotorEx.Direction RightDirection = DcMotorSimple.Direction.FORWARD;
-    @IgnoreConfigurable
-    public static DcMotorEx.Direction MiddleDirection = DcMotorSimple.Direction.REVERSE;
-    @IgnoreConfigurable
+    public static DcMotorEx.Direction RightDirection = DcMotorSimple.Direction.REVERSE;
+    public static DcMotorEx.Direction MiddleDirection = DcMotorSimple.Direction.FORWARD;
+
     public static DcMotorEx.Direction LeftDirection = DcMotorSimple.Direction.FORWARD;
     @IgnoreConfigurable
     public static String HoodServoName = "hoodServo1";
@@ -43,7 +41,7 @@ public class ShooterConstants {
 
     public static double MultiplierLeft = 1;
     public static double MultiplierRight = 1;
-    public static double MultiplierMiddle = 0.965;
+    public static double MultiplierMiddle = 1;
 
     public static double RpmTol = 60;
     public static double HoodTol = 0.0025;

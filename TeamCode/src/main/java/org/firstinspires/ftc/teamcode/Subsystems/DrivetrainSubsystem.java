@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
 
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
@@ -8,6 +7,7 @@ import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.Pose;
 import com.pedropathing.paths.PathBuilder;
 import com.pedropathing.paths.PathChain;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 
 import org.firstinspires.ftc.teamcode.Utils.AllStates.DrivetrainStates;
@@ -16,6 +16,7 @@ import org.firstinspires.ftc.teamcode.Constants.PedroConstants;
 import org.firstinspires.ftc.teamcode.Container;
 import org.firstinspires.ftc.teamcode.Positions.BluePositions;
 import org.firstinspires.ftc.teamcode.Positions.RedPositions;
+import org.firstinspires.ftc.teamcode.Utils.LimelightHandler;
 
 /**
  * Subsystem responsible for the robot's drivetrain.
@@ -34,6 +35,9 @@ public class DrivetrainSubsystem extends SubsystemBase
     private DrivetrainStates currentState;
     private DrivetrainStates lastState;
 
+    public LimelightHandler limelight;
+
+
 
 
     /**
@@ -41,11 +45,13 @@ public class DrivetrainSubsystem extends SubsystemBase
      * Initializes the IMU and the Pedro Pathing Follower.
      * Sets the starting pose based on the alliance color.
      */
-    public DrivetrainSubsystem()
+    public DrivetrainSubsystem(HardwareMap hardwareMap)
     {
         parameters = new IMU.Parameters(DrivetrainConstants.RevHubOrientation);
         imu = hardwareMap.get(IMU.class, DrivetrainConstants.ImuName);
         imu.initialize(parameters);
+
+        limelight = new LimelightHandler(hardwareMap);
 
         currentState = DrivetrainStates.IDLE;
         lastState = DrivetrainStates.IDLE;
@@ -59,6 +65,11 @@ public class DrivetrainSubsystem extends SubsystemBase
     @Override
     public void periodic()
     {
+        follower.update();
+        limelight.updateResult();
+        if (Container.colorCombination==null&&(limelight.getCombination().length() > 1)){
+            Container.colorCombination = limelight.getCombination();
+        }
         // This method will be called once per scheduler run
 
         //Setting the starting pose | Update follower

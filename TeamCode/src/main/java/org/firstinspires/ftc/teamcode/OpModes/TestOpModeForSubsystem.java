@@ -12,10 +12,15 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.bylazar.telemetry.JoinedTelemetry;
 import com.bylazar.telemetry.PanelsTelemetry;
 import com.bylazar.telemetry.TelemetryManager;
+import com.pedropathing.follower.Follower;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.Constants.PedroConstants;
+import org.firstinspires.ftc.teamcode.Constants.ShooterConstants;
+import org.firstinspires.ftc.teamcode.Container;
 import org.firstinspires.ftc.teamcode.Subsystems.DrivetrainSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.IntakeSubsystem;
+import org.firstinspires.ftc.teamcode.Subsystems.ShooterSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.TheMachineSubsystem;
 import org.firstinspires.ftc.teamcode.Utils.AllStates;
 import org.firstinspires.ftc.teamcode.Utils.Mouth;
@@ -26,7 +31,8 @@ public class TestOpModeForSubsystem extends CommandOpMode {
     private JoinedTelemetry joinedTelemetry;
     private CommandScheduler scheduler;
 
-    private IntakeSubsystem m_intake;
+    private ShooterSubsystem m_shoot;
+    private DrivetrainSubsystem m_drive;
     private GamepadEx gamepadEx1;
     private GamepadEx gamepadEx2;
 
@@ -34,10 +40,15 @@ public class TestOpModeForSubsystem extends CommandOpMode {
 
     public Command periodicOpCommand;
 
+    //Follower follower;
+
+
+
     @Override
     public void initialize()
     {
-        m_intake = new IntakeSubsystem(hardwareMap);
+        m_shoot = new ShooterSubsystem(hardwareMap);
+        m_drive = new DrivetrainSubsystem(hardwareMap);
 
         gamepadEx1 = new GamepadEx(gamepad1);
         gamepadEx2 = new GamepadEx(gamepad2);
@@ -46,29 +57,52 @@ public class TestOpModeForSubsystem extends CommandOpMode {
         joinedTelemetry = new JoinedTelemetry(panelsTelemetry, telemetry);
 
         scheduler = CommandScheduler.getInstance();
+        //follower = follower = PedroConstants.createFollower(hardwareMap);
 
-        configureBindingsGamepad1();
-        configureBindingsGamepad2();
+
 
         initOpCommand = new InstantCommand(() -> {
+            Container.colorCombination = null;
+            //follower.setStartingPose(startPose);
+            //updateFollower();
         });
+
 
         periodicOpCommand = new RunCommand(() -> {
             joinedTelemetry.addData("CommandScheduler", scheduler.toString());
-            joinedTelemetry.addData("Intake-State", m_intake.getState());
+            joinedTelemetry.addData("Intake-State", m_shoot.getState());
+            joinedTelemetry.addData("ColorCombination", Container.colorCombination);
+            joinedTelemetry.addData("ShooterRPM", m_shoot.getGoalRPM());
+            joinedTelemetry.addData("ShooterHood", m_shoot.getGoalHood());
+            joinedTelemetry.addData("LeftRPM", m_shoot.getLeftRPM());
+            joinedTelemetry.addData("RightRPM", m_shoot.getRightRPM());
+            joinedTelemetry.addData("MiddleRPM", m_shoot.getMiddleRPM());
             joinedTelemetry.update();
         });
 
-        schedule(periodicOpCommand);
+        schedule(initOpCommand.andThen(periodicOpCommand));
+
+        configureBindingsGamepad1();
+        configureBindingsGamepad2();
     }
 
     public void configureBindingsGamepad1() {
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_STICK_BUTTON)
+        /*gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_STICK_BUTTON)
                 .whenPressed(m_intake.intakeRequest());
         gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_STICK_BUTTON)
                 .whenPressed(m_intake.outtakeRequest());
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT)
-                .whenPressed(m_intake.idleRequest());
+                .whenPressed(m_intake.idleRequest());*/
+        //m_shoot.setTeleopDriveFieldCentric(gamepadEx1);
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_STICK_BUTTON)
+                .whenPressed(m_shoot.shootP1Request());
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_STICK_BUTTON)
+                .whenPressed(m_shoot.reverseRequest());
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT)
+                .whenPressed(m_shoot.zeroRequest());
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT)
+                .whenPressed(m_shoot.restRequest());
+
     }
     public void configureBindingsGamepad2() {
 
