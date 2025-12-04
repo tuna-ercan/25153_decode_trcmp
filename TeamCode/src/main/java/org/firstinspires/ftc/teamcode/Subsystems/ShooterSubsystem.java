@@ -310,7 +310,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public double getMiddleRPM()
     {
-        return (middleMotor.getVelocity() * 60 / 28);
+        return (middleMotor.getVelocity() * 60 / 28 );
     }
     public double getLeftRPM()
     {
@@ -429,7 +429,7 @@ public class ShooterSubsystem extends SubsystemBase {
         setAllMotorPowers(0);
         setGoalRPM(0);
 
-        setHoodPosition(0);
+        setHoodPosition(ShooterConstants.RestHoodPos);
 
         setIsReady(true);
     }

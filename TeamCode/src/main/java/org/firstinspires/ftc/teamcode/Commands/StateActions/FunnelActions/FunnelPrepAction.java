@@ -17,6 +17,7 @@ public class FunnelPrepAction extends CommandBase {
     private long now;
     private long startTime;
     private final long leftDelay;
+    private final long waitForPrep;
     private final long middleDelay;
     private final long rightDelay;
     private final long maxDelay;
@@ -30,10 +31,11 @@ public class FunnelPrepAction extends CommandBase {
         addRequirements(funnelSubsystem);
         this.funnelSubsystem = funnelSubsystem;
 
-        leftDelay = FunnelConstants.PrepDelay;
-        middleDelay = FunnelConstants.PrepDelay*3;
-        rightDelay = FunnelConstants.PrepDelay*2;
-        maxDelay = FunnelConstants.PrepDelay*5;
+        waitForPrep = FunnelConstants.PrepWaitDelay;
+        leftDelay = waitForPrep;
+        middleDelay = waitForPrep +  FunnelConstants.PrepDelay*2;
+        rightDelay = waitForPrep + FunnelConstants.PrepDelay;
+        maxDelay = waitForPrep + FunnelConstants.PrepDelay*5;
     }
 
     @Override
@@ -48,6 +50,7 @@ public class FunnelPrepAction extends CommandBase {
         if (now - startTime <= maxDelay) {
             now = System.currentTimeMillis();
 
+            if (now - startTime <= waitForPrep) funnelSubsystem.setPrePrepServoPrep();
             if (now - startTime >= leftDelay) funnelSubsystem.setLeftServoPrep();
             if (now - startTime >= middleDelay) funnelSubsystem.setMiddleServoPrep();
             if (now - startTime >= rightDelay) funnelSubsystem.setRightServoPrep();

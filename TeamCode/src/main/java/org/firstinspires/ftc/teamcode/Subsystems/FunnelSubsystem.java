@@ -27,10 +27,14 @@ public class FunnelSubsystem extends SubsystemBase
     private final Servo rightServo;
     private final Servo middleServo;
     private final Servo leftServo;
+    private final Servo prePrepServo;
+
 
     private double goalPosLeft;
     private double goalPosMiddle;
     private double goalPosRight;
+    private double goalPosPrePrep;
+
 
     private boolean isReady;
 
@@ -60,9 +64,13 @@ public class FunnelSubsystem extends SubsystemBase
         rightServo = hardwareMap.get(Servo.class, FunnelConstants.ServoR);
         leftServo = hardwareMap.get(Servo.class,FunnelConstants.ServoL);
         middleServo = hardwareMap.get(Servo.class,FunnelConstants.ServoM);
+        prePrepServo = hardwareMap.get(Servo.class,FunnelConstants.ServoP);
+
+
         rightServo.setDirection(FunnelConstants.RightDirection);
         leftServo.setDirection(FunnelConstants.LeftDirection);
         middleServo.setDirection(FunnelConstants.MiddleDirection);
+        prePrepServo.setDirection(FunnelConstants.PrePrepDirection);
 
         currentState = FunnelStates.HOME;
         lastState = FunnelStates.HOME;
@@ -160,13 +168,7 @@ public class FunnelSubsystem extends SubsystemBase
         setRightServo(FunnelConstants.RightHome);
         setMiddleServo(FunnelConstants.MiddleHome);
         setLeftServo(FunnelConstants.LeftHome);
-    }
-
-    public void prepColor()
-    {
-        setRightServo(FunnelConstants.RightPrep);
-        setMiddleServo(FunnelConstants.MiddlePrep);
-        setLeftServo(FunnelConstants.LeftPrep);
+        setPrePrepServo(FunnelConstants.PrePrepHome);
     }
 
     public void setRightServoFeed()
@@ -199,11 +201,16 @@ public class FunnelSubsystem extends SubsystemBase
         setLeftServo(FunnelConstants.LeftPrep);
     }
 
+    public void setPrePrepServoPrep() {
+        setPrePrepServo(FunnelConstants.PrePrepPrep);
+    }
+
     public void shake()
     {
         setRightServo(FunnelConstants.RightHome);
         setMiddleServo(FunnelConstants.MiddleHome);
         setLeftServo(FunnelConstants.LeftHome);
+        setPrePrepServo(FunnelConstants.PrePrepHome);
     }
 
     public void test()
@@ -211,6 +218,7 @@ public class FunnelSubsystem extends SubsystemBase
         setRightServo(FunnelConstants.RightTest);
         setMiddleServo(FunnelConstants.MiddleTest);
         setLeftServo(FunnelConstants.LeftTest);
+        setPrePrepServo(FunnelConstants.PrePrepTest);
     }
 
     public void setGoalPosLeft(double pos)
@@ -224,6 +232,10 @@ public class FunnelSubsystem extends SubsystemBase
     public void setGoalPosRight(double pos)
     {
         goalPosRight = pos;
+    }
+    public void setGoalPosPrePrep(double pos)
+    {
+        goalPosPrePrep = pos;
     }
 
     public boolean checkPosition()
@@ -253,6 +265,13 @@ public class FunnelSubsystem extends SubsystemBase
         rightServo.setPosition(pos);
         setGoalPosRight(pos);
     }
+
+    public void setPrePrepServo(double pos)
+    {
+        prePrepServo.setPosition(pos);
+        setGoalPosPrePrep(pos);
+    }
+
 
     public boolean getPatternEnabled()
     {

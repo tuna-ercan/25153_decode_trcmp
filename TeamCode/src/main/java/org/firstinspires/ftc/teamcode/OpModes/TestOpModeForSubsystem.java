@@ -24,6 +24,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.ShooterSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.TheMachineSubsystem;
 import org.firstinspires.ftc.teamcode.Utils.AllStates;
 import org.firstinspires.ftc.teamcode.Utils.Mouth;
+import org.firstinspires.ftc.teamcode.Utils.PanelsFieldDrawing;
 
 @TeleOp(name = "TEST_SUBSYSTEM")
 public class TestOpModeForSubsystem extends CommandOpMode {
@@ -33,6 +34,9 @@ public class TestOpModeForSubsystem extends CommandOpMode {
 
     private ShooterSubsystem m_shoot;
     private DrivetrainSubsystem m_drive;
+
+    private IntakeSubsystem m_intake;
+
     private GamepadEx gamepadEx1;
     private GamepadEx gamepadEx2;
 
@@ -49,6 +53,8 @@ public class TestOpModeForSubsystem extends CommandOpMode {
     {
         m_shoot = new ShooterSubsystem(hardwareMap);
         m_drive = new DrivetrainSubsystem(hardwareMap);
+        m_intake = new IntakeSubsystem(hardwareMap);
+
 
         gamepadEx1 = new GamepadEx(gamepad1);
         gamepadEx2 = new GamepadEx(gamepad2);
@@ -63,12 +69,14 @@ public class TestOpModeForSubsystem extends CommandOpMode {
 
         initOpCommand = new InstantCommand(() -> {
             Container.colorCombination = null;
-            //follower.setStartingPose(startPose);
+            m_drive.startTeleopDrive();
+            PanelsFieldDrawing.init();
             //updateFollower();
         });
 
 
         periodicOpCommand = new RunCommand(() -> {
+            m_drive.setTeleopDriveFieldCentric(gamepadEx1);
             joinedTelemetry.addData("CommandScheduler", scheduler.toString());
             joinedTelemetry.addData("Intake-State", m_shoot.getState());
             joinedTelemetry.addData("ColorCombination", Container.colorCombination);
@@ -78,6 +86,9 @@ public class TestOpModeForSubsystem extends CommandOpMode {
             joinedTelemetry.addData("RightRPM", m_shoot.getRightRPM());
             joinedTelemetry.addData("MiddleRPM", m_shoot.getMiddleRPM());
             joinedTelemetry.update();
+
+            PanelsFieldDrawing.drawRobot(m_drive.getPose());
+            PanelsFieldDrawing.sendPacket();
         });
 
         schedule(initOpCommand.andThen(periodicOpCommand));
@@ -87,6 +98,7 @@ public class TestOpModeForSubsystem extends CommandOpMode {
     }
 
     public void configureBindingsGamepad1() {
+
         /*gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_STICK_BUTTON)
                 .whenPressed(m_intake.intakeRequest());
         gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_STICK_BUTTON)
@@ -94,14 +106,19 @@ public class TestOpModeForSubsystem extends CommandOpMode {
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT)
                 .whenPressed(m_intake.idleRequest());*/
         //m_shoot.setTeleopDriveFieldCentric(gamepadEx1);
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_STICK_BUTTON)
-                .whenPressed(m_shoot.shootP1Request());
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_STICK_BUTTON)
-                .whenPressed(m_shoot.reverseRequest());
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT)
                 .whenPressed(m_shoot.zeroRequest());
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT)
-                .whenPressed(m_shoot.restRequest());
+                .whenPressed(m_shoot.shootP1Request());
+
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
+                .whenPressed(m_intake.intakeRequest());
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
+                .whileHeld(m_intake.outtakeRequest())
+                .whenReleased(m_intake.idleRequest());
+
+
+
 
     }
     public void configureBindingsGamepad2() {

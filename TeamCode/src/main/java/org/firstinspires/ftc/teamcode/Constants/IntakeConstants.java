@@ -12,7 +12,7 @@ public class IntakeConstants {
     @IgnoreConfigurable
     public static String IntakeMotorName = "intake";
     @IgnoreConfigurable
-    public static DcMotorSimple.Direction IntakeMotorDirection = DcMotorSimple.Direction.FORWARD;
+    public static DcMotorSimple.Direction IntakeMotorDirection = DcMotorSimple.Direction.REVERSE;
     
     /**
      * Power for the intake motor when intaking game elements.
