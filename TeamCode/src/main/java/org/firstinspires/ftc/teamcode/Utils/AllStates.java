@@ -66,18 +66,6 @@ public class AllStates {
     }
 
     /**
-     * States for the Lift subsystem.
-     */
-    public enum LiftStates
-    {
-        HOME,
-        OPEN,
-        SHAKE,
-        TEST
-
-    }
-
-    /**
      * States for the Shooter subsystem.
      */
     public enum ShooterStates

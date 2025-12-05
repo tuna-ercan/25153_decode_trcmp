@@ -19,7 +19,6 @@ public class MachineIntakeAction extends ParallelCommandGroup
         super(
                 theMachineSubsystem.funnelRequest(AllStates.FunnelStates.HOME),
                 theMachineSubsystem.intakeRequest(AllStates.IntakeStates.INTAKE),
-                theMachineSubsystem.liftRequest(AllStates.LiftStates.HOME),
                 theMachineSubsystem.shooterRequest(AllStates.ShooterStates.REST)
         );
 
