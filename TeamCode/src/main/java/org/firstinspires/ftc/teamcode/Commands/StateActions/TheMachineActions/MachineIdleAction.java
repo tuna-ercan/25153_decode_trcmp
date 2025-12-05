@@ -24,7 +24,6 @@ public class MachineIdleAction extends ParallelCommandGroup
         super(
                 theMachineSubsystem.funnelRequest(AllStates.FunnelStates.HOME),
                 theMachineSubsystem.intakeRequest(AllStates.IntakeStates.IDLE),
-                theMachineSubsystem.liftRequest(AllStates.LiftStates.HOME),
                 theMachineSubsystem.shooterRequest(AllStates.ShooterStates.ZERO)
         );
 

@@ -16,7 +16,6 @@ public class MachinePrepP4Action extends ParallelCommandGroup
         super(
                 theMachineSubsystem.funnelRequest(AllStates.FunnelStates.PREP),
                 theMachineSubsystem.intakeRequest(AllStates.IntakeStates.IDLE),
-                theMachineSubsystem.liftRequest(AllStates.LiftStates.HOME),
                 theMachineSubsystem.shooterRequest(AllStates.ShooterStates.SHOOT_P4)
         );
 

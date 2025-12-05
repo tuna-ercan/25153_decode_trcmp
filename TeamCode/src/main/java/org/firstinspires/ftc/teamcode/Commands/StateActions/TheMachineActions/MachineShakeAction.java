@@ -16,7 +16,6 @@ public class MachineShakeAction extends ParallelCommandGroup
         super(
                 theMachineSubsystem.funnelRequest(AllStates.FunnelStates.SHAKE),
                 theMachineSubsystem.intakeRequest(AllStates.IntakeStates.SHAKE),
-                theMachineSubsystem.liftRequest(AllStates.LiftStates.SHAKE),
                 theMachineSubsystem.shooterRequest(AllStates.ShooterStates.SHAKE)
         );
 

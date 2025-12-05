@@ -16,7 +16,6 @@ public class MachineParkAction extends ParallelCommandGroup
         super(
                 theMachineSubsystem.funnelRequest(AllStates.FunnelStates.HOME),
                 theMachineSubsystem.intakeRequest(AllStates.IntakeStates.IDLE),
-                theMachineSubsystem.liftRequest(AllStates.LiftStates.OPEN),
                 theMachineSubsystem.shooterRequest(AllStates.ShooterStates.ZERO)
         );
 
