@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Utils;
 
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Subsystems.DrivetrainSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.FunnelSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.IntakeSubsystem;
@@ -27,7 +28,7 @@ public class Mouth {
 
     private final CommandScheduler scheduler;
 
-    public Mouth(TheMachineSubsystem machineSubsystem, DrivetrainSubsystem drivetrainSubsystem)
+    public Mouth(TheMachineSubsystem machineSubsystem, DrivetrainSubsystem drivetrainSubsystem, Telemetry telemetry)
     {
         this.machineSubsystem = machineSubsystem;
         this.drivetrainSubsystem = drivetrainSubsystem;

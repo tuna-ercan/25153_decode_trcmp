@@ -12,7 +12,6 @@ import org.firstinspires.ftc.teamcode.Subsystems.IntakeSubsystem;
 public class IntakeOuttakeAction extends CommandBase {
 
     private final IntakeSubsystem intakeSubsystem;
-    private boolean isFinished = false;
 
     /**
      * Constructor for IntakeOuttakeAction.
@@ -31,11 +30,16 @@ public class IntakeOuttakeAction extends CommandBase {
 
     @Override
     public void execute() {
-        if(!(intakeSubsystem.getState() == AllStates.IntakeStates.OUTTAKE)) isFinished = true;
+        
+    }
+
+    private boolean checkFinish()
+    {
+        return intakeSubsystem.getState() != AllStates.IntakeStates.OUTTAKE;
     }
 
     @Override
     public boolean isFinished() {
-        return isFinished;
+        return checkFinish();
     }
 }

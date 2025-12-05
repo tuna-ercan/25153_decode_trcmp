@@ -84,17 +84,6 @@ public class ShooterSubsystem extends SubsystemBase {
     private ShooterStates currentState;
     private ShooterStates lastState;
 
-    private final Command requestZero;
-    private final Command requestRest;
-    private final Command requestShootP1;
-    private final Command requestShootP2;
-    private final Command requestShootP3;
-    private final Command requestShootP4;
-    private final Command requestShootFromPose;
-    private final Command requestReverse;
-    private final Command requestShake;
-    private final Command requestTest;
-
     private final Command zeroAction;
     private final Command restAction;
     private final Command shootP1Action;
@@ -164,17 +153,6 @@ public class ShooterSubsystem extends SubsystemBase {
         currentState = ShooterStates.ZERO;
         lastState = ShooterStates.ZERO;
 
-        requestZero = new ShooterZeroRequest(this);
-        requestRest = new ShooterRestRequest(this);
-        requestShootP1 = new ShooterShootP1Request(this);
-        requestShootP2 = new ShooterShootP2Request(this);
-        requestShootP3 = new ShooterShootP3Request(this);
-        requestShootP4 = new ShooterShootP4Request(this);
-        requestShootFromPose = new ShooterShootFromPoseRequest(this);
-        requestReverse = new ShooterReverseRequest(this);
-        requestShake = new ShooterShakeRequest(this);
-        requestTest = new ShooterTestRequest(this);
-
         zeroAction = new ShooterZeroAction(this);
         restAction = new ShooterRestAction(this);
         shootP1Action = new ShooterShootP1Action(this);
@@ -231,6 +209,14 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     /**
+     * Requests a change in the shooter state.
+     * @param requestedState The new state to request.
+     */
+    public void requestState(ShooterStates requestedState) {
+        setState(requestedState);
+    }
+
+    /**
      * Sets the shooter state and updates the last state.
      * @param requestedState The new state.
      */
@@ -247,16 +233,16 @@ public class ShooterSubsystem extends SubsystemBase {
         return currentState;
     }
 
-    public Command zeroRequest() { return requestZero; }
-    public Command restRequest() { return requestRest; }
-    public Command shootP1Request() { return requestShootP1; }
-    public Command shootP2Request() { return requestShootP2; }
-    public Command shootP3Request() { return requestShootP3; }
-    public Command shootP4Request() { return requestShootP4; }
-    public Command shootFromPoseRequest() { return requestShootFromPose; }
-    public Command reverseRequest() { return requestReverse; }
-    public Command shakeRequest() { return requestShake; }
-    public Command testRequest() { return requestTest; }
+    public Command zeroRequest() { return new ShooterZeroRequest(this); }
+    public Command restRequest() { return new ShooterRestRequest(this); }
+    public Command shootP1Request() { return new ShooterShootP1Request(this); }
+    public Command shootP2Request() { return new ShooterShootP2Request(this); }
+    public Command shootP3Request() { return new ShooterShootP3Request(this); }
+    public Command shootP4Request() { return new ShooterShootP4Request(this); }
+    public Command shootFromPoseRequest() { return new ShooterShootFromPoseRequest(this); }
+    public Command reverseRequest() { return new ShooterReverseRequest(this); }
+    public Command shakeRequest() { return new ShooterShakeRequest(this); }
+    public Command testRequest() { return new ShooterTestRequest(this); }
 
     public void setCurrentState(ShooterStates currentState) {
         this.currentState = currentState;

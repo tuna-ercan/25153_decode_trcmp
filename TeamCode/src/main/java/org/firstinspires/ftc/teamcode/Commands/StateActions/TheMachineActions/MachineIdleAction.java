@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Commands.StateActions.TheMachineActions;
 
+import com.arcrobotics.ftclib.command.CommandBase;
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 
 import org.firstinspires.ftc.teamcode.Utils.AllStates;
@@ -13,7 +14,6 @@ public class MachineIdleAction extends ParallelCommandGroup
 {
 
     private final TheMachineSubsystem theMachineSubsystem;
-    private boolean isFinished = false;
 
     /**
      * Constructor for MachineIdleAction.
@@ -21,14 +21,15 @@ public class MachineIdleAction extends ParallelCommandGroup
      */
     public MachineIdleAction(TheMachineSubsystem theMachineSubsystem)
     {
-        super(
+
+        this.theMachineSubsystem = theMachineSubsystem;
+        addRequirements(theMachineSubsystem);
+
+        addCommands(
                 theMachineSubsystem.funnelRequest(AllStates.FunnelStates.HOME),
                 theMachineSubsystem.intakeRequest(AllStates.IntakeStates.IDLE),
                 theMachineSubsystem.shooterRequest(AllStates.ShooterStates.ZERO)
         );
-
-        this.theMachineSubsystem = theMachineSubsystem;
-        addRequirements(theMachineSubsystem);
     }
 
     /**
@@ -46,7 +47,12 @@ public class MachineIdleAction extends ParallelCommandGroup
     @Override
     public void execute()
     {
-        if(!(theMachineSubsystem.getState() == AllStates.MachineStates.IDLE)) isFinished = true;
+        
+    }
+
+    private boolean checkFinish()
+    {
+        return theMachineSubsystem.getState() != AllStates.MachineStates.IDLE;
     }
 
     /**
@@ -57,6 +63,6 @@ public class MachineIdleAction extends ParallelCommandGroup
     @Override
     public boolean isFinished()
     {
-        return isFinished;
+        return checkFinish();
     }
 }

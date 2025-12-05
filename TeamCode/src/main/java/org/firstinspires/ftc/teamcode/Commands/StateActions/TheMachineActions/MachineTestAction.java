@@ -9,7 +9,6 @@ public class MachineTestAction extends CommandBase
 {
 
     private final TheMachineSubsystem machineSubsystem;
-    private boolean isFinished = false;
 
     public MachineTestAction(TheMachineSubsystem machineSubsystem)
     {
@@ -26,12 +25,17 @@ public class MachineTestAction extends CommandBase
     @Override
     public void execute()
     {
-        if(!(machineSubsystem.getState() == AllStates.MachineStates.TEST)) isFinished = true;
+        
+    }
+
+    private boolean checkFinish()
+    {
+        return machineSubsystem.getState() != AllStates.MachineStates.TEST;
     }
 
     @Override
     public boolean isFinished()
     {
-        return isFinished;
+        return checkFinish();
     }
 }

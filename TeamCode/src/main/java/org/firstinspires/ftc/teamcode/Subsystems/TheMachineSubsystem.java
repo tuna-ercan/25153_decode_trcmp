@@ -54,24 +54,6 @@ public class TheMachineSubsystem extends SubsystemBase {
     private MachineStates currentState;
     private MachineStates lastState;
 
-    // Command requests (triggers for state changes)
-    private final Command requestIdle;
-    private final Command requestRest;
-    private final Command requestPrepP1;
-    private final Command requestPrepP2;
-    private final Command requestPrepP3;
-    private final Command requestPrepP4;
-    private final Command requestShootFromP1;
-    private final Command requestShootFromP2;
-    private final Command requestShootFromP3;
-    private final Command requestShootFromP4;
-    private final Command requestShootFromPose;
-    private final Command requestIntake;
-    private final Command requestOuttake;
-    private final Command requestPark;
-    private final Command requestShake;
-
-
     // Actions corresponding to states
     private final Command idleAction;
     private final Command restAction;
@@ -101,23 +83,6 @@ public class TheMachineSubsystem extends SubsystemBase {
 
         currentState = MachineStates.IDLE;
         lastState = MachineStates.IDLE;
-
-        // Initialize requests
-        requestIdle = new MachineIdleRequest(this);
-        requestRest = new MachineRestRequest(this);
-        requestPrepP1 = new MachinePrepP1Request(this);
-        requestPrepP2 = new MachinePrepP2Request(this);
-        requestPrepP3 = new MachinePrepP3Request(this);
-        requestPrepP4 = new MachinePrepP4Request(this);
-        requestShootFromP1 = new MachineShootFromP1Request(this);
-        requestShootFromP2 = new MachineShootFromP2Request(this);
-        requestShootFromP3 = new MachineShootFromP3Request(this);
-        requestShootFromP4 = new MachineShootFromP4Request(this);
-        requestShootFromPose = new MachineShootFromPoseRequest(this);
-        requestIntake = new MachineIntakeRequest(this);
-        requestOuttake = new MachineOuttakeRequest(this);
-        requestPark = new MachineParkRequest(this);
-        requestShake = new MachineShakeRequest(this);
 
         // Initialize actions
         idleAction = new MachineIdleAction(this);
@@ -206,6 +171,14 @@ public class TheMachineSubsystem extends SubsystemBase {
     }
 
     /**
+     * Requests a change in the machine state.
+     * @param requestedState The new state to request.
+     */
+    public void requestState(MachineStates requestedState) {
+        setState(requestedState);
+    }
+
+    /**
      * Sets the current state of the machine.
      * Updates the last state before changing.
      * @param requestedState The new state to set.
@@ -236,77 +209,77 @@ public class TheMachineSubsystem extends SubsystemBase {
 
     public Command idleRequest()
     {
-        return requestIdle;
+        return new MachineIdleRequest(this);
     }
 
     public Command restRequest()
     {
-        return requestRest;
+        return new MachineRestRequest(this);
     }
 
     public Command intakeRequest()
     {
-        return requestIntake;
+        return new MachineIntakeRequest(this);
     }
 
     public Command outtakeRequest()
     {
-        return requestOuttake;
+        return new MachineOuttakeRequest(this);
     }
 
     public Command parkRequest()
     {
-        return requestPark;
+        return new MachineParkRequest(this);
     }
 
     public Command shakeRequest()
     {
-        return requestShake;
+        return new MachineShakeRequest(this);
     }
 
     public Command shootFromPoseRequest()
     {
-        return requestShootFromPose;
+        return new MachineShootFromPoseRequest(this);
     }
 
     public Command shootFromP1Request()
     {
-        return requestShootFromP1;
+        return new MachineShootFromP1Request(this);
     }
 
     public Command shootFromP2Request()
     {
-        return requestShootFromP2;
+        return new MachineShootFromP2Request(this);
     }
 
     public Command shootFromP3Request()
     {
-        return requestShootFromP3;
+        return new MachineShootFromP3Request(this);
     }
 
     public Command shootFromP4Request()
     {
-        return requestShootFromP4;
+        return new MachineShootFromP4Request(this);
     }
 
     public Command prepP1Request()
     {
-        return requestPrepP1;
+        return new MachinePrepP1Request(this);
     }
 
     public Command prepP2Request()
     {
-        return requestPrepP2;
+        return new MachinePrepP2Request(this);
     }
 
     public Command prepP3Request()
     {
-        return requestPrepP3;
+        return new MachinePrepP3Request(this);
     }
 
     public Command prepP4Request()
     {
-        return requestPrepP4;
+        return new MachinePrepP4Request(this);
     }
 
     /**

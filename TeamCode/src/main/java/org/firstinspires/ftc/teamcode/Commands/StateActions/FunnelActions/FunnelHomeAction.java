@@ -11,7 +11,6 @@ import org.firstinspires.ftc.teamcode.Subsystems.FunnelSubsystem;
 public class FunnelHomeAction extends CommandBase {
 
     private final FunnelSubsystem funnelSubsystem;
-    private boolean isFinished = false;
 
     /**
      * Constructor for FunnelHomeAction.
@@ -28,13 +27,13 @@ public class FunnelHomeAction extends CommandBase {
         funnelSubsystem.home();
     }
 
-    @Override
-    public void execute() {
-        if(!(funnelSubsystem.getState() == AllStates.FunnelStates.HOME)) isFinished = true;
+    private boolean checkFinish()
+    {
+        return funnelSubsystem.getState() != AllStates.FunnelStates.HOME;
     }
 
     @Override
     public boolean isFinished() {
-        return isFinished;
+        return checkFinish();
     }
 }

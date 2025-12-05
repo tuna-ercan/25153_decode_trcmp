@@ -13,7 +13,6 @@ import org.firstinspires.ftc.teamcode.Subsystems.FunnelSubsystem;
 public class FunnelPrepAction extends CommandBase {
 
     private final FunnelSubsystem funnelSubsystem;
-    private boolean isFinished = false;
     private long now;
     private long startTime;
     private final long leftDelay;
@@ -55,12 +54,15 @@ public class FunnelPrepAction extends CommandBase {
             if (now - startTime >= middleDelay) funnelSubsystem.setMiddleServoPrep();
             if (now - startTime >= rightDelay) funnelSubsystem.setRightServoPrep();
         }
+    }
 
-        if(!(funnelSubsystem.getState() == AllStates.FunnelStates.PREP)) isFinished = true;
+    private boolean checkFinish()
+    {
+        return funnelSubsystem.getState() != AllStates.FunnelStates.PREP;
     }
 
     @Override
     public boolean isFinished() {
-        return isFinished;
+        return checkFinish();
     }
 }

@@ -14,7 +14,6 @@ public class FunnelFeedAction extends CommandBase
 {
 
     private final FunnelSubsystem funnelSubsystem;
-    private boolean isFinished = false;
     private long now;
     private long startTime;
     private final long leftDelay;
@@ -44,7 +43,8 @@ public class FunnelFeedAction extends CommandBase
     @Override
     public void initialize()
     {
-
+        startTime = System.currentTimeMillis();
+        now = startTime;
     }
 
     /**
@@ -54,23 +54,18 @@ public class FunnelFeedAction extends CommandBase
     @Override
     public void execute()
     {
-        if (!isTimeVariablesSet)
-        {
-            startTime = System.currentTimeMillis();
-            now = startTime;
-            isTimeVariablesSet = true;
-        }
-
+        now = System.currentTimeMillis();
         if (now - startTime <= maxDelay)
         {
-            now = System.currentTimeMillis();
-
             if (now - startTime >= leftDelay) funnelSubsystem.setLeftServoFeed();
             if (now - startTime >= middleDelay) funnelSubsystem.setMiddleServoFeed();
             if (now - startTime >= rightDelay) funnelSubsystem.setRightServoFeed();
         }
+    }
 
-        if(!(funnelSubsystem.getState() == AllStates.FunnelStates.FEED)) isFinished = true;
+    private boolean checkFinish()
+    {
+        return funnelSubsystem.getState() != AllStates.FunnelStates.FEED;
     }
 
     /**
@@ -80,7 +75,7 @@ public class FunnelFeedAction extends CommandBase
     @Override
     public boolean isFinished()
     {
-        return isFinished;
+        return checkFinish();
     }
 
     @Override

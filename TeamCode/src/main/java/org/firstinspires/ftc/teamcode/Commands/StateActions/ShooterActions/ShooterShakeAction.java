@@ -7,7 +7,6 @@ import org.firstinspires.ftc.teamcode.Subsystems.ShooterSubsystem;
 
 public class ShooterShakeAction extends CommandBase {
     private final ShooterSubsystem shooterSubsystem;
-    private boolean isFinished = false;
 
     public ShooterShakeAction(ShooterSubsystem shooterSubsystem) {
         addRequirements(shooterSubsystem);
@@ -22,11 +21,15 @@ public class ShooterShakeAction extends CommandBase {
     @Override
     public void execute() {
         shooterSubsystem.shake();
-        if(!(shooterSubsystem.getState() == AllStates.ShooterStates.SHAKE)) isFinished = true;
+    }
+
+    private boolean checkFinish()
+    {
+        return shooterSubsystem.getState() != AllStates.ShooterStates.SHAKE;
     }
 
     @Override
     public boolean isFinished() {
-        return isFinished;
+        return checkFinish();
     }
 }

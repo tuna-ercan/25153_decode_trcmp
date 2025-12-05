@@ -9,7 +9,6 @@ public class ShooterTestAction extends CommandBase
 {
 
     private final ShooterSubsystem shooterSubsystem;
-    private boolean isFinished = false;
 
     public ShooterTestAction(ShooterSubsystem shooterSubsystem)
     {
@@ -27,12 +26,16 @@ public class ShooterTestAction extends CommandBase
     public void execute()
     {
         shooterSubsystem.test();
-        if(!(shooterSubsystem.getState() == AllStates.ShooterStates.TEST)) isFinished = true;
+    }
+
+    private boolean checkFinish()
+    {
+        return shooterSubsystem.getState() != AllStates.ShooterStates.TEST;
     }
 
     @Override
     public boolean isFinished()
     {
-        return isFinished;
+        return checkFinish();
     }
 }

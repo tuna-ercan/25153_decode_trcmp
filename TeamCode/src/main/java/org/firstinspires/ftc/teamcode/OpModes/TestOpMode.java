@@ -29,10 +29,9 @@ public class TestOpMode extends CommandOpMode {
     @Override
     public void initialize()
     {
-
-        m_machine = new TheMachineSubsystem(hardwareMap);
         m_drive = new DrivetrainSubsystem(hardwareMap);
-        mouth = new Mouth(m_machine,m_drive);
+        m_machine = new TheMachineSubsystem(hardwareMap);
+        mouth = new Mouth(m_machine,m_drive, telemetry);
 
         gamepadEx1 = new GamepadEx(gamepad1);
         gamepadEx2 = new GamepadEx(gamepad2);
@@ -45,6 +44,7 @@ public class TestOpMode extends CommandOpMode {
         });
 
         periodicOpCommand = new RunCommand(() -> {
+            m_drive.setTeleopDriveFieldCentric(gamepadEx1);
             mouth.speak();
         });
 
@@ -54,9 +54,31 @@ public class TestOpMode extends CommandOpMode {
     }
 
     public void configureBindingsGamepad1() {
-        m_drive.setTeleopDriveFieldCentric(gamepadEx1);
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_STICK_BUTTON)
-                .whenPressed(m_machine.intakeRequest(AllStates.IntakeStates.INTAKE));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT)
+                .whenPressed(m_machine.intakeRequest(AllStates.IntakeStates.TEST));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT)
+                .whenPressed(m_machine.shooterRequest(AllStates.ShooterStates.TEST));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP)
+                .whenPressed(m_machine.funnelRequest(AllStates.FunnelStates.TEST));
+
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.X)
+                .whenHeld(m_machine.prepP1Request());
+
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.Y)
+                .whenHeld(m_machine.idleRequest());
+
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.A)
+                .whenHeld(m_machine.shootFromP1Request());
+
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.B)
+                .whenHeld(m_machine.intakeRequest());
+
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
+                .whenHeld(
+                        m_drive.driveToShootP1().alongWith(m_machine.prepP1Request())
+                                .andThen(m_machine.shootFromP1Request())
+                ).whenReleased(m_machine.idleRequest());
+
     }
     public void configureBindingsGamepad2() {
 

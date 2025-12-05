@@ -11,7 +11,6 @@ import org.firstinspires.ftc.teamcode.Subsystems.ShooterSubsystem;
  */
 public class ShooterRestAction extends CommandBase {
     private final ShooterSubsystem shooterSubsystem;
-    private boolean isFinished = false;
 
     /**
      * Constructor for ShooterRestAction.
@@ -30,11 +29,15 @@ public class ShooterRestAction extends CommandBase {
     @Override
     public void execute() {
         shooterSubsystem.rest();
-        if(!(shooterSubsystem.getState() == AllStates.ShooterStates.REST)) isFinished = true;
+    }
+
+    private boolean checkFinish()
+    {
+        return shooterSubsystem.getState() != AllStates.ShooterStates.REST;
     }
 
     @Override
     public boolean isFinished() {
-        return isFinished;
+        return checkFinish();
     }
 }

@@ -7,7 +7,6 @@ import org.firstinspires.ftc.teamcode.Subsystems.ShooterSubsystem;
 
 public class ShooterShootFromPoseAction extends CommandBase {
     private final ShooterSubsystem shooterSubsystem;
-    private boolean isFinished = false;
 
     public ShooterShootFromPoseAction(ShooterSubsystem shooterSubsystem) {
         addRequirements(shooterSubsystem);
@@ -22,11 +21,15 @@ public class ShooterShootFromPoseAction extends CommandBase {
     @Override
     public void execute() {
         shooterSubsystem.shootFromPose();
-        if(!(shooterSubsystem.getState() == AllStates.ShooterStates.SHOOT_FROM_POSE)) isFinished = true;
+    }
+
+    private boolean checkFinish()
+    {
+        return shooterSubsystem.getState() != AllStates.ShooterStates.SHOOT_FROM_POSE;
     }
 
     @Override
     public boolean isFinished() {
-        return isFinished;
+        return checkFinish();
     }
 }

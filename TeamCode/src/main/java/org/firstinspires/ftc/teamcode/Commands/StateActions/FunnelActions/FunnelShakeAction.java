@@ -11,7 +11,6 @@ import org.firstinspires.ftc.teamcode.Subsystems.FunnelSubsystem;
 public class FunnelShakeAction extends CommandBase {
 
     private final FunnelSubsystem funnelSubsystem;
-    private boolean isFinished = false;
 
     /**
      * Constructor for FunnelShakeAction.
@@ -30,11 +29,16 @@ public class FunnelShakeAction extends CommandBase {
 
     @Override
     public void execute() {
-        if(!(funnelSubsystem.getState() == AllStates.FunnelStates.SHAKE)) isFinished = true;
+        
+    }
+
+    private boolean checkFinish()
+    {
+        return funnelSubsystem.getState() != AllStates.FunnelStates.SHAKE;
     }
 
     @Override
     public boolean isFinished() {
-        return isFinished;
+        return checkFinish();
     }
 }

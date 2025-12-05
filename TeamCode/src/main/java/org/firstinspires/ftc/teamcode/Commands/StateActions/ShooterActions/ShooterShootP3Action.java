@@ -7,7 +7,6 @@ import org.firstinspires.ftc.teamcode.Subsystems.ShooterSubsystem;
 
 public class ShooterShootP3Action extends CommandBase {
     private final ShooterSubsystem shooterSubsystem;
-    private boolean isFinished = false;
 
     public ShooterShootP3Action(ShooterSubsystem shooterSubsystem) {
         addRequirements(shooterSubsystem);
@@ -22,11 +21,15 @@ public class ShooterShootP3Action extends CommandBase {
     @Override
     public void execute() {
         shooterSubsystem.shootP3();
-        if(!(shooterSubsystem.getState() == AllStates.ShooterStates.SHOOT_P3)) isFinished = true;
+    }
+
+    private boolean checkFinish()
+    {
+        return shooterSubsystem.getState() != AllStates.ShooterStates.SHOOT_P3;
     }
 
     @Override
     public boolean isFinished() {
-        return isFinished;
+        return checkFinish();
     }
 }

@@ -7,7 +7,6 @@ import org.firstinspires.ftc.teamcode.Subsystems.ShooterSubsystem;
 
 public class ShooterZeroAction extends CommandBase {
     private final ShooterSubsystem shooterSubsystem;
-    private boolean isFinished = false;
 
     public ShooterZeroAction(ShooterSubsystem shooterSubsystem) {
         addRequirements(shooterSubsystem);
@@ -22,11 +21,15 @@ public class ShooterZeroAction extends CommandBase {
     @Override
     public void execute() {
         shooterSubsystem.zero();
-        if(!(shooterSubsystem.getState() == AllStates.ShooterStates.ZERO)) isFinished = true;
+    }
+
+    private boolean checkFinish()
+    {
+        return shooterSubsystem.getState() != AllStates.ShooterStates.ZERO;
     }
 
     @Override
     public boolean isFinished() {
-        return isFinished;
+        return checkFinish();
     }
 }

@@ -7,7 +7,6 @@ import org.firstinspires.ftc.teamcode.Subsystems.ShooterSubsystem;
 
 public class ShooterReverseAction extends CommandBase {
     private final ShooterSubsystem shooterSubsystem;
-    private boolean isFinished = false;
 
     public ShooterReverseAction(ShooterSubsystem shooterSubsystem) {
         addRequirements(shooterSubsystem);
@@ -22,11 +21,15 @@ public class ShooterReverseAction extends CommandBase {
     @Override
     public void execute() {
         shooterSubsystem.reverse();
-        if(!(shooterSubsystem.getState() == AllStates.ShooterStates.REVERSE)) isFinished = true;
+    }
+
+    private boolean checkFinish()
+    {
+        return shooterSubsystem.getState() != AllStates.ShooterStates.REVERSE;
     }
 
     @Override
     public boolean isFinished() {
-        return isFinished;
+        return checkFinish();
     }
 }

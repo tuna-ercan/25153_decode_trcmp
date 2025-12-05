@@ -1,24 +1,17 @@
 package org.firstinspires.ftc.teamcode.Commands.StateActions.TheMachineActions;
 
-import com.arcrobotics.ftclib.command.ParallelCommandGroup;
+import com.arcrobotics.ftclib.command.CommandBase;
 
 import org.firstinspires.ftc.teamcode.Utils.AllStates;
 import org.firstinspires.ftc.teamcode.Subsystems.TheMachineSubsystem;
 
-public class MachineOuttakeAction extends ParallelCommandGroup
+public class MachineOuttakeAction extends CommandBase
 {
 
     private final TheMachineSubsystem theMachineSubsystem;
-    private boolean isFinished = false;
 
     public MachineOuttakeAction(TheMachineSubsystem theMachineSubsystem)
     {
-        super(
-                theMachineSubsystem.funnelRequest(AllStates.FunnelStates.HOME),
-                theMachineSubsystem.intakeRequest(AllStates.IntakeStates.OUTTAKE),
-                theMachineSubsystem.shooterRequest(AllStates.ShooterStates.REST)
-        );
-
         this.theMachineSubsystem = theMachineSubsystem;
         addRequirements(theMachineSubsystem);
     }
@@ -26,18 +19,25 @@ public class MachineOuttakeAction extends ParallelCommandGroup
     @Override
     public void initialize()
     {
-        isFinished = false;
+        theMachineSubsystem.funnelRequest(AllStates.FunnelStates.HOME).schedule();
+        theMachineSubsystem.intakeRequest(AllStates.IntakeStates.OUTTAKE).schedule();
+        theMachineSubsystem.shooterRequest(AllStates.ShooterStates.REST).schedule();
     }
 
     @Override
     public void execute()
     {
-        if(theMachineSubsystem.getState() != AllStates.MachineStates.OUTTAKE) isFinished = true;
+        
+    }
+
+    private boolean checkFinish()
+    {
+        return theMachineSubsystem.getState() != AllStates.MachineStates.OUTTAKE;
     }
 
     @Override
     public boolean isFinished()
     {
-        return isFinished;
+        return checkFinish();
     }
 }

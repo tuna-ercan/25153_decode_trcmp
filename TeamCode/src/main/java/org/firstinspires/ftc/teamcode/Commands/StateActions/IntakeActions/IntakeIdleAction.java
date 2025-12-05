@@ -13,7 +13,6 @@ public class IntakeIdleAction extends CommandBase
 {
 
     private final IntakeSubsystem intakeSubsystem;
-    private boolean isFinished = false;
 
     /**
      * Constructor for IntakeIdleAction.
@@ -41,7 +40,12 @@ public class IntakeIdleAction extends CommandBase
     @Override
     public void execute()
     {
-        if(!(intakeSubsystem.getState() == AllStates.IntakeStates.IDLE)) isFinished = true;
+        
+    }
+
+    private boolean checkFinish()
+    {
+        return intakeSubsystem.getState() != AllStates.IntakeStates.IDLE;
     }
 
     /**
@@ -52,6 +56,6 @@ public class IntakeIdleAction extends CommandBase
     @Override
     public boolean isFinished()
     {
-        return isFinished;
+        return checkFinish();
     }
 }

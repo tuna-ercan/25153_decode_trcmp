@@ -30,12 +30,6 @@ public class IntakeSubsystem extends SubsystemBase {
     private IntakeStates currentState;
     private IntakeStates lastState;
 
-    private final Command requestIdle;
-    private final Command requestIntake;
-    private final Command requestOuttake;
-    private final Command requestShake;
-    private final Command requestTest;
-
     private final Command idleAction;
     private final Command intakeAction;
     private final Command outtakeAction;
@@ -52,12 +46,6 @@ public class IntakeSubsystem extends SubsystemBase {
 
         currentState = IntakeStates.IDLE;
         lastState = IntakeStates.IDLE;
-
-        requestIdle = new IntakeIdleRequest(this);
-        requestIntake = new IntakeIntakeRequest(this);
-        requestOuttake = new IntakeOuttakeRequest(this);
-        requestShake = new IntakeShakeRequest(this);
-        requestTest = new IntakeTestRequest(this);
 
         idleAction = new IntakeIdleAction(this);
         intakeAction = new IntakeIntakeAction(this);
@@ -95,6 +83,13 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
 
+    /**
+     * Requests a change in the intake state.
+     * @param requestedState The new state to request.
+     */
+    public void requestState(IntakeStates requestedState) {
+        setState(requestedState);
+    }
 
     /**
      * Sets the intake state and updates the last state.
@@ -122,23 +117,23 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public Command idleRequest() {
-        return requestIdle;
+        return new IntakeIdleRequest(this);
     }
 
     public Command intakeRequest() {
-        return requestIntake;
+        return new IntakeIntakeRequest(this);
     }
 
     public Command outtakeRequest() {
-        return requestOuttake;
+        return new IntakeOuttakeRequest(this);
     }
 
     public Command shakeRequest() {
-        return requestShake;
+        return new IntakeShakeRequest(this);
     }
 
     public Command testRequest() {
-        return requestTest;
+        return new IntakeTestRequest(this);
     }
 
     public void stop() {

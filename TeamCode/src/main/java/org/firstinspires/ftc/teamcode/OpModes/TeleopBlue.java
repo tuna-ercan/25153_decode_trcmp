@@ -31,7 +31,7 @@ public class TeleopBlue extends CommandOpMode {
 
         m_machine = new TheMachineSubsystem(hardwareMap);
         m_drive = new DrivetrainSubsystem(hardwareMap);
-        mouth = new Mouth(m_machine,m_drive);
+        mouth = new Mouth(m_machine,m_drive, telemetry);
 
         gamepadEx1 = new GamepadEx(gamepad1);
         gamepadEx2 = new GamepadEx(gamepad2);

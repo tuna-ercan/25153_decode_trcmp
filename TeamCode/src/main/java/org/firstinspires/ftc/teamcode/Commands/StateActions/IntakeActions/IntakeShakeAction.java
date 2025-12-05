@@ -11,7 +11,6 @@ import org.firstinspires.ftc.teamcode.Subsystems.IntakeSubsystem;
 public class IntakeShakeAction extends CommandBase {
 
     private final IntakeSubsystem intakeSubsystem;
-    private boolean isFinished = false;
 
     /**
      * Constructor for IntakeShakeAction.
@@ -30,11 +29,16 @@ public class IntakeShakeAction extends CommandBase {
 
     @Override
     public void execute() {
-        if(!(intakeSubsystem.getState() == AllStates.IntakeStates.SHAKE)) isFinished = true;
+        
+    }
+
+    private boolean checkFinish()
+    {
+        return intakeSubsystem.getState() != AllStates.IntakeStates.SHAKE;
     }
 
     @Override
     public boolean isFinished() {
-        return isFinished;
+        return checkFinish();
     }
 }

@@ -39,7 +39,7 @@ public class FunnelConstants {
 
     public static double RightPreFeedPrep = 0.44, MiddlePreFeedPrep = 0.465, LeftPreFeedPrep = 0.465;
 
-    public static double RightHome = 0.67, MiddleHome= 0.67, LeftHome = 0.67, PrePrepHome = 0.41;
+    public static double RightHome = 0.67, MiddleHome= 0.67, LeftHome = 0.67, PrePrepHome = 0.5;
     //public static double RightTest = 0.41, MiddleTest = 0.41, LeftTest = 0.41, PrePrepTest = 0.41;
     public static double RightTest = 0.5, MiddleTest = 0.5, LeftTest = 0.5, PrePrepTest = 0.5;
     public static double Tol = 0.001;

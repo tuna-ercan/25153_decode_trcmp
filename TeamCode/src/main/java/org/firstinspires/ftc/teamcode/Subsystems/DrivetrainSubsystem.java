@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
 
+import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.pedropathing.follower.Follower;
@@ -10,6 +11,7 @@ import com.pedropathing.paths.PathChain;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 
+import org.firstinspires.ftc.teamcode.Commands.DrivetrainCommands.DriveToShootP1;
 import org.firstinspires.ftc.teamcode.Utils.AllStates.DrivetrainStates;
 import org.firstinspires.ftc.teamcode.Constants.DrivetrainConstants;
 import org.firstinspires.ftc.teamcode.Constants.PedroConstants;
@@ -37,7 +39,7 @@ public class DrivetrainSubsystem extends SubsystemBase
 
     public LimelightHandler limelight;
 
-
+    private Command driveToShootP1;
 
 
     /**
@@ -60,6 +62,7 @@ public class DrivetrainSubsystem extends SubsystemBase
         if(Container.isBlue) startPose = BluePositions.START_POSE;
         else startPose = RedPositions.START_POSE;
 
+        driveToShootP1 = new DriveToShootP1(this);
     }
 
     @Override
@@ -270,5 +273,10 @@ public class DrivetrainSubsystem extends SubsystemBase
     public boolean isBusy()
     {
         return isBusy;
+    }
+
+    public Command driveToShootP1()
+    {
+        return driveToShootP1;
     }
 }

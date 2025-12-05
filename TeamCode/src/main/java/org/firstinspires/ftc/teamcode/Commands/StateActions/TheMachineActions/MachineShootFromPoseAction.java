@@ -1,24 +1,17 @@
 package org.firstinspires.ftc.teamcode.Commands.StateActions.TheMachineActions;
 
-import com.arcrobotics.ftclib.command.ParallelCommandGroup;
+import com.arcrobotics.ftclib.command.CommandBase;
 
 import org.firstinspires.ftc.teamcode.Utils.AllStates;
 import org.firstinspires.ftc.teamcode.Subsystems.TheMachineSubsystem;
 
-public class MachineShootFromPoseAction extends ParallelCommandGroup
+public class MachineShootFromPoseAction extends CommandBase
 {
 
     private final TheMachineSubsystem theMachineSubsystem;
-    private boolean isFinished = false;
 
     public MachineShootFromPoseAction(TheMachineSubsystem theMachineSubsystem)
     {
-        super(
-                theMachineSubsystem.funnelRequest(AllStates.FunnelStates.FEED),
-                theMachineSubsystem.intakeRequest(AllStates.IntakeStates.IDLE),
-                theMachineSubsystem.shooterRequest(AllStates.ShooterStates.SHOOT_FROM_POSE)
-        );
-
         this.theMachineSubsystem = theMachineSubsystem;
         addRequirements(theMachineSubsystem);
     }
@@ -26,18 +19,26 @@ public class MachineShootFromPoseAction extends ParallelCommandGroup
     @Override
     public void initialize()
     {
-        isFinished = false;
+        theMachineSubsystem.intakeRequest(AllStates.IntakeStates.IDLE).schedule();
+        theMachineSubsystem.shooterRequest(AllStates.ShooterStates.SHOOT_FROM_POSE)
+                .andThen(theMachineSubsystem.waitForShooterToBeReady())
+                .andThen(theMachineSubsystem.funnelRequest(AllStates.FunnelStates.FEED))
+                .schedule();
     }
 
     @Override
     public void execute()
     {
-        if(theMachineSubsystem.getState() != AllStates.MachineStates.SHOOT_FROM_POSE) isFinished = true;
+    }
+
+    private boolean checkFinish()
+    {
+        return theMachineSubsystem.getState() != AllStates.MachineStates.SHOOT_FROM_POSE;
     }
 
     @Override
     public boolean isFinished()
     {
-        return isFinished;
+        return checkFinish();
     }
 }

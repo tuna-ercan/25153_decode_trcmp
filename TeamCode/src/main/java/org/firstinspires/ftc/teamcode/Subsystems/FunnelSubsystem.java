@@ -43,12 +43,6 @@ public class FunnelSubsystem extends SubsystemBase
     private FunnelStates currentState;
     private FunnelStates lastState;
 
-    private final Command requestHome;
-    private final Command requestPrep;
-    private final Command requestFeed;
-    private final Command requestShake;
-    private final Command requestTest;
-
     private final Command homeAction;
     private final Command prepAction;
     private final Command feedAction;
@@ -74,12 +68,6 @@ public class FunnelSubsystem extends SubsystemBase
 
         currentState = FunnelStates.HOME;
         lastState = FunnelStates.HOME;
-
-        requestHome = new FunnelHomeRequest(this);
-        requestPrep = new FunnelPrepRequest(this);
-        requestFeed = new FunnelFeedRequest(this);
-        requestShake = new FunnelShakeRequest(this);
-        requestTest = new FunnelTestRequest(this);
 
         homeAction = new FunnelHomeAction(this);
         prepAction = new FunnelPrepAction(this);
@@ -157,11 +145,11 @@ public class FunnelSubsystem extends SubsystemBase
         return lastState;
     }
 
-    public Command homeRequest() { return requestHome; }
-    public Command prepRequest() { return requestPrep; }
-    public Command feedRequest() { return requestFeed; }
-    public Command shakeRequest() { return requestShake; }
-    public Command testRequest() { return requestTest; }
+    public Command homeRequest() { return new FunnelHomeRequest(this); }
+    public Command prepRequest() { return new FunnelPrepRequest(this); }
+    public Command feedRequest() { return new FunnelFeedRequest(this); }
+    public Command shakeRequest() { return new FunnelShakeRequest(this); }
+    public Command testRequest() { return new FunnelTestRequest(this); }
 
     public void home()
     {
