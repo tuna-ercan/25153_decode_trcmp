@@ -5,7 +5,6 @@ import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.tel
 import org.firstinspires.ftc.teamcode.Subsystems.DrivetrainSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.FunnelSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.IntakeSubsystem;
-import org.firstinspires.ftc.teamcode.Subsystems.LiftSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.ShooterSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.TheMachineSubsystem;
 
@@ -22,7 +21,6 @@ public class Mouth {
     private final IntakeSubsystem intakeSubsystem;
     private final FunnelSubsystem funnelSubsystem;
     private final ShooterSubsystem shooterSubsystem;
-    private final LiftSubsystem liftSubsystem;
 
     private final TelemetryManager.TelemetryWrapper panelsTelemetry;
     private final JoinedTelemetry joinedTelemetry;
@@ -36,7 +34,6 @@ public class Mouth {
         this.intakeSubsystem = machineSubsystem.getIntakeSubsystem();
         this.funnelSubsystem = machineSubsystem.getFunnelSubsystem();
         this.shooterSubsystem = machineSubsystem.getShooterSubsystem();
-        this.liftSubsystem = machineSubsystem.getLiftSubsystem();
 
         PanelsFieldDrawing.init();
 
@@ -76,11 +73,6 @@ public class Mouth {
         joinedTelemetry.addData("Funnel-State", funnelSubsystem.getState());
 
         panelsTelemetry.addData("Funnel-IsReady", funnelSubsystem.isReady());
-
-        // Lift
-        joinedTelemetry.addData("Lift-State", liftSubsystem.getState());
-
-        panelsTelemetry.addData("Lift-IsReady", liftSubsystem.isReady());
 
         // Machine
         joinedTelemetry.addData("Machine-State", machineSubsystem.getState());

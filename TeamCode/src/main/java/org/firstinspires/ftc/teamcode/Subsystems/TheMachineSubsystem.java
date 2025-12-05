@@ -41,14 +41,13 @@ import org.firstinspires.ftc.teamcode.Constants.TheMachineConstants;
 /**
  * TheMachineSubsystem acts as a supervisor or a "super-subsystem" that coordinates
  * the high-level states and interactions between the individual subsystems:
- * Intake, Funnel, Lift, and Shooter.
+ * Intake, Funnel, and Shooter.
  */
 public class TheMachineSubsystem extends SubsystemBase {
 
     // Subsystems managed by The Machine
     private final IntakeSubsystem m_intake;
     private final FunnelSubsystem m_funnel;
-    private final LiftSubsystem m_lift;
     private final ShooterSubsystem m_shooter;
     
     // State tracking
@@ -98,7 +97,6 @@ public class TheMachineSubsystem extends SubsystemBase {
     {
         m_intake = new IntakeSubsystem(hardwareMap);
         m_funnel = new FunnelSubsystem(hardwareMap);
-        m_lift = new LiftSubsystem(hardwareMap);
         m_shooter = new ShooterSubsystem(hardwareMap);
 
         currentState = MachineStates.IDLE;
@@ -356,26 +354,6 @@ public class TheMachineSubsystem extends SubsystemBase {
     }
 
     /**
-     * Delegates lift requests to the LiftSubsystem.
-     * @param requestedState The lift state.
-     * @return The command for the requested lift state.
-     */
-    public Command liftRequest(AllStates.LiftStates requestedState)
-    {
-        switch (requestedState)
-        {
-            case HOME:
-                return m_lift.homeRequest();
-            case OPEN:
-                return m_lift.openRequest();
-            case SHAKE:
-                return m_lift.shakeRequest();
-            default:
-                return null;
-        }
-    }
-
-    /**
      * Delegates shooter requests to the ShooterSubsystem.
      * @param requestedState The shooter state.
      * @return The command for the requested shooter state.
@@ -417,11 +395,6 @@ public class TheMachineSubsystem extends SubsystemBase {
         return m_funnel;
     }
 
-    public LiftSubsystem getLiftSubsystem()
-    {
-        return m_lift;
-    }
-
     public ShooterSubsystem getShooterSubsystem()
     {
         return m_shooter;
@@ -438,11 +411,11 @@ public class TheMachineSubsystem extends SubsystemBase {
 
     /**
      * Checks if all relevant subsystems are ready.
-     * @return true if shooter, funnel, and lift are ready.
+     * @return true if shooter and funnel are ready.
      */
     public boolean isReady()
     {
-        return m_shooter.isReady() && m_funnel.isReady() && m_lift.isReady();
+        return m_shooter.isReady() && m_funnel.isReady();
     }
 
 }
