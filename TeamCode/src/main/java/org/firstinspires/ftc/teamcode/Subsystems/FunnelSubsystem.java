@@ -178,7 +178,7 @@ public class FunnelSubsystem extends SubsystemBase
 
     public void setMiddleServoFeed()
     {
-        setLeftServo(FunnelConstants.MiddleFeed);
+        setMiddleServo(FunnelConstants.MiddleFeed);
     }
 
     public void setLeftServoFeed()

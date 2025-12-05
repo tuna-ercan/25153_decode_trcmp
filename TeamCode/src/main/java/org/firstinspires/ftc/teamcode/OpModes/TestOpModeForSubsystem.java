@@ -19,6 +19,7 @@ import org.firstinspires.ftc.teamcode.Constants.PedroConstants;
 import org.firstinspires.ftc.teamcode.Constants.ShooterConstants;
 import org.firstinspires.ftc.teamcode.Container;
 import org.firstinspires.ftc.teamcode.Subsystems.DrivetrainSubsystem;
+import org.firstinspires.ftc.teamcode.Subsystems.FunnelSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.ShooterSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.TheMachineSubsystem;
@@ -37,6 +38,8 @@ public class TestOpModeForSubsystem extends CommandOpMode {
 
     private IntakeSubsystem m_intake;
 
+    private FunnelSubsystem m_funnel;
+
     private GamepadEx gamepadEx1;
     private GamepadEx gamepadEx2;
 
@@ -54,6 +57,7 @@ public class TestOpModeForSubsystem extends CommandOpMode {
         m_shoot = new ShooterSubsystem(hardwareMap);
         m_drive = new DrivetrainSubsystem(hardwareMap);
         m_intake = new IntakeSubsystem(hardwareMap);
+        m_funnel = new FunnelSubsystem(hardwareMap);
 
 
         gamepadEx1 = new GamepadEx(gamepad1);
@@ -71,7 +75,6 @@ public class TestOpModeForSubsystem extends CommandOpMode {
             Container.colorCombination = null;
             m_drive.startTeleopDrive();
             PanelsFieldDrawing.init();
-            //updateFollower();
         });
 
 
@@ -79,11 +82,13 @@ public class TestOpModeForSubsystem extends CommandOpMode {
             m_drive.setTeleopDriveFieldCentric(gamepadEx1);
             joinedTelemetry.addData("CommandScheduler", scheduler.toString());
             joinedTelemetry.addData("Intake-State", m_shoot.getState());
+            joinedTelemetry.addData("Funnel-State", m_funnel.getState());
             joinedTelemetry.addData("ColorCombination", Container.colorCombination);
             joinedTelemetry.addData("ShooterRPM", m_shoot.getGoalRPM());
             joinedTelemetry.addData("ShooterHood", m_shoot.getGoalHood());
             joinedTelemetry.addData("LeftRPM", m_shoot.getLeftRPM());
             joinedTelemetry.addData("RightRPM", m_shoot.getRightRPM());
+            joinedTelemetry.addData("MiddleRPM", m_shoot.getMiddleRPM());
             joinedTelemetry.addData("MiddleRPM", m_shoot.getMiddleRPM());
             joinedTelemetry.update();
 
@@ -110,6 +115,13 @@ public class TestOpModeForSubsystem extends CommandOpMode {
                 .whenPressed(m_shoot.zeroRequest());
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT)
                 .whenPressed(m_shoot.shootP1Request());
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.X)
+                .whenPressed(m_funnel.homeRequest());
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.Y)
+                .whenPressed(m_funnel.feedRequest());
+        /*gamepadEx1.getGamepadButton(GamepadKeys.Button.B)
+                .whenPressed(m_funnel.feedRequest());*/
+
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
                 .whenPressed(m_intake.intakeRequest());

@@ -56,7 +56,6 @@ public class FunnelPrepAction extends CommandBase {
             if (now - startTime >= rightDelay) funnelSubsystem.setRightServoPrep();
         }
 
-
         if(!(funnelSubsystem.getState() == AllStates.FunnelStates.PREP)) isFinished = true;
     }
 

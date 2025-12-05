@@ -21,6 +21,7 @@ public class FunnelFeedAction extends CommandBase
     private final long middleDelay;
     private final long rightDelay;
     private final long maxDelay;
+    private boolean isTimeVariablesSet = false;
 
     /**
      * Constructor for FunnelFeedAction.
@@ -43,8 +44,6 @@ public class FunnelFeedAction extends CommandBase
     @Override
     public void initialize()
     {
-        startTime = System.currentTimeMillis();
-        now = startTime;
 
     }
 
@@ -55,6 +54,13 @@ public class FunnelFeedAction extends CommandBase
     @Override
     public void execute()
     {
+        if (!isTimeVariablesSet)
+        {
+            startTime = System.currentTimeMillis();
+            now = startTime;
+            isTimeVariablesSet = true;
+        }
+
         if (now - startTime <= maxDelay)
         {
             now = System.currentTimeMillis();
@@ -63,7 +69,6 @@ public class FunnelFeedAction extends CommandBase
             if (now - startTime >= middleDelay) funnelSubsystem.setMiddleServoFeed();
             if (now - startTime >= rightDelay) funnelSubsystem.setRightServoFeed();
         }
-
 
         if(!(funnelSubsystem.getState() == AllStates.FunnelStates.FEED)) isFinished = true;
     }
@@ -76,5 +81,10 @@ public class FunnelFeedAction extends CommandBase
     public boolean isFinished()
     {
         return isFinished;
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        isTimeVariablesSet = false;
     }
 }
