@@ -27,18 +27,24 @@ public class FunnelTestAction extends CommandBase
     @Override
     public void initialize()
     {
+        funnelSubsystem.test();
+
+    }
+
+    private boolean checkFinish()
+    {
+        return funnelSubsystem.getState() != AllStates.FunnelStates.TEST;
     }
 
     @Override
     public void execute()
     {
         funnelSubsystem.test();
-        if(!(funnelSubsystem.getState() == AllStates.FunnelStates.TEST)) isFinished = true;
     }
 
     @Override
     public boolean isFinished()
     {
-        return isFinished;
+        return checkFinish();
     }
 }

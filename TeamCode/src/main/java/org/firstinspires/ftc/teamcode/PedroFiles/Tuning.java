@@ -882,7 +882,7 @@ class HeadingTuner extends OpMode {
  * @version 1.0, 3/12/2024
  */
 class DriveTuner extends OpMode {
-    public static double DISTANCE = 40;
+    public static double DISTANCE = 80;
     private boolean forward = true;
 
     private PathChain forwards;
@@ -936,19 +936,20 @@ class DriveTuner extends OpMode {
         follower.update();
         draw();
 
-        if (!follower.isBusy()) {
+        /*if (!follower.isBusy()) {
             if (forward) {
                 forward = false;
-                follower.followPath(backwards);
+                follower.followPath(forwards);
             } else {
                 forward = true;
                 follower.followPath(forwards);
             }
-        }
+        }*/
 
         telemetryM.debug("Driving forward?: " + forward);
         telemetryM.addData("Zero Line", 0);
-        telemetryM.addData("Error", follower.errorCalculator.getDriveErrors()[1]);
+        telemetryM.addData("ErrorTest", follower.errorCalculator.getDriveErrors()[1]);
+        telemetryM.addData("Error", (DISTANCE+72)-follower.getPose().getX());
         telemetryM.update(telemetry);
     }
 }

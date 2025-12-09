@@ -19,6 +19,7 @@ import org.firstinspires.ftc.teamcode.Commands.StateActions.TheMachineActions.Ma
 import org.firstinspires.ftc.teamcode.Commands.StateActions.TheMachineActions.MachineShootFromP3Action;
 import org.firstinspires.ftc.teamcode.Commands.StateActions.TheMachineActions.MachineShootFromP4Action;
 import org.firstinspires.ftc.teamcode.Commands.StateActions.TheMachineActions.MachineShootFromPoseAction;
+import org.firstinspires.ftc.teamcode.Commands.StateActions.TheMachineActions.MachineTestAction;
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.TheMachineRequests.MachineIdleRequest;
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.TheMachineRequests.MachineIntakeRequest;
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.TheMachineRequests.MachineOuttakeRequest;
@@ -34,6 +35,7 @@ import org.firstinspires.ftc.teamcode.Commands.StateRequests.TheMachineRequests.
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.TheMachineRequests.MachineShootFromP3Request;
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.TheMachineRequests.MachineShootFromP4Request;
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.TheMachineRequests.MachineShootFromPoseRequest;
+import org.firstinspires.ftc.teamcode.Commands.StateRequests.TheMachineRequests.MachineTestRequest;
 import org.firstinspires.ftc.teamcode.Utils.AllStates;
 import org.firstinspires.ftc.teamcode.Utils.AllStates.MachineStates;
 import org.firstinspires.ftc.teamcode.Constants.TheMachineConstants;
@@ -71,6 +73,8 @@ public class TheMachineSubsystem extends SubsystemBase {
     private final Command parkAction;
     private final Command shakeAction;
 
+    private final Command testAction;
+
 
     /**
      * Constructor initializes all subsystems and their corresponding commands.
@@ -100,7 +104,7 @@ public class TheMachineSubsystem extends SubsystemBase {
         outtakeAction = new MachineOuttakeAction(this);
         parkAction = new MachineParkAction(this);
         shakeAction = new MachineShakeAction(this);
-
+        testAction = new MachineTestAction(this);
 
     }
 
@@ -166,7 +170,9 @@ public class TheMachineSubsystem extends SubsystemBase {
             case SHAKE:
                 if(!shakeAction.isScheduled()) shakeAction.schedule();
                 break;
-
+            case TEST:
+                if(!testAction.isScheduled()) testAction.schedule();
+                break;
         }
     }
 
@@ -221,6 +227,8 @@ public class TheMachineSubsystem extends SubsystemBase {
     {
         return new MachineIntakeRequest(this);
     }
+    public Command testRequest() { return new MachineTestRequest(this); }
+
 
     public Command outtakeRequest()
     {
@@ -299,6 +307,8 @@ public class TheMachineSubsystem extends SubsystemBase {
                 return  m_intake.outtakeRequest();
             case SHAKE:
                 return  m_intake.shakeRequest();
+            case TEST:
+                return  m_intake.testRequest();
             default:
                 return null;
         }
@@ -320,6 +330,8 @@ public class TheMachineSubsystem extends SubsystemBase {
                 return m_funnel.feedRequest();
             case SHAKE:
                 return m_funnel.shakeRequest();
+            case TEST:
+                return m_funnel.testRequest();
             default:
                 return null;
 
@@ -353,6 +365,8 @@ public class TheMachineSubsystem extends SubsystemBase {
                 return m_shooter.reverseRequest();
             case SHAKE:
                 return m_shooter.shakeRequest();
+            case TEST:
+                return m_shooter.testRequest();
             default:
                 return null;
         }

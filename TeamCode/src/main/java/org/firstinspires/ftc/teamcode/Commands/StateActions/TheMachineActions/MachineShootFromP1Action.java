@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode.Commands.StateActions.TheMachineActions;
 
-import com.arcrobotics.ftclib.command.CommandBase;
+import com.arcrobotics.ftclib.command.ParallelCommandGroup;
+import com.arcrobotics.ftclib.command.SequentialCommandGroup;
+import com.arcrobotics.ftclib.command.WaitCommand;
 
 import org.firstinspires.ftc.teamcode.Utils.AllStates;
 import org.firstinspires.ftc.teamcode.Subsystems.TheMachineSubsystem;
 
-public class MachineShootFromP1Action extends CommandBase
+public class MachineShootFromP1Action extends ParallelCommandGroup
 {
 
     private final TheMachineSubsystem theMachineSubsystem;
@@ -14,22 +16,28 @@ public class MachineShootFromP1Action extends CommandBase
     {
         this.theMachineSubsystem = theMachineSubsystem;
         addRequirements(theMachineSubsystem);
+
+        addCommands(
+                theMachineSubsystem.intakeRequest(AllStates.IntakeStates.IDLE),
+                theMachineSubsystem.funnelRequest(AllStates.FunnelStates.PREP),
+                new SequentialCommandGroup(
+                        theMachineSubsystem.shooterRequest(AllStates.ShooterStates.SHOOT_P1),
+                        theMachineSubsystem.waitForShooterToBeReady(),
+                        theMachineSubsystem.funnelRequest(AllStates.FunnelStates.FEED)
+                )
+        );
     }
 
     @Override
     public void initialize()
     {
-        theMachineSubsystem.intakeRequest(AllStates.IntakeStates.IDLE).schedule();
-        theMachineSubsystem.shooterRequest(AllStates.ShooterStates.SHOOT_P1)
-                .andThen(theMachineSubsystem.waitForShooterToBeReady())
-                .andThen(theMachineSubsystem.funnelRequest(AllStates.FunnelStates.FEED))
-                .schedule();
+        super.initialize();
     }
 
     @Override
     public void execute()
     {
-        
+        super.execute();
     }
 
     private boolean checkFinish()

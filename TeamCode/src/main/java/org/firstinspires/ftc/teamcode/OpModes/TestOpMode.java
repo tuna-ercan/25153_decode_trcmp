@@ -4,6 +4,7 @@ import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.RunCommand;
+import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -26,6 +27,8 @@ public class TestOpMode extends CommandOpMode {
 
     public Command periodicOpCommand;
 
+    public Command x;
+
     @Override
     public void initialize()
     {
@@ -41,6 +44,7 @@ public class TestOpMode extends CommandOpMode {
 
         initOpCommand = new InstantCommand(() -> {
             m_drive.startTeleopDrive();
+            m_machine.funnelRequest(AllStates.FunnelStates.HOME);
         });
 
         periodicOpCommand = new RunCommand(() -> {
@@ -49,17 +53,19 @@ public class TestOpMode extends CommandOpMode {
         });
 
         schedule(
-                initOpCommand.andThen(periodicOpCommand),
-                m_machine.idleRequest());
+                initOpCommand.andThen(periodicOpCommand)
+                //m_machine.idleRequest());
+        //m_drive.driveToShootP1().
+         );
     }
 
     public void configureBindingsGamepad1() {
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT)
-                .whenPressed(m_machine.intakeRequest(AllStates.IntakeStates.TEST));
+                .whenHeld(m_machine.intakeRequest(AllStates.IntakeStates.TEST));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT)
-                .whenPressed(m_machine.shooterRequest(AllStates.ShooterStates.TEST));
+                .whenHeld(m_machine.shooterRequest(AllStates.ShooterStates.TEST));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP)
-                .whenPressed(m_machine.funnelRequest(AllStates.FunnelStates.TEST));
+                .whenHeld(m_machine.funnelRequest(AllStates.FunnelStates.TEST));
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.X)
                 .whenHeld(m_machine.prepP1Request());
@@ -75,9 +81,17 @@ public class TestOpMode extends CommandOpMode {
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
                 .whenHeld(
-                        m_drive.driveToShootP1().alongWith(m_machine.prepP1Request())
-                                .andThen(m_machine.shootFromP1Request())
+                        m_drive.driveToShootP1().alongWith(m_machine.prepP4Request())
+                                .andThen(m_machine.shootFromP4Request())
                 ).whenReleased(m_machine.idleRequest());
+
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
+                .whenHeld(m_machine.testRequest())
+                .whenReleased(m_machine.idleRequest()); ;
+
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_STICK_BUTTON)
+                .whenHeld(m_machine.outtakeRequest())
+                .whenReleased(m_machine.idleRequest()); ;
 
     }
     public void configureBindingsGamepad2() {

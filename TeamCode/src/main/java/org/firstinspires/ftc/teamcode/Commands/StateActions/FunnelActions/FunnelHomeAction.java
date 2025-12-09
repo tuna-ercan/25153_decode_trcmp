@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Commands.StateActions.FunnelActions;
 
 import com.arcrobotics.ftclib.command.CommandBase;
 
+import org.firstinspires.ftc.teamcode.Constants.FunnelConstants;
 import org.firstinspires.ftc.teamcode.Utils.AllStates;
 import org.firstinspires.ftc.teamcode.Subsystems.FunnelSubsystem;
 
@@ -11,6 +12,9 @@ import org.firstinspires.ftc.teamcode.Subsystems.FunnelSubsystem;
 public class FunnelHomeAction extends CommandBase {
 
     private final FunnelSubsystem funnelSubsystem;
+    private long now;
+    private long startTime;
+    private final long waitForPrep;
 
     /**
      * Constructor for FunnelHomeAction.
@@ -20,11 +24,20 @@ public class FunnelHomeAction extends CommandBase {
     {
         addRequirements(funnelSubsystem);
         this.funnelSubsystem = funnelSubsystem;
+
+        waitForPrep = FunnelConstants.PrepWaitDelay;
     }
 
     @Override
     public void initialize() {
-        funnelSubsystem.home();
+        startTime = System.currentTimeMillis();
+        now = startTime;
+    }
+
+    @Override
+    public void execute() {
+        if (now - startTime <= waitForPrep) funnelSubsystem.prep();
+        else funnelSubsystem.home();
     }
 
     private boolean checkFinish()

@@ -49,9 +49,8 @@ public class ShooterConstants {
     public static double RestRPM = 2000;
     public static double RestHoodPos = 0.1;
 
-    public static double TestRpm = 2000;
-    public static double TestHoodPos = 0.0275;
-
+    public static double TestRpm = 2650;
+    public static double TestHoodPos = 0.1;
     public static double CalculateRpmFromDistance(double distance)
     {
         return 2750 + (distance-164)/57.5 * 250; // 2600'ü değiştir, oto şut konumuna göre

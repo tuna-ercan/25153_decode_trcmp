@@ -30,6 +30,7 @@ public class MachineIdleAction extends ParallelCommandGroup
                 theMachineSubsystem.intakeRequest(AllStates.IntakeStates.IDLE),
                 theMachineSubsystem.shooterRequest(AllStates.ShooterStates.ZERO)
         );
+
     }
 
     /**

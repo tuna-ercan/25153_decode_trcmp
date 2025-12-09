@@ -46,13 +46,11 @@ public class FunnelPrepAction extends CommandBase {
 
     @Override
     public void execute() {
-        if (now - startTime <= maxDelay) {
-            now = System.currentTimeMillis();
-
-            if (now - startTime <= waitForPrep) funnelSubsystem.setPrePrepServoPrep();
-            if (now - startTime >= leftDelay) funnelSubsystem.setLeftServoPrep();
-            if (now - startTime >= middleDelay) funnelSubsystem.setMiddleServoPrep();
-            if (now - startTime >= rightDelay) funnelSubsystem.setRightServoPrep();
+        now = System.currentTimeMillis();
+        if (now - startTime <= maxDelay)
+        {
+            if (now - startTime <= waitForPrep) funnelSubsystem.prep();
+            if (now - startTime > waitForPrep) funnelSubsystem.setPrePrepServoPrep();
         }
     }
 

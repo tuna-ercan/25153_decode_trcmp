@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
 
 import androidx.annotation.NonNull;
 
@@ -44,6 +43,13 @@ import org.firstinspires.ftc.teamcode.Utils.ShooterPIDController;
 /**
  * Subsystem responsible for the shooter mechanism.
  * Controls flywheel motors and hood servo to shoot rings/game elements.
+ *
+ *
+ * P1: closest
+ * P2: up against wall position
+ * P3: near the line corner
+ * P4: furthest
+ *
  */
 public class ShooterSubsystem extends SubsystemBase {
 
@@ -95,8 +101,6 @@ public class ShooterSubsystem extends SubsystemBase {
     private final Command shakeAction;
     private final Command testAction;
 
-    private final Command waitForReady;
-
     /**
      * Creates a new ShooterSubsystem.
      * Initializes motors, servos, PIDs, and calculates preset values.
@@ -132,14 +136,16 @@ public class ShooterSubsystem extends SubsystemBase {
         p3Pose = (Container.isBlue ? BluePositions.SHOOT_P3 : RedPositions.SHOOT_P3);
         p4Pose = (Container.isBlue ? BluePositions.SHOOT_P4 : RedPositions.SHOOT_P4);
 
-        p1Rpm = calculateRpmFromPose(p1Pose);
+        //p1Rpm = calculateRpmFromPose(p1Pose);
+        p1Rpm = ShooterConstants.TestRpm;
         p2Rpm = calculateRpmFromPose(p2Pose);
         p3Rpm = calculateRpmFromPose(p3Pose);
         p4Rpm = calculateRpmFromPose(p4Pose);
 
         restRpm = ShooterConstants.RestRPM;
 
-        p1Hood = calculateHoodFromPose(p1Pose);
+        //p1Hood = calculateHoodFromPose(p1Pose);
+        p1Hood = ShooterConstants.TestHoodPos;
         p2Hood = calculateHoodFromPose(p2Pose);
         p3Hood = calculateHoodFromPose(p3Pose);
         p4Hood = calculateHoodFromPose(p4Pose);
@@ -147,8 +153,6 @@ public class ShooterSubsystem extends SubsystemBase {
         prevROutput = 0;
         prevMOutput = 0;
         prevLOutput = 0;
-
-        waitForReady = new WaitUntilCommand(this::isReady);
 
         currentState = ShooterStates.ZERO;
         lastState = ShooterStates.ZERO;
@@ -415,7 +419,7 @@ public class ShooterSubsystem extends SubsystemBase {
         setAllMotorPowers(0);
         setGoalRPM(0);
 
-        setHoodPosition(ShooterConstants.RestHoodPos);
+        setHoodPosition(ShooterConstants.TestHoodPos);
 
         setIsReady(true);
     }
@@ -491,6 +495,6 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public Command waitForReady()
     {
-        return waitForReady;
+        return new WaitUntilCommand(this::isReady);
     }
 }

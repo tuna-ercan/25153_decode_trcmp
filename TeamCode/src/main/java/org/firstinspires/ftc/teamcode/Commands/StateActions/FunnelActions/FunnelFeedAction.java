@@ -20,8 +20,6 @@ public class FunnelFeedAction extends CommandBase
     private final long middleDelay;
     private final long rightDelay;
     private final long maxDelay;
-    private boolean isTimeVariablesSet = false;
-
     /**
      * Constructor for FunnelFeedAction.
      * @param funnelSubsystem The funnel subsystem instance.
@@ -76,10 +74,5 @@ public class FunnelFeedAction extends CommandBase
     public boolean isFinished()
     {
         return checkFinish();
-    }
-
-    @Override
-    public void end(boolean interrupted) {
-        isTimeVariablesSet = false;
     }
 }

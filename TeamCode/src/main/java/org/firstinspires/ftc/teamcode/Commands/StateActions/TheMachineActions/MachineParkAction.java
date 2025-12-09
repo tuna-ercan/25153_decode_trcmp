@@ -1,11 +1,11 @@
 package org.firstinspires.ftc.teamcode.Commands.StateActions.TheMachineActions;
 
-import com.arcrobotics.ftclib.command.CommandBase;
+import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 
 import org.firstinspires.ftc.teamcode.Utils.AllStates;
 import org.firstinspires.ftc.teamcode.Subsystems.TheMachineSubsystem;
 
-public class MachineParkAction extends CommandBase
+public class MachineParkAction extends ParallelCommandGroup
 {
 
     private final TheMachineSubsystem theMachineSubsystem;
@@ -14,19 +14,24 @@ public class MachineParkAction extends CommandBase
     {
         this.theMachineSubsystem = theMachineSubsystem;
         addRequirements(theMachineSubsystem);
+
+        addCommands(
+                theMachineSubsystem.funnelRequest(AllStates.FunnelStates.HOME),
+                theMachineSubsystem.intakeRequest(AllStates.IntakeStates.IDLE),
+                theMachineSubsystem.shooterRequest(AllStates.ShooterStates.ZERO)
+        );
     }
 
     @Override
     public void initialize()
     {
-        theMachineSubsystem.funnelRequest(AllStates.FunnelStates.HOME).schedule();
-        theMachineSubsystem.intakeRequest(AllStates.IntakeStates.IDLE).schedule();
-        theMachineSubsystem.shooterRequest(AllStates.ShooterStates.ZERO).schedule();
+        super.initialize();
     }
 
     @Override
     public void execute()
     {
+        super.execute();
     }
 
     private boolean checkFinish()
