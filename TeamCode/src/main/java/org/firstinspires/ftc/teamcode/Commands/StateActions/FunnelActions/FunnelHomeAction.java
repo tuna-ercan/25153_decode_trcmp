@@ -36,7 +36,8 @@ public class FunnelHomeAction extends CommandBase {
 
     @Override
     public void execute() {
-        if (now - startTime <= waitForPrep) funnelSubsystem.prep();
+        now = System.currentTimeMillis();
+        if (now - startTime <= waitForPrep) funnelSubsystem.prepTop();
         else funnelSubsystem.home();
     }
 

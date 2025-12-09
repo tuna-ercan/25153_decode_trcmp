@@ -159,7 +159,7 @@ public class FunnelSubsystem extends SubsystemBase
         setPrePrepServo(FunnelConstants.PrePrepHome);
     }
 
-    public void prep()
+    public void prepTop()
     {
         setRightServo(FunnelConstants.RightPrep);
         setMiddleServo(FunnelConstants.MiddlePrep);

@@ -12,6 +12,9 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 
 import org.firstinspires.ftc.teamcode.Commands.DrivetrainCommands.DriveToShootP1;
+import org.firstinspires.ftc.teamcode.Commands.DrivetrainCommands.DriveToShootP2;
+import org.firstinspires.ftc.teamcode.Commands.DrivetrainCommands.DriveToShootP3;
+import org.firstinspires.ftc.teamcode.Commands.DrivetrainCommands.DriveToShootP4;
 import org.firstinspires.ftc.teamcode.Utils.AllStates.DrivetrainStates;
 import org.firstinspires.ftc.teamcode.Constants.DrivetrainConstants;
 import org.firstinspires.ftc.teamcode.Constants.PedroConstants;
@@ -37,9 +40,13 @@ public class DrivetrainSubsystem extends SubsystemBase
     private DrivetrainStates currentState;
     private DrivetrainStates lastState;
 
-    public LimelightHandler limelight;
+    public final LimelightHandler limelight;
 
-    private Command driveToShootP1;
+    private final Command driveToShootP1;
+    private final Command driveToShootP2;
+    private final Command driveToShootP3;
+    private final Command driveToShootP4;
+
 
 
     /**
@@ -63,6 +70,9 @@ public class DrivetrainSubsystem extends SubsystemBase
         else startPose = RedPositions.START_POSE;
 
         driveToShootP1 = new DriveToShootP1(this);
+        driveToShootP2 = new DriveToShootP2(this);
+        driveToShootP3 = new DriveToShootP3(this);
+        driveToShootP4 = new DriveToShootP4(this);
     }
 
     @Override
@@ -278,5 +288,20 @@ public class DrivetrainSubsystem extends SubsystemBase
     public Command driveToShootP1()
     {
         return driveToShootP1;
+    }
+
+    public Command driveToShootP2()
+    {
+        return driveToShootP2;
+    }
+
+    public Command driveToShootP3()
+    {
+        return driveToShootP3;
+    }
+
+    public Command driveToShootP4()
+    {
+        return driveToShootP4;
     }
 }

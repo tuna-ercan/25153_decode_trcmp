@@ -46,7 +46,7 @@ public class FunnelConstants {
     public static long FeedDelay = 150;
     public static long FeedColorDelay = 150;
     public static long PrepDelay = 150;
-    public static long PrepWaitDelay = 150;
+    public static long PrepWaitDelay = 200;
     public static long PrepColorDelay = 150;
 
 }
