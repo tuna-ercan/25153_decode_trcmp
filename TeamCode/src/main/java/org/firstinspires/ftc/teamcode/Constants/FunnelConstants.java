@@ -22,6 +22,13 @@ public class FunnelConstants {
     @IgnoreConfigurable
     public static String ServoP = "prepServo";
     @IgnoreConfigurable
+    public static String colorSensorL = "sensorL";
+    @IgnoreConfigurable
+    public static String colorSensorR = "sensorR";
+    @IgnoreConfigurable
+    public static String colorSensorM = "sensorM";
+
+    @IgnoreConfigurable
     public static Servo.Direction RightDirection = Servo.Direction.FORWARD;
     @IgnoreConfigurable
     public static Servo.Direction LeftDirection = Servo.Direction.FORWARD;
@@ -34,12 +41,12 @@ public class FunnelConstants {
     public static double PosTol = 0.005;
 
     // Right -0.02 offset
-    public static double RightFeed = 0.50, MiddleFeed = 0.50, LeftFeed = 0.50;
-    public static double RightPrep = 0.65, MiddlePrep = 0.65, LeftPrep = 0.65, PrePrepPrep = 0.68;
+    public static double RightFeed = 0.47, MiddleFeed = 0.44, LeftFeed = 0.44;
+    public static double RightPrep = 0.68, MiddlePrep = 0.65, LeftPrep = 0.65, PrePrepPrep = 0.44;
 
     public static double RightPreFeedPrep = 0.44, MiddlePreFeedPrep = 0.465, LeftPreFeedPrep = 0.465;
 
-    public static double RightHome = 0.59, MiddleHome= 0.59, LeftHome = 0.59, PrePrepHome = 0.5;
+    public static double RightHome = 0.58, MiddleHome= 0.55, LeftHome = 0.55, PrePrepHome = 0.25;
     //public static double RightTest = 0.41, MiddleTest = 0.41, LeftTest = 0.41, PrePrepTest = 0.41;
     public static double RightTest = 0.5, MiddleTest = 0.5, LeftTest = 0.5, PrePrepTest = 0.5;
     public static double Tol = 0.001;

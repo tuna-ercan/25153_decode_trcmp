@@ -9,7 +9,6 @@ public class ShooterTestRequest extends CommandBase
 {
 
     private final ShooterSubsystem shooterSubsystem;
-    private boolean isFinished;
 
     public ShooterTestRequest(ShooterSubsystem shooterSubsystem)
     {
@@ -20,12 +19,11 @@ public class ShooterTestRequest extends CommandBase
     public void initialize()
     {
         shooterSubsystem.setState(AllStates.ShooterStates.TEST);
-        isFinished = true;
     }
 
     @Override
     public boolean isFinished()
     {
-        return isFinished;
+        return true;
     }
 }

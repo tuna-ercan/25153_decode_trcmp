@@ -136,16 +136,14 @@ public class ShooterSubsystem extends SubsystemBase {
         p3Pose = (Container.isBlue ? BluePositions.SHOOT_P3 : RedPositions.SHOOT_P3);
         p4Pose = (Container.isBlue ? BluePositions.SHOOT_P4 : RedPositions.SHOOT_P4);
 
-        //p1Rpm = calculateRpmFromPose(p1Pose);
-        p1Rpm = ShooterConstants.TestRpm;
+        p1Rpm = calculateRpmFromPose(p1Pose);
         p2Rpm = calculateRpmFromPose(p2Pose);
         p3Rpm = calculateRpmFromPose(p3Pose);
         p4Rpm = calculateRpmFromPose(p4Pose);
 
         restRpm = ShooterConstants.RestRPM;
 
-        //p1Hood = calculateHoodFromPose(p1Pose);
-        p1Hood = ShooterConstants.TestHoodPos;
+        p1Hood = calculateHoodFromPose(p1Pose);
         p2Hood = calculateHoodFromPose(p2Pose);
         p3Hood = calculateHoodFromPose(p3Pose);
         p4Hood = calculateHoodFromPose(p4Pose);
@@ -420,7 +418,8 @@ public class ShooterSubsystem extends SubsystemBase {
         setAllMotorPowers(0);
         setGoalRPM(0);
 
-        setHoodPosition(ShooterConstants.TestHoodPos);
+        //setHoodPosition(ShooterConstants.TestHoodPos);
+        setHoodPosition(0);
 
         setIsReady(true);
     }

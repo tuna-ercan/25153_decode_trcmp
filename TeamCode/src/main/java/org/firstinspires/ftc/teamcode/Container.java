@@ -27,6 +27,8 @@ public class Container
      */
     public static String colorCombination = null;
 
+    public static boolean useColor = false;
+
     /**
      * Current pose of the robot on the field.
      * Updated by the DrivetrainSubsystem.

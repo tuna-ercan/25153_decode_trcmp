@@ -72,6 +72,9 @@ public class Mouth {
 
         // Funnel
         joinedTelemetry.addData("Funnel-State", funnelSubsystem.getState());
+        joinedTelemetry.addData("SensorL", funnelSubsystem.getSensorL().getNormalizedColors().toColor());
+        joinedTelemetry.addData("SensorM", funnelSubsystem.getSensorM().getNormalizedColors().toColor());
+        joinedTelemetry.addData("SensorR", funnelSubsystem.getSensorR().getNormalizedColors().toColor());
 
         panelsTelemetry.addData("Funnel-IsReady", funnelSubsystem.isReady());
 

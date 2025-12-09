@@ -7,7 +7,6 @@ import org.firstinspires.ftc.teamcode.Subsystems.ShooterSubsystem;
 
 public class ShooterReverseRequest extends CommandBase {
     private final ShooterSubsystem shooterSubsystem;
-    private boolean isFinished;
 
     public ShooterReverseRequest(ShooterSubsystem shooterSubsystem) {
         this.shooterSubsystem = shooterSubsystem;
@@ -16,11 +15,10 @@ public class ShooterReverseRequest extends CommandBase {
     @Override
     public void initialize() {
         shooterSubsystem.setState(AllStates.ShooterStates.REVERSE);
-        isFinished = true;
     }
 
     @Override
     public boolean isFinished() {
-        return isFinished;
+        return true;
     }
 }

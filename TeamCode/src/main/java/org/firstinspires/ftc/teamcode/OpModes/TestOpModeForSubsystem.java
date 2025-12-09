@@ -83,13 +83,10 @@ public class TestOpModeForSubsystem extends CommandOpMode {
             joinedTelemetry.addData("CommandScheduler", scheduler.toString());
             joinedTelemetry.addData("Intake-State", m_shoot.getState());
             joinedTelemetry.addData("Funnel-State", m_funnel.getState());
+            joinedTelemetry.addData("SensorL", m_funnel.getSensorL().getNormalizedColors().toString());
+            joinedTelemetry.addData("SensorM", m_funnel.getSensorM().getNormalizedColors().toString());
+            joinedTelemetry.addData("SensorR", m_funnel.getSensorR().getNormalizedColors().toString());
             joinedTelemetry.addData("ColorCombination", Container.colorCombination);
-            joinedTelemetry.addData("ShooterRPM", m_shoot.getGoalRPM());
-            joinedTelemetry.addData("ShooterHood", m_shoot.getGoalHood());
-            joinedTelemetry.addData("LeftRPM", m_shoot.getLeftRPM());
-            joinedTelemetry.addData("RightRPM", m_shoot.getRightRPM());
-            joinedTelemetry.addData("MiddleRPM", m_shoot.getMiddleRPM());
-            joinedTelemetry.addData("MiddleRPM", m_shoot.getMiddleRPM());
             joinedTelemetry.update();
 
             PanelsFieldDrawing.drawRobot(m_drive.getPose());
@@ -112,7 +109,7 @@ public class TestOpModeForSubsystem extends CommandOpMode {
                 .whenPressed(m_intake.idleRequest());*/
         //m_shoot.setTeleopDriveFieldCentric(gamepadEx1);
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT)
-                .whenPressed(m_shoot.zeroRequest());
+                .whenPressed(m_funnel.testRequest());
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT)
                 .whenPressed(m_shoot.shootP1Request());
         gamepadEx1.getGamepadButton(GamepadKeys.Button.X)

@@ -9,7 +9,6 @@ public class IntakeTestRequest extends CommandBase
 {
 
     private final IntakeSubsystem intakeSubsystem;
-    private boolean isFinished;
 
     public IntakeTestRequest(IntakeSubsystem intakeSubsystem)
     {
@@ -20,12 +19,11 @@ public class IntakeTestRequest extends CommandBase
     public void initialize()
     {
         intakeSubsystem.setState(AllStates.IntakeStates.TEST);
-        isFinished = true;
     }
 
     @Override
     public boolean isFinished()
     {
-        return isFinished;
+        return true;
     }
 }

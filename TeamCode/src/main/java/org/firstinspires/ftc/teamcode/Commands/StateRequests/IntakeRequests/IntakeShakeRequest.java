@@ -12,7 +12,6 @@ public class IntakeShakeRequest extends CommandBase
 {
 
     private final IntakeSubsystem intakeSubsystem;
-    private boolean isFinished;
 
     /**
      * Constructor for IntakeShakeRequest.
@@ -30,7 +29,6 @@ public class IntakeShakeRequest extends CommandBase
     public void initialize()
     {
         intakeSubsystem.setState(AllStates.IntakeStates.SHAKE);
-        isFinished = true;
     }
 
     /**
@@ -40,6 +38,6 @@ public class IntakeShakeRequest extends CommandBase
     @Override
     public boolean isFinished()
     {
-        return isFinished;
+        return true;
     }
 }

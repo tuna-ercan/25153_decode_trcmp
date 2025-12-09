@@ -3,7 +3,9 @@ package org.firstinspires.ftc.teamcode.Subsystems;
 
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.SubsystemBase;
+import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Commands.StateActions.FunnelActions.FunnelFeedAction;
@@ -28,6 +30,9 @@ public class FunnelSubsystem extends SubsystemBase
     private final Servo middleServo;
     private final Servo leftServo;
     private final Servo prePrepServo;
+    private final RevColorSensorV3 sensorL;
+    private final RevColorSensorV3 sensorR;
+    private final RevColorSensorV3 sensorM;
 
 
     private double goalPosLeft;
@@ -49,6 +54,12 @@ public class FunnelSubsystem extends SubsystemBase
     private final Command shakeAction;
     private final Command testAction;
 
+    public enum DetectedColor {
+        UNKNOWN,
+        PURPLE,
+        GREEN
+    }
+
     /**
      * Creates a new FunnelSubsystem.
      * Initializes servos and commands.
@@ -60,6 +71,14 @@ public class FunnelSubsystem extends SubsystemBase
         middleServo = hardwareMap.get(Servo.class,FunnelConstants.ServoM);
         prePrepServo = hardwareMap.get(Servo.class,FunnelConstants.ServoP);
 
+        sensorL = hardwareMap.get(RevColorSensorV3.class, FunnelConstants.colorSensorL);
+        sensorR = hardwareMap.get(RevColorSensorV3.class, FunnelConstants.colorSensorR);
+        sensorM = hardwareMap.get(RevColorSensorV3.class, FunnelConstants.colorSensorM);
+
+
+        sensorL.enableLed(true);
+        sensorR.enableLed(true);
+        sensorM.enableLed(true);
 
         rightServo.setDirection(FunnelConstants.RightDirection);
         leftServo.setDirection(FunnelConstants.LeftDirection);
@@ -194,6 +213,25 @@ public class FunnelSubsystem extends SubsystemBase
     public void setLeftServoPrep()
     {
         setLeftServo(FunnelConstants.LeftPrep);
+    }
+
+    public RevColorSensorV3 getSensorL() {
+        return sensorL;
+    }
+    public RevColorSensorV3 getSensorR() {
+        return sensorR;
+    }
+    public RevColorSensorV3 getSensorM() {
+        return sensorM;
+    }
+
+    public DetectedColor getDetectedColorL () {
+        NormalizedRGBA color = sensorL.getNormalizedColors();
+        float normRed, normGreen, normBlue;
+        normRed = color.red / color.alpha;
+        normGreen = color.green / color.alpha;
+        normBlue = color.blue / color.alpha;
+        return DetectedColor.UNKNOWN;
     }
 
     public void setPrePrepServoPrep() {
