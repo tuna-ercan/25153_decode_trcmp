@@ -21,7 +21,6 @@ public class DriveToPoseAuto extends CommandBase {
     private final Supplier<PathChain> path;
     private final Pose goalPosition;
     private final DrivetrainSubsystem m_drive;
-    private boolean isFinished;
 
     /**
      * Constructor for DriveToShootP1.
@@ -52,13 +51,11 @@ public class DriveToPoseAuto extends CommandBase {
         {
             m_drive.followPathAuto(path.get());
         }
-
-        isFinished = (!m_drive.isBusy() && m_drive.atPose(goalPosition));
     }
 
     @Override
     public boolean isFinished()
     {
-        return isFinished;
+        return (!m_drive.isBusy() && m_drive.atPose(goalPosition));
     }
 }

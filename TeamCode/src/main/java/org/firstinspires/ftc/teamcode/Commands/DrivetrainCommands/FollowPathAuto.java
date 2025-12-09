@@ -16,7 +16,6 @@ import org.firstinspires.ftc.teamcode.Subsystems.DrivetrainSubsystem;
 public class FollowPathAuto extends CommandBase {
     private final PathChain path;
     private final DrivetrainSubsystem m_drive;
-    private boolean isFinished;
     public FollowPathAuto(DrivetrainSubsystem drive, PathChain path)
     {
         this.m_drive = drive;
@@ -32,13 +31,13 @@ public class FollowPathAuto extends CommandBase {
     @Override
     public void execute()
     {
-        isFinished = !m_drive.isBusy();
+        super.execute();
     }
 
     @Override
     public boolean isFinished()
     {
-        return isFinished;
+        return !m_drive.isBusy();
     }
 
 }

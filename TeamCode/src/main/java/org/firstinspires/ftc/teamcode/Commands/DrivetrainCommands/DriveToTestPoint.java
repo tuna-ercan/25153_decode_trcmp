@@ -22,7 +22,6 @@ public class DriveToTestPoint extends CommandBase {
     private final Pose goalPosition;
     private final Pose focusPose;
     private final DrivetrainSubsystem m_drive;
-    private boolean isFinished;
 
     /**
      * Constructor for DriveToTestPoint.
@@ -55,14 +54,12 @@ public class DriveToTestPoint extends CommandBase {
         {
             m_drive.followPathTest(path.get());
         }
-
-        isFinished = (!m_drive.isBusy() && m_drive.atPose(goalPosition));
     }
 
     @Override
     public boolean isFinished()
     {
-        return isFinished;
+        return (m_drive.atPose(goalPosition) && m_drive.headingReached());
     }
 
     @Override

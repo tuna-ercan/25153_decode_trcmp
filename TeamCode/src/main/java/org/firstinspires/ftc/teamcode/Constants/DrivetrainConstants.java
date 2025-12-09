@@ -43,16 +43,16 @@ public class DrivetrainConstants {
     /**
      * Tolerance for X position in inches.
      */
-    public static double TolX = 2;
+    public static double TolX = 1;
     
     /**
      * Tolerance for Y position in inches.
      */
-    public static double TolY = 2;
+    public static double TolY = 1;
     
     /**
      * Tolerance for Heading in degrees/radians (depending on implementation, usually radians in PedroPathing).
      */
-    public static double TolH = 0.5;
+    public static double TolH = 10;
 
 }

@@ -22,7 +22,6 @@ public class DriveToShootP1 extends CommandBase {
     private final Pose goalPosition;
     private final Pose focusPose;
     private final DrivetrainSubsystem m_drive;
-    private boolean isFinished;
 
     /**
      * Constructor for DriveToShootP1.
@@ -51,18 +50,12 @@ public class DriveToShootP1 extends CommandBase {
     @Override
     public void execute()
     {
-        if (!m_drive.isBusy() && !m_drive.atPose(goalPosition))
-        {
-            m_drive.followPathTeleop(path.get());
-        }
-
-        isFinished = (!m_drive.isBusy() && m_drive.atPose(goalPosition));
     }
 
     @Override
     public boolean isFinished()
     {
-        return isFinished;
+        return (m_drive.atPose(goalPosition) && m_drive.headingReached());
     }
 
     @Override

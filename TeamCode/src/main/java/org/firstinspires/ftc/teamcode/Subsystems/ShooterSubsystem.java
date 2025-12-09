@@ -289,7 +289,8 @@ public class ShooterSubsystem extends SubsystemBase {
     private void setHoodPosition(double position)
     {
         setGoalHood(position);
-        hoodServo.setPosition(position);
+        hoodServo.setPosition(ShooterConstants.HoodStartTol -
+                Math.floor(position*ShooterConstants.HoodGearRatio/ShooterConstants.ServoAngleCapacity * 10000) / 10000.0);
     }
 
     public double getRightRPM()
@@ -491,6 +492,11 @@ public class ShooterSubsystem extends SubsystemBase {
         setIsReadyByChecking();
         setHoodPosition(ShooterConstants.TestHoodPos);
         controlMotorRPM(ShooterConstants.TestRpm);
+    }
+
+    public void zeroHood()
+    {
+        setHoodPosition(0);
     }
 
     public Command waitForReady()

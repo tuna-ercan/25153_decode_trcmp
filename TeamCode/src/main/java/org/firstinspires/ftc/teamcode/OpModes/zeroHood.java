@@ -45,7 +45,7 @@ public class zeroHood extends CommandOpMode {
 
 
         initOpCommand = new InstantCommand(() -> {
-            m_shoot.zeroRequest();
+            m_shoot.zeroHood();
         });
 
 

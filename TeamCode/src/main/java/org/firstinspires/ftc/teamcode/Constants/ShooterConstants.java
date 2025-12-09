@@ -47,10 +47,17 @@ public class ShooterConstants {
     public static double HoodTol = 0.0025;
 
     public static double RestRPM = 2000;
-    public static double RestHoodPos = 0.1;
+    public static double RestHoodPos = 0;
 
     public static double TestRpm = 2650;
-    public static double TestHoodPos = 0.1;
+    public static double TestHoodPos = 0;
+
+    public static double HoodStartTol = 0.5;
+
+    public static double HoodGearRatio = 7;
+ // Max hood angle 37 degrees
+    public static double ServoAngleCapacity = 1800;
+
     public static double CalculateRpmFromDistance(double distance)
     {
         return 2750 + (distance-164)/57.5 * 250; // 2600'ü değiştir, oto şut konumuna göre

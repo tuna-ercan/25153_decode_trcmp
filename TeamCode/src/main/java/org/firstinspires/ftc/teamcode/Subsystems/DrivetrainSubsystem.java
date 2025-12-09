@@ -197,6 +197,22 @@ public class DrivetrainSubsystem extends SubsystemBase
         return follower;
     }
 
+    public double getHeadingError()
+    {
+        return follower.getHeadingError();
+    }
+
+    public double getDriveError()
+    {
+        return follower.getDriveError();
+    }
+
+    public double getTranslationalError()
+    {
+        return follower.getTranslationalError().getMagnitude();
+    }
+
+
 
     /**
      * Sets the teleop drive controls to field-centric mode.

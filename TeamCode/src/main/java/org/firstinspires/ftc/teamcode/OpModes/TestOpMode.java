@@ -40,16 +40,16 @@ public class TestOpMode extends CommandOpMode {
         m_machine = new TheMachineSubsystem(hardwareMap);
         mouth = new Mouth(m_machine,m_drive, telemetry);
 
-        driveAndShootP1 = m_drive.driveToShootP1().alongWith(m_machine.prepP1Request())
+        driveAndShootP1 = m_drive.driveToShootP1().alongWith(m_machine.prepP1Request()).withTimeout(3000)
                             .andThen(m_machine.shootFromP1Request());
 
-        driveAndShootP2 = m_drive.driveToShootP2().alongWith(m_machine.prepP2Request())
+        driveAndShootP2 = m_drive.driveToShootP2().alongWith(m_machine.prepP2Request()).withTimeout(3000)
                 .andThen(m_machine.shootFromP2Request());
 
-        driveAndShootP3 = m_drive.driveToShootP3().alongWith(m_machine.prepP3Request())
+        driveAndShootP3 = m_drive.driveToShootP3().alongWith(m_machine.prepP3Request()).withTimeout(3000)
                 .andThen(m_machine.shootFromP3Request());
 
-        driveAndShootP4 = m_drive.driveToShootP4().alongWith(m_machine.prepP4Request())
+        driveAndShootP4 = m_drive.driveToShootP4().alongWith(m_machine.prepP4Request()).withTimeout(3000)
                 .andThen(m_machine.shootFromP4Request());
 
         gamepadEx1 = new GamepadEx(gamepad1);
@@ -88,19 +88,19 @@ public class TestOpMode extends CommandOpMode {
                 .whenPressed(m_machine.testRequest());
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP)
-                .whenPressed(driveAndShootP1)
+                .whenHeld(driveAndShootP1)
                 .whenReleased(m_machine.idleRequest());
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT)
-                .whenPressed(driveAndShootP2)
+                .whenHeld(driveAndShootP2)
                 .whenReleased(m_machine.idleRequest());
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN)
-                .whenPressed(driveAndShootP3)
+                .whenHeld(driveAndShootP3)
                 .whenReleased(m_machine.idleRequest());
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT)
-                .whenPressed(driveAndShootP4)
+                .whenHeld(driveAndShootP4)
                 .whenReleased(m_machine.idleRequest());
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_STICK_BUTTON)

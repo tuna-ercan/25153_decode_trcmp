@@ -22,7 +22,6 @@ public class AimToShoot extends CommandBase {
     private final Supplier<PathChain> path;
     private final Pose focusPose;
     private final DrivetrainSubsystem m_drive;
-    private boolean isFinished;
 
     /**
      * Constructor for AimToShoot.
@@ -53,14 +52,12 @@ public class AimToShoot extends CommandBase {
         {
             m_drive.followPathTeleop(path.get());
         }
-
-        isFinished = (!m_drive.isBusy() && m_drive.headingReached());
     }
 
     @Override
     public boolean isFinished()
     {
-        return isFinished;
+        return (!m_drive.isBusy() && m_drive.headingReached());
     }
 
     @Override
