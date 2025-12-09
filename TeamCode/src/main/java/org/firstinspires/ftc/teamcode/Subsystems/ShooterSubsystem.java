@@ -227,6 +227,7 @@ public class ShooterSubsystem extends SubsystemBase {
     public void setState(ShooterStates requestedState) {
         if(currentState != requestedState) lastState = currentState;
         currentState = requestedState;
+
     }
 
     /**
