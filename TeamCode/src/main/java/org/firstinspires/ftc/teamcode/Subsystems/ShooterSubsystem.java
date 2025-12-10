@@ -435,29 +435,29 @@ public class ShooterSubsystem extends SubsystemBase {
     public void shootP1()
     {
         setIsReadyByChecking();
-        setHoodPosition(p1Hood);
-        controlMotorRPM(p1Rpm);
+        setHoodPosition(ShooterConstants.P1HoodPos);
+        controlMotorRPM(ShooterConstants.P1Rpm);
     }
 
     public void shootP2()
     {
         setIsReadyByChecking();
-        setHoodPosition(p2Hood);
-        controlMotorRPM(p2Rpm);
+        setHoodPosition(ShooterConstants.P2HoodPos);
+        controlMotorRPM(ShooterConstants.P2Rpm);
     }
 
     public void shootP3()
     {
         setIsReadyByChecking();
-        setHoodPosition(p3Hood);
-        controlMotorRPM(p3Rpm);
+        setHoodPosition(ShooterConstants.P3HoodPos);
+        controlMotorRPM(ShooterConstants.P3Rpm);
     }
 
     public void shootP4()
     {
         setIsReadyByChecking();
-        setHoodPosition(p4Hood);
-        controlMotorRPM(p4Rpm);
+        setHoodPosition(ShooterConstants.P4HoodPos);
+        controlMotorRPM(ShooterConstants.P4Rpm);
     }
 
     public void shootFromPose()

@@ -39,6 +39,7 @@ import org.firstinspires.ftc.teamcode.Commands.StateRequests.TheMachineRequests.
 import org.firstinspires.ftc.teamcode.Utils.AllStates;
 import org.firstinspires.ftc.teamcode.Utils.AllStates.MachineStates;
 import org.firstinspires.ftc.teamcode.Constants.TheMachineConstants;
+import org.firstinspires.ftc.teamcode.Utils.LimelightHandler;
 
 /**
  * TheMachineSubsystem acts as a supervisor or a "super-subsystem" that coordinates
@@ -51,7 +52,8 @@ public class TheMachineSubsystem extends SubsystemBase {
     private final IntakeSubsystem m_intake;
     private final FunnelSubsystem m_funnel;
     private final ShooterSubsystem m_shooter;
-    
+    private final LimelightHandler limelightHandler;
+
     // State tracking
     private MachineStates currentState;
     private MachineStates lastState;
@@ -84,6 +86,7 @@ public class TheMachineSubsystem extends SubsystemBase {
         m_intake = new IntakeSubsystem(hardwareMap);
         m_funnel = new FunnelSubsystem(hardwareMap);
         m_shooter = new ShooterSubsystem(hardwareMap);
+        limelightHandler = new LimelightHandler(hardwareMap);
 
         currentState = MachineStates.IDLE;
         lastState = MachineStates.IDLE;
@@ -115,6 +118,7 @@ public class TheMachineSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         stateMachine();
+        limelightHandler.updateResult();
     }
 
     /**
@@ -386,6 +390,7 @@ public class TheMachineSubsystem extends SubsystemBase {
     {
         return m_shooter;
     }
+    public LimelightHandler getLimelightHandler(){ return limelightHandler; }
 
     /**
      * Helper command to wait until the shooter is ready.

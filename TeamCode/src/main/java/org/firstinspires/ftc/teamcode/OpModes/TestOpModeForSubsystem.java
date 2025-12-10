@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.OpModes;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
-
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.CommandScheduler;
@@ -12,19 +10,13 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.bylazar.telemetry.JoinedTelemetry;
 import com.bylazar.telemetry.PanelsTelemetry;
 import com.bylazar.telemetry.TelemetryManager;
-import com.pedropathing.follower.Follower;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.Constants.PedroConstants;
-import org.firstinspires.ftc.teamcode.Constants.ShooterConstants;
 import org.firstinspires.ftc.teamcode.Container;
 import org.firstinspires.ftc.teamcode.Subsystems.DrivetrainSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.FunnelSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.ShooterSubsystem;
-import org.firstinspires.ftc.teamcode.Subsystems.TheMachineSubsystem;
-import org.firstinspires.ftc.teamcode.Utils.AllStates;
-import org.firstinspires.ftc.teamcode.Utils.Mouth;
 import org.firstinspires.ftc.teamcode.Utils.PanelsFieldDrawing;
 
 @TeleOp(name = "TEST_SUBSYSTEM")

@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.Commands.DrivetrainCommands.DriveToShootP3
 import org.firstinspires.ftc.teamcode.Commands.DrivetrainCommands.DriveToShootP4;
 import org.firstinspires.ftc.teamcode.Utils.AllStates.DrivetrainStates;
 import org.firstinspires.ftc.teamcode.Constants.DrivetrainConstants;
-import org.firstinspires.ftc.teamcode.Constants.PedroConstants;
+import org.firstinspires.ftc.teamcode.PedroFiles.PedroConstants;
 import org.firstinspires.ftc.teamcode.Container;
 import org.firstinspires.ftc.teamcode.Positions.BluePositions;
 import org.firstinspires.ftc.teamcode.Positions.RedPositions;
@@ -39,9 +39,6 @@ public class DrivetrainSubsystem extends SubsystemBase
 
     private DrivetrainStates currentState;
     private DrivetrainStates lastState;
-
-    public final LimelightHandler limelight;
-
     private final Command driveToShootP1;
     private final Command driveToShootP2;
     private final Command driveToShootP3;
@@ -60,8 +57,6 @@ public class DrivetrainSubsystem extends SubsystemBase
         imu = hardwareMap.get(IMU.class, DrivetrainConstants.ImuName);
         imu.initialize(parameters);
 
-        limelight = new LimelightHandler(hardwareMap);
-
         currentState = DrivetrainStates.IDLE;
         lastState = DrivetrainStates.IDLE;
 
@@ -79,11 +74,8 @@ public class DrivetrainSubsystem extends SubsystemBase
     public void periodic()
     {
         follower.update();
-        limelight.updateResult();
-        if (Container.colorCombination==null&&(limelight.getCombination().length() > 1)){
-            Container.colorCombination = limelight.getCombination();
-        }
         // This method will be called once per scheduler run
+        Container.headingRadians = follower.getHeading();
 
         //Setting the starting pose | Update follower
         if (!isStartPoseSet)

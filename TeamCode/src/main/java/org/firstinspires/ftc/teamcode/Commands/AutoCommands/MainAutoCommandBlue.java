@@ -9,6 +9,7 @@ import com.pedropathing.geometry.Pose;
 import com.pedropathing.paths.PathChain;
 
 import org.firstinspires.ftc.teamcode.Commands.DrivetrainCommands.FollowPathAuto;
+import org.firstinspires.ftc.teamcode.Positions.BluePositions;
 import org.firstinspires.ftc.teamcode.Subsystems.DrivetrainSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.TheMachineSubsystem;
 
@@ -24,7 +25,7 @@ public class MainAutoCommandBlue extends SequentialCommandGroup {
         Paths paths = new Paths(drivetrain.getFollower());
 
         addCommands(
-                theMachineSubsystem.prepP1Request(),
+                //theMachineSubsystem.prepP1Request(),
                 new FollowPathAuto(drivetrain, paths.firstPathShootP1)
         );
     }
@@ -38,7 +39,7 @@ public class MainAutoCommandBlue extends SequentialCommandGroup {
             firstPathShootP1 = follower
                     .pathBuilder()
                     .addPath(
-                            new BezierLine(new Pose(56.000, 8.000), new Pose(56.000, 36.000))
+                            new BezierLine(BluePositions.START_POSE, new Pose(72, 72)) //56,36
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(180))
                     .build();

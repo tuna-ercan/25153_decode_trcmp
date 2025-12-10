@@ -11,5 +11,5 @@ public class TheMachineConstants {
      * Time in milliseconds to wait for the shooter to reach target velocity/hood position
      * before proceeding with the shot in an automated sequence.
      */
-    public static long timeoutForShooterToBeReady = 2650;
+    public static long timeoutForShooterToBeReady = 1500;
 }

@@ -29,6 +29,8 @@ public class Container
 
     public static boolean useColor = false;
 
+    public static double headingRadians = 0;
+
     /**
      * Current pose of the robot on the field.
      * Updated by the DrivetrainSubsystem.

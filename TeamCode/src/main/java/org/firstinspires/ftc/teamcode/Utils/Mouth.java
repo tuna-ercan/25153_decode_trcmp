@@ -23,6 +23,7 @@ public class Mouth {
     private final IntakeSubsystem intakeSubsystem;
     private final FunnelSubsystem funnelSubsystem;
     private final ShooterSubsystem shooterSubsystem;
+    private final LimelightHandler llHandler;
 
     private final TelemetryManager.TelemetryWrapper panelsTelemetry;
     private final JoinedTelemetry joinedTelemetry;
@@ -36,6 +37,7 @@ public class Mouth {
         this.intakeSubsystem = machineSubsystem.getIntakeSubsystem();
         this.funnelSubsystem = machineSubsystem.getFunnelSubsystem();
         this.shooterSubsystem = machineSubsystem.getShooterSubsystem();
+        this.llHandler = machineSubsystem.getLimelightHandler();
 
         PanelsFieldDrawing.init();
 
@@ -87,6 +89,14 @@ public class Mouth {
         joinedTelemetry.addData("SensorR", funnelSubsystem.getSensorR().getNormalizedColors().toColor());
 
         panelsTelemetry.addData("Funnel-IsReady", funnelSubsystem.isReady());
+
+        // Limelight
+
+        joinedTelemetry.addData("Limelight-BotPose", llHandler.getPose().toString());
+        joinedTelemetry.addData("Limelight-BotPosePedro", llHandler.getPosePedro().toString());
+        joinedTelemetry.addData("Limelight-BotPosePedro-x", llHandler.getPosePedro().getX());
+        joinedTelemetry.addData("Limelight-BotPosePedro-y", llHandler.getPosePedro().getY());
+        joinedTelemetry.addData("Limelight-BotPosePedro-theta", Math.toRadians(llHandler.getPosePedro().getHeading()));
 
         // Machine
         joinedTelemetry.addData("Machine-State", machineSubsystem.getState());

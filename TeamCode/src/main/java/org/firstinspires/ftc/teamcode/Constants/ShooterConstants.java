@@ -52,6 +52,19 @@ public class ShooterConstants {
     public static double TestRpm = 2650;
     public static double TestHoodPos = 0;
 
+    public static double P1Rpm = 2650;
+    public static double P1HoodPos = 15;
+
+    public static double P2Rpm = 2575;
+    public static double P2HoodPos = 18;
+
+    public static double P3Rpm = 3000;
+    public static double P3HoodPos = 0.15;
+
+    public static double P4Rpm = 3000;
+    public static double P4HoodPos = 0.2;
+
+
     public static double HoodStartTol = 0.5;
 
     public static double HoodGearRatio = 7;

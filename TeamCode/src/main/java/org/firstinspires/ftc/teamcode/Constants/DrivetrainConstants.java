@@ -44,7 +44,10 @@ public class DrivetrainConstants {
      * Tolerance for X position in inches.
      */
     public static double TolX = 1;
-    
+
+    public static double autoDriveInterpolator = 0.9;
+    public static double driveBrakingStrength = 0.82;
+
     /**
      * Tolerance for Y position in inches.
      */
