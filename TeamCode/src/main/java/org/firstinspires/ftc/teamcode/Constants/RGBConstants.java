@@ -14,4 +14,11 @@ public class RGBConstants {
     @IgnoreConfigurable
     public static String RGBName = "RGB ";
 
+    public static double shooterReadyColor = 0.5;
+    public static double shooterNotReadyColor = 0.444;
+    public static double intakeColor = 0.611;
+    public static double outtakeColor = 0.277;
+    public static double prepColor = 0.388;
+    public static double idleColor = 0.666;
+    public static double restColor = 1;
 }

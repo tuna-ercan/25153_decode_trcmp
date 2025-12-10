@@ -193,43 +193,30 @@ public class TheMachineSubsystem extends SubsystemBase {
         switch (currentState)
         {
             case IDLE:
-                color = 0.666;
+                color = RGBConstants.idleColor;
                 break;
             case REST:
-                color = 1;
+                color = RGBConstants.restColor;
                 break;
             case PREP_P1:
-                color = 0.388;
-                break;
             case PREP_P2:
-                color = 0.388;
-                break;
             case PREP_P3:
-                color = 0.388;
-                break;
             case PREP_P4:
-                color = 0.388;
+                color = RGBConstants.prepColor;
                 break;
             case SHOOT_FROM_P1:
-                color = 0.5;
-                break;
             case SHOOT_FROM_P2:
-                color = 0.5;
-                break;
             case SHOOT_FROM_P3:
-                color = 0.5;
-                break;
             case SHOOT_FROM_P4:
-                color = 0.5;
-                break;
             case SHOOT_FROM_POSE:
-                color = 0.5;
+                if (m_shooter.isReady()) color = RGBConstants.shooterReadyColor;
+                else color = RGBConstants.shooterNotReadyColor;
                 break;
             case INTAKE:
-                color = 0.611;
+                color = RGBConstants.intakeColor;
                 break;
             case OUTTAKE:
-                color = 0.277;
+                color = RGBConstants.outtakeColor;
                 break;
         }
         rgb.setPosition(color);
