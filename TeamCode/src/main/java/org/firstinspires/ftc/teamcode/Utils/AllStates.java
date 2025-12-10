@@ -81,4 +81,17 @@ public class AllStates {
         SHAKE,
         TEST
     }
+
+    /**
+     * States for the RGB subsystem.
+     */
+    public enum RGBStates
+    {
+        WHITE,
+        RED,
+        GREEN,
+        BLUE,
+        OFF
+
+    };
 }

@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Subsystems;
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Commands.StateActions.TheMachineActions.MachineIdleAction;
 import org.firstinspires.ftc.teamcode.Commands.StateActions.TheMachineActions.MachineIntakeAction;
@@ -36,6 +37,7 @@ import org.firstinspires.ftc.teamcode.Commands.StateRequests.TheMachineRequests.
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.TheMachineRequests.MachineShootFromP4Request;
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.TheMachineRequests.MachineShootFromPoseRequest;
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.TheMachineRequests.MachineTestRequest;
+import org.firstinspires.ftc.teamcode.Constants.RGBConstants;
 import org.firstinspires.ftc.teamcode.Utils.AllStates;
 import org.firstinspires.ftc.teamcode.Utils.AllStates.MachineStates;
 import org.firstinspires.ftc.teamcode.Constants.TheMachineConstants;
@@ -53,6 +55,7 @@ public class TheMachineSubsystem extends SubsystemBase {
     private final FunnelSubsystem m_funnel;
     private final ShooterSubsystem m_shooter;
     private final LimelightHandler limelightHandler;
+
 
     // State tracking
     private MachineStates currentState;
@@ -76,6 +79,9 @@ public class TheMachineSubsystem extends SubsystemBase {
     private final Command shakeAction;
 
     private final Command testAction;
+    private final Servo rgb;
+
+
 
 
     /**
@@ -109,6 +115,7 @@ public class TheMachineSubsystem extends SubsystemBase {
         shakeAction = new MachineShakeAction(this);
         testAction = new MachineTestAction(this);
 
+        rgb = hardwareMap.get(Servo.class, RGBConstants.RGBName);
     }
 
     /**
@@ -119,6 +126,7 @@ public class TheMachineSubsystem extends SubsystemBase {
     public void periodic() {
         stateMachine();
         limelightHandler.updateResult();
+        ledFeedforward();
     }
 
     /**
@@ -178,6 +186,53 @@ public class TheMachineSubsystem extends SubsystemBase {
                 if(!testAction.isScheduled()) testAction.schedule();
                 break;
         }
+    }
+
+    public void ledFeedforward(){
+        double color = 0;
+        switch (currentState)
+        {
+            case IDLE:
+                color = 0.666;
+                break;
+            case REST:
+                color = 1;
+                break;
+            case PREP_P1:
+                color = 0.388;
+                break;
+            case PREP_P2:
+                color = 0.388;
+                break;
+            case PREP_P3:
+                color = 0.388;
+                break;
+            case PREP_P4:
+                color = 0.388;
+                break;
+            case SHOOT_FROM_P1:
+                color = 0.5;
+                break;
+            case SHOOT_FROM_P2:
+                color = 0.5;
+                break;
+            case SHOOT_FROM_P3:
+                color = 0.5;
+                break;
+            case SHOOT_FROM_P4:
+                color = 0.5;
+                break;
+            case SHOOT_FROM_POSE:
+                color = 0.5;
+                break;
+            case INTAKE:
+                color = 0.611;
+                break;
+            case OUTTAKE:
+                color = 0.277;
+                break;
+        }
+        rgb.setPosition(color);
     }
 
     /**
