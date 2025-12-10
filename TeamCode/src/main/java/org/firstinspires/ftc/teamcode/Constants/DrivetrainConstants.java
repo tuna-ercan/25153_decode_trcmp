@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 /**
  * Constants related to the drivetrain hardware and control.
  */
-@Configurable
+//@Configurable
 public class DrivetrainConstants {
 
     @IgnoreConfigurable
@@ -45,9 +45,6 @@ public class DrivetrainConstants {
      */
     public static double TolX = 1;
 
-    public static double autoDriveInterpolator = 0.9;
-    public static double driveBrakingStrength = 0.82;
-
     /**
      * Tolerance for Y position in inches.
      */
@@ -58,4 +55,6 @@ public class DrivetrainConstants {
      */
     public static double TolH = 10;
 
+    public static double autoDriveInterpolator = 0.9;
+    public static double driveBrakingStrength = 0.9;
 }

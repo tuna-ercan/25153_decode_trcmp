@@ -18,7 +18,7 @@ public class ShooterConstants {
     public static String LeftMotorName = "leftShooter";
     @IgnoreConfigurable
     public static String MiddleMotorName = "middleShooter";
-    public static DcMotorEx.Direction RightDirection = DcMotorSimple.Direction.FORWARD;
+    public static DcMotorEx.Direction RightDirection = DcMotorSimple.Direction.REVERSE;
     public static DcMotorEx.Direction MiddleDirection = DcMotorSimple.Direction.REVERSE;
 
     public static DcMotorEx.Direction LeftDirection = DcMotorSimple.Direction.REVERSE;
@@ -43,11 +43,11 @@ public class ShooterConstants {
     public static double MultiplierRight = 1;
     public static double MultiplierMiddle = 1;
 
-    public static double RpmTol = 60;
+    public static double RpmTol = 50;
     public static double HoodTol = 0.0025;
 
     public static double RestRPM = 2000;
-    public static double RestHoodPos = 0;
+    public static double RestHoodPos = 3;
 
     public static double TestRpm = 2650;
     public static double TestHoodPos = 0;
@@ -58,11 +58,11 @@ public class ShooterConstants {
     public static double P2Rpm = 2575;
     public static double P2HoodPos = 18;
 
-    public static double P3Rpm = 3000;
-    public static double P3HoodPos = 0.15;
+    public static double P3Rpm = 2980;
+    public static double P3HoodPos = 6;
 
-    public static double P4Rpm = 3000;
-    public static double P4HoodPos = 0.2;
+    public static double P4Rpm = 3400;
+    public static double P4HoodPos = 3;
 
 
     public static double HoodStartTol = 0.5;

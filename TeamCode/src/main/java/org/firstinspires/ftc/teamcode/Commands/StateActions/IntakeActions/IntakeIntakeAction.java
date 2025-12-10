@@ -33,7 +33,7 @@ public class IntakeIntakeAction extends CommandBase {
 
     @Override
     public void execute() {
-        
+        intakeSubsystem.intake();
     }
 
     private boolean checkFinish()

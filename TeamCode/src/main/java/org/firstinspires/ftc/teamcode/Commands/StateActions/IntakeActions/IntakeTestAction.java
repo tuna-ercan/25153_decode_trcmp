@@ -33,12 +33,12 @@ public class IntakeTestAction extends CommandBase
     @Override
     public void execute()
     {
-        if(!(intakeSubsystem.getState() == AllStates.IntakeStates.TEST)) isFinished = true;
+        intakeSubsystem.test();
     }
 
     @Override
     public boolean isFinished()
     {
-        return isFinished;
+        return !(intakeSubsystem.getState() == AllStates.IntakeStates.TEST);
     }
 }

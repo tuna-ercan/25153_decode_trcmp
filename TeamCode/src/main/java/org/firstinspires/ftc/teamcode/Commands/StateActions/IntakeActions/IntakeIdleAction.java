@@ -40,7 +40,7 @@ public class IntakeIdleAction extends CommandBase
     @Override
     public void execute()
     {
-        
+        intakeSubsystem.stop();
     }
 
     private boolean checkFinish()

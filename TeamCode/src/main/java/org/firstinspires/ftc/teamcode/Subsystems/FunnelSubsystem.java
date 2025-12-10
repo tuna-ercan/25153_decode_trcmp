@@ -225,13 +225,13 @@ public class FunnelSubsystem extends SubsystemBase
         return sensorM;
     }
 
-    public DetectedColor getDetectedColorL () {
+    public float[] getDetectedColorL() {
         NormalizedRGBA color = sensorL.getNormalizedColors();
         float normRed, normGreen, normBlue;
         normRed = color.red / color.alpha;
         normGreen = color.green / color.alpha;
         normBlue = color.blue / color.alpha;
-        return DetectedColor.UNKNOWN;
+        return new float[] {normRed,normGreen,normBlue};
     }
 
     public void setPrePrepServoPrep() {

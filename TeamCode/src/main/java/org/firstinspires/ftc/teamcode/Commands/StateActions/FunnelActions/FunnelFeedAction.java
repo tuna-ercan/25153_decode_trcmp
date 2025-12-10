@@ -29,9 +29,9 @@ public class FunnelFeedAction extends CommandBase
         addRequirements(funnelSubsystem);
         this.funnelSubsystem = funnelSubsystem;
 
-        leftDelay = FunnelConstants.FeedDelay;
-        middleDelay = FunnelConstants.FeedDelay*3;
-        rightDelay = FunnelConstants.FeedDelay*2;
+        leftDelay = 0;
+        middleDelay = FunnelConstants.FeedDelay*2;
+        rightDelay = FunnelConstants.FeedDelay;
         maxDelay = FunnelConstants.FeedDelay*5;
     }
 
@@ -52,13 +52,14 @@ public class FunnelFeedAction extends CommandBase
     @Override
     public void execute()
     {
-        now = System.currentTimeMillis();
         if (now - startTime <= maxDelay)
         {
             if (now - startTime >= leftDelay) funnelSubsystem.setLeftServoFeed();
             if (now - startTime >= middleDelay) funnelSubsystem.setMiddleServoFeed();
             if (now - startTime >= rightDelay) funnelSubsystem.setRightServoFeed();
         }
+        now = System.currentTimeMillis();
+
     }
 
     private boolean checkFinish()

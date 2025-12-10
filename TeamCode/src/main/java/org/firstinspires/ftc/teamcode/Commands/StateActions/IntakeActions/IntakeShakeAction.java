@@ -29,7 +29,7 @@ public class IntakeShakeAction extends CommandBase {
 
     @Override
     public void execute() {
-        
+        intakeSubsystem.shake();
     }
 
     private boolean checkFinish()

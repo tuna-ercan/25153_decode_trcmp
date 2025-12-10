@@ -30,7 +30,7 @@ public class IntakeOuttakeAction extends CommandBase {
 
     @Override
     public void execute() {
-        
+        intakeSubsystem.outtake();
     }
 
     private boolean checkFinish()

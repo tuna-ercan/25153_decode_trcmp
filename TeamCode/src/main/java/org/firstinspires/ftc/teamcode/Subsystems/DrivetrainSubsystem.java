@@ -75,7 +75,6 @@ public class DrivetrainSubsystem extends SubsystemBase
     {
         follower.update();
         // This method will be called once per scheduler run
-        Container.headingRadians = follower.getHeading();
 
         //Setting the starting pose | Update follower
         if (!isStartPoseSet)

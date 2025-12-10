@@ -81,6 +81,10 @@ public class TheMachineSubsystem extends SubsystemBase {
     private final Command testAction;
     private final Servo rgb;
 
+    private double color = 0;
+
+
+
 
 
 
@@ -189,7 +193,6 @@ public class TheMachineSubsystem extends SubsystemBase {
     }
 
     public void ledFeedforward(){
-        double color = 0;
         switch (currentState)
         {
             case IDLE:
@@ -209,8 +212,7 @@ public class TheMachineSubsystem extends SubsystemBase {
             case SHOOT_FROM_P3:
             case SHOOT_FROM_P4:
             case SHOOT_FROM_POSE:
-                if (m_shooter.isReady()) color = RGBConstants.shooterReadyColor;
-                else color = RGBConstants.shooterNotReadyColor;
+                color = RGBConstants.shooterNotReadyColor;
                 break;
             case INTAKE:
                 color = RGBConstants.intakeColor;
@@ -219,6 +221,8 @@ public class TheMachineSubsystem extends SubsystemBase {
                 color = RGBConstants.outtakeColor;
                 break;
         }
+
+        if (m_funnel.getState() == AllStates.FunnelStates.FEED) color = RGBConstants.shooterReadyColor;
         rgb.setPosition(color);
     }
 

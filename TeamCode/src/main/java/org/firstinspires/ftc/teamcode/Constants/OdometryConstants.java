@@ -8,7 +8,7 @@ import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
  * Constants for the GoBilda Pinpoint Odometry Computer.
  * Includes hardware names, pod types, directions, and offsets.
  */
-@Configurable
+//@Configurable
 public class OdometryConstants {
         @IgnoreConfigurable
         public static String PINPOINT_NAME = "pinpoint";

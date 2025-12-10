@@ -12,7 +12,6 @@ public class IntakeIntakeRequest extends CommandBase
 {
 
     private final IntakeSubsystem intakeSubsystem;
-    private boolean isFinished;
 
     /**
      * Constructor for IntakeIntakeRequest.
@@ -30,7 +29,6 @@ public class IntakeIntakeRequest extends CommandBase
     public void initialize()
     {
         intakeSubsystem.setState(AllStates.IntakeStates.INTAKE);
-        isFinished = true;
     }
 
     /**
@@ -40,6 +38,6 @@ public class IntakeIntakeRequest extends CommandBase
     @Override
     public boolean isFinished()
     {
-        return isFinished;
+        return true;
     }
 }

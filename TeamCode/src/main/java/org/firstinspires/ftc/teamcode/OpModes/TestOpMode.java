@@ -70,7 +70,6 @@ public class TestOpMode extends CommandOpMode {
 
         schedule(
                 initOpCommand.andThen(periodicOpCommand)
-                //m_machine.idleRequest());
          );
     }
 
@@ -79,7 +78,7 @@ public class TestOpMode extends CommandOpMode {
                 .whenPressed(m_machine.prepP1Request());
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.Y)
-                .whenPressed(m_machine.idleRequest());
+                .whenPressed(m_machine.restRequest());
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.A)
                 .whenPressed(m_machine.shootFromP1Request());
@@ -89,27 +88,26 @@ public class TestOpMode extends CommandOpMode {
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP)
                 .whenHeld(driveAndShootP1)
-                .whenReleased(m_machine.idleRequest());
+                .whenReleased(m_machine.restRequest());
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT)
                 .whenHeld(driveAndShootP2)
-                .whenReleased(m_machine.idleRequest());
+                .whenReleased(m_machine.restRequest());
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN)
                 .whenHeld(driveAndShootP3)
-                .whenReleased(m_machine.idleRequest());
+                .whenReleased(m_machine.restRequest());
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT)
                 .whenHeld(driveAndShootP4)
-                .whenReleased(m_machine.idleRequest());
+                .whenReleased(m_machine.restRequest());
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_STICK_BUTTON)
                 .whenPressed(m_machine.outtakeRequest())
-                .whenReleased(m_machine.idleRequest());
+                .whenReleased(m_machine.restRequest());
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_STICK_BUTTON)
-                .whenPressed(m_machine.intakeRequest())
-                .whenReleased(m_machine.idleRequest());
+                .whenPressed(m_machine.intakeRequest());
 
     }
     public void configureBindingsGamepad2() {

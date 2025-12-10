@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 /**
  * Constants for the Intake subsystem.
  */
-@Configurable
+//@Configurable
 public class IntakeConstants {
     @IgnoreConfigurable
     public static String IntakeMotorName = "intake";
