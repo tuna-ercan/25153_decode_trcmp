@@ -17,6 +17,11 @@ public class ShooterShootP2Request extends CommandBase {
         shooterSubsystem.setState(AllStates.ShooterStates.SHOOT_P2);
     }
 
+
+    @Override
+    public void execute() {
+        shooterSubsystem.setState(AllStates.ShooterStates.SHOOT_P2);
+    }
     @Override
     public boolean isFinished() {
         return true;

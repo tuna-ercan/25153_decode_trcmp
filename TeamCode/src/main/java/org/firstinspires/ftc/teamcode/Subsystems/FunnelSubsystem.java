@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Subsystems;
 
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.SubsystemBase;
+import com.arcrobotics.ftclib.command.WaitUntilCommand;
 import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.NormalizedRGBA;
@@ -19,8 +20,12 @@ import org.firstinspires.ftc.teamcode.Commands.StateRequests.FunnelRequests.Funn
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.FunnelRequests.FunnelPrepRequest;
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.FunnelRequests.FunnelShakeRequest;
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.FunnelRequests.FunnelTestRequest;
+import org.firstinspires.ftc.teamcode.Constants.ShooterConstants;
+import org.firstinspires.ftc.teamcode.Container;
 import org.firstinspires.ftc.teamcode.Utils.AllStates.FunnelStates;
 import org.firstinspires.ftc.teamcode.Constants.FunnelConstants;
+
+import java.util.Objects;
 
 /**
  * Subsystem responsible for the funnel mechanism.
@@ -55,11 +60,7 @@ public class FunnelSubsystem extends SubsystemBase
     private final Command shakeAction;
     private final Command testAction;
 
-    public enum DetectedColor {
-        UNKNOWN,
-        PURPLE,
-        GREEN
-    }
+    private int[] funnelFeedOrder;
 
     /**
      * Creates a new FunnelSubsystem.
@@ -76,7 +77,6 @@ public class FunnelSubsystem extends SubsystemBase
         sensorR = hardwareMap.get(RevColorSensorV3.class, FunnelConstants.colorSensorR);
         sensorM = hardwareMap.get(RevColorSensorV3.class, FunnelConstants.colorSensorM);
 
-
         sensorL.enableLed(true);
         sensorR.enableLed(true);
         sensorM.enableLed(true);
@@ -85,6 +85,8 @@ public class FunnelSubsystem extends SubsystemBase
         leftServo.setDirection(FunnelConstants.LeftDirection);
         middleServo.setDirection(FunnelConstants.MiddleDirection);
         prePrepServo.setDirection(FunnelConstants.PrePrepDirection);
+
+        funnelFeedOrder = FunnelConstants.DefaultFeedOrder;
 
         currentState = FunnelStates.HOME;
         lastState = FunnelStates.HOME;
@@ -216,35 +218,7 @@ public class FunnelSubsystem extends SubsystemBase
         setLeftServo(FunnelConstants.LeftPrep);
     }
 
-    public RevColorSensorV3 getSensorL() {
-        return sensorL;
-    }
-    public RevColorSensorV3 getSensorR() {
-        return sensorR;
-    }
-    public RevColorSensorV3 getSensorM() {
-        return sensorM;
-    }
 
-    public float[] getDetectedColorL() {
-        NormalizedRGBA color = sensorL.getNormalizedColors();
-        float normRed, normGreen, normBlue;
-        normRed = color.red / color.alpha;
-        normGreen = color.green / color.alpha;
-        normBlue = color.blue / color.alpha;
-        return new float[] {normRed,normGreen,normBlue};
-    }
-
-    public double getDistanceL(){return sensorL.getDistance(DistanceUnit.CM);}
-    public double getDistanceM(){return sensorM.getDistance(DistanceUnit.CM);}
-    public double getDistanceR(){return sensorR.getDistance(DistanceUnit.CM);}
-
-    public boolean isFull() {
-        if (getDistanceL() < FunnelConstants.distanceThresh && getDistanceM() < FunnelConstants.distanceThresh && getDistanceR() < FunnelConstants.distanceThresh) {
-            return true;
-        }
-        return false;
-    }
 
     public void setPrePrepServoPrep() {
         setPrePrepServo(FunnelConstants.PrePrepPrep);
@@ -326,5 +300,224 @@ public class FunnelSubsystem extends SubsystemBase
     public void setPatternEnabled(boolean enabled)
     {
         isPatternEnabled = enabled;
+    }
+
+    public double getDistanceL(){return sensorL.getDistance(DistanceUnit.CM);}
+    public double getDistanceM(){return sensorM.getDistance(DistanceUnit.CM);}
+    public double getDistanceR(){return sensorR.getDistance(DistanceUnit.CM);}
+
+    public boolean isFull() {
+        return getDistanceL() < FunnelConstants.distanceThresh && getDistanceM() < FunnelConstants.distanceThresh && getDistanceR() < FunnelConstants.distanceThresh;
+    }
+
+    public RevColorSensorV3 getSensorL() {
+        return sensorL;
+    }
+    public RevColorSensorV3 getSensorR() {
+        return sensorR;
+    }
+    public RevColorSensorV3 getSensorM() {
+        return sensorM;
+    }
+    public double[] getDetectedColorL() {
+        NormalizedRGBA color = sensorL.getNormalizedColors();
+        double normRed, normGreen, normBlue;
+        normRed = Math.floor(color.red / color.alpha*10000) / 10000.0;
+        normGreen = Math.floor(color.green / color.alpha*10000) / 10000.0;
+        normBlue = Math.floor(color.blue / color.alpha*10000) / 10000.0;
+        return new double[] {normRed,normGreen,normBlue};
+    }
+
+    public double[] getDetectedColorM() {
+        NormalizedRGBA color = sensorM.getNormalizedColors();
+        double normRed, normGreen, normBlue;
+        normRed = Math.floor(color.red / color.alpha*10000) / 10000.0;
+        normGreen = Math.floor(color.green / color.alpha*10000) / 10000.0;
+        normBlue = Math.floor(color.blue / color.alpha*10000) / 10000.0;
+        return new double[] {normRed,normGreen,normBlue};
+    }
+
+    public double[] getDetectedColorR() {
+        NormalizedRGBA color = sensorR.getNormalizedColors();
+        double normRed, normGreen, normBlue;
+        normRed = Math.floor(color.red / color.alpha*10000) / 10000.0;
+        normGreen = Math.floor(color.green / color.alpha*10000) / 10000.0;
+        normBlue = Math.floor(color.blue / color.alpha*10000) / 10000.0;
+        return new double[] {normRed,normGreen,normBlue};
+    }
+
+    public boolean checkIsFeed()
+    {
+        return getState() == FunnelStates.FEED;
+    }
+
+    public Command waitForFeed() {
+        return new WaitUntilCommand(this::checkIsFeed);
+    }
+
+    public double colorDistance(double r, double g, double b, double[] t) {
+        return Math.sqrt(
+                Math.pow(r - t[0], 2) +
+                        Math.pow(g - t[1], 2) +
+                        Math.pow(b - t[2], 2)
+        );
+    }
+
+    public double leftGreenDistance() {
+        double[] color = getDetectedColorL();
+        return colorDistance(color[0], color[1], color[2], FunnelConstants.GreenBallColor);
+    }
+
+    public double rightMiddleDistance() {
+        double[] color = getDetectedColorM();
+        return colorDistance(color[0], color[1], color[2], FunnelConstants.GreenBallColor);
+    }
+
+    public double rightGreenDistance() {
+        double[] color = getDetectedColorR();
+        return colorDistance(color[0], color[1], color[2], FunnelConstants.GreenBallColor);
+    }
+
+
+
+
+    public double getColorRatio(double[] color)
+    {
+        double greenDist = colorDistance(color[0], color[1], color[2], FunnelConstants.GreenBallColor);
+        double purpleDist = colorDistance(color[0], color[1], color[2], FunnelConstants.PurpleBallColor);
+        return greenDist / purpleDist;
+    }
+
+    public boolean isGreenBall(double[] color)
+    {
+        return getColorRatio(color) <= FunnelConstants.ColorTolerance;
+    }
+
+    public double getLeftColorRatio()
+    {
+        return getColorRatio(getDetectedColorL());
+    }
+
+    public double getMiddleColorRatio()
+    {
+        return getColorRatio(getDetectedColorM());
+    }
+
+    public double getRightColorRatio()
+    {
+        return getColorRatio(getDetectedColorR());
+    }
+
+    public boolean isGreenBallL()
+    {
+        return isGreenBall(getDetectedColorL());
+    }
+
+    public boolean isGreenBallM()
+    {
+        return isGreenBall(getDetectedColorM());
+    }
+
+    public boolean isGreenBallR()
+    {
+        return isGreenBall(getDetectedColorR());
+    }
+
+    public int[] getFunnelGreenRatioOrder()
+    {
+        int leftOrder = 0;
+        int middleOrder = 0;
+        int rightOrder = 0;
+
+        double leftRatio = getLeftColorRatio();
+        double middleRatio = getMiddleColorRatio();
+        double rightRatio = getRightColorRatio();
+
+        if (leftRatio > middleRatio) {
+            leftOrder++;
+        } else {
+            middleOrder++;
+        }
+
+        if (leftRatio > rightRatio) {
+            leftOrder++;
+        } else {
+            rightOrder++;
+        }
+
+        if (middleRatio > rightRatio) {
+            middleOrder++;
+        } else {
+            rightOrder++;
+        }
+
+
+        return new int[]{leftOrder,middleOrder, rightOrder };
+    }
+
+    public void setFunnelFeedOrder(int[] funnelFeedOrder) {
+
+        this.funnelFeedOrder = funnelFeedOrder;
+    }
+
+    public void setFunnelFeedOrderByColor() {
+
+        int[] newOrder = FunnelConstants.DefaultFeedOrder;
+
+        if (Container.useColor && !(Objects.equals(Container.colorCombination, "x")) && isFull())
+        {
+            int[] greenOrder = getFunnelGreenRatioOrder();
+
+            int indexOfGreen = 0;
+            int indexOfSecond = 0;
+            int indexOfThird = 0;
+
+            for (int i = 0; i < greenOrder.length; i++) {
+                if (greenOrder[i] == 0) {
+                    indexOfGreen = i;
+                }
+                if (greenOrder[i] == 1) {
+                    indexOfSecond = i;
+                }
+                if (greenOrder[i] == 2) {
+                    indexOfThird = i;
+                }
+            }
+
+
+            if (Objects.equals(Container.colorCombination, "GPP"))
+            {
+                newOrder[indexOfGreen] = 0;
+                newOrder[indexOfSecond] = 1;
+                newOrder[indexOfThird] = 2;
+            }
+            else if (Objects.equals(Container.colorCombination, "PGP"))
+            {
+                newOrder[indexOfGreen] = 1;
+                newOrder[indexOfSecond] = 0;
+                newOrder[indexOfThird] = 2;
+            }
+            else if (Objects.equals(Container.colorCombination, "PPG"))
+            {
+                newOrder[indexOfGreen] = 2;
+                newOrder[indexOfSecond] = 1;
+                newOrder[indexOfThird] = 0;
+            }
+            else
+            {
+                setFunnelFeedOrder(FunnelConstants.DefaultFeedOrder);
+            }
+        }
+
+        if (!Container.isBlue) {
+            newOrder = new int[]{newOrder[2], newOrder[1], newOrder[0]};
+        }
+
+        setFunnelFeedOrder(newOrder);
+    }
+
+
+    public int[] getFunnelFeedOrder() {
+        return funnelFeedOrder;
     }
 }

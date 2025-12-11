@@ -18,6 +18,7 @@ public class MachineShootFromP3Action extends ParallelCommandGroup
 
         addCommands(
                 theMachineSubsystem.intakeRequest(AllStates.IntakeStates.IDLE),
+                theMachineSubsystem.funnelRequest(AllStates.FunnelStates.PREP),
                 new SequentialCommandGroup(
                         theMachineSubsystem.shooterRequest(AllStates.ShooterStates.SHOOT_P3),
                         theMachineSubsystem.waitForShooterToBeReady(),

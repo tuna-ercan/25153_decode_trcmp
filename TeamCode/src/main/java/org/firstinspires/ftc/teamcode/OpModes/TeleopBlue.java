@@ -33,10 +33,11 @@ public class TeleopBlue extends CommandOpMode {
 
     private Command periodicOpCommand;
 
-    private Command driveAndShootP1;
+    private Command driveAndShootP5;
     private Command driveAndShootP2;
     private Command driveAndShootP3;
     private Command driveAndShootP4;
+
 
     private PathChain x;
 
@@ -59,16 +60,16 @@ public class TeleopBlue extends CommandOpMode {
                 .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(136))
                 .build();
 
-        driveAndShootP1 = m_drive.driveToShootP1().alongWith(m_machine.prepP1Request()).withTimeout(1700)
-                .andThen(m_machine.shootFromP1Request());
+        driveAndShootP5 = m_drive.driveToShootP5().alongWith(m_machine.prepP5Request()).withTimeout(2000)
+                .andThen(m_machine.shootFromP5Request());
 
-        driveAndShootP2 = m_drive.driveToShootP2().alongWith(m_machine.prepP2Request()).withTimeout(1700)
+        driveAndShootP2 = m_drive.driveToShootP2().alongWith(m_machine.prepP2Request()).withTimeout(2000)
                 .andThen(m_machine.shootFromP2Request());
 
-        driveAndShootP3 = m_drive.driveToShootP3().alongWith(m_machine.prepP3Request()).withTimeout(1700)
+        driveAndShootP3 = m_drive.driveToShootP3().alongWith(m_machine.prepP3Request()).withTimeout(2000)
                 .andThen(m_machine.shootFromP3Request());
 
-        driveAndShootP4 = m_drive.driveToShootP4().alongWith(m_machine.prepP4Request()).withTimeout(1700    )
+        driveAndShootP4 = m_drive.driveToShootP4().alongWith(m_machine.prepP4Request()).withTimeout(2000)
                 .andThen(m_machine.shootFromP4Request());
 
         gamepadEx1 = new GamepadEx(gamepad1);
@@ -98,7 +99,7 @@ public class TeleopBlue extends CommandOpMode {
                 .whenPressed(m_machine.restRequest());
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.B)
-                .whenHeld(driveAndShootP1)
+                .whenHeld(driveAndShootP5)
                 .whenReleased(m_machine.restRequest());
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT)

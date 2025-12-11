@@ -41,6 +41,7 @@ public class FunnelPrepAction extends CommandBase {
     @Override
     public void execute() {
         now = System.currentTimeMillis();
+        funnelSubsystem.setFunnelFeedOrderByColor();
         if (now - startTime <= maxDelay)
         {
             if (now - startTime <= waitForPrep) funnelSubsystem.prepTop();

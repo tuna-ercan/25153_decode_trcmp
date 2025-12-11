@@ -29,4 +29,6 @@ public class IntakeConstants {
      */
     public static double IntakeTestPower = 0.5;
 
+    public static long IntakeIdleDelay = 1750;
+
 }

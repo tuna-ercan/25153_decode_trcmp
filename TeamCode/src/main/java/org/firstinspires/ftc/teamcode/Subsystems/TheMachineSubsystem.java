@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Subsystems;
 
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.SubsystemBase;
+import com.arcrobotics.ftclib.command.WaitCommand;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -13,12 +14,14 @@ import org.firstinspires.ftc.teamcode.Commands.StateActions.TheMachineActions.Ma
 import org.firstinspires.ftc.teamcode.Commands.StateActions.TheMachineActions.MachinePrepP2Action;
 import org.firstinspires.ftc.teamcode.Commands.StateActions.TheMachineActions.MachinePrepP3Action;
 import org.firstinspires.ftc.teamcode.Commands.StateActions.TheMachineActions.MachinePrepP4Action;
+import org.firstinspires.ftc.teamcode.Commands.StateActions.TheMachineActions.MachinePrepP5Action;
 import org.firstinspires.ftc.teamcode.Commands.StateActions.TheMachineActions.MachineRestAction;
 import org.firstinspires.ftc.teamcode.Commands.StateActions.TheMachineActions.MachineShakeAction;
 import org.firstinspires.ftc.teamcode.Commands.StateActions.TheMachineActions.MachineShootFromP1Action;
 import org.firstinspires.ftc.teamcode.Commands.StateActions.TheMachineActions.MachineShootFromP2Action;
 import org.firstinspires.ftc.teamcode.Commands.StateActions.TheMachineActions.MachineShootFromP3Action;
 import org.firstinspires.ftc.teamcode.Commands.StateActions.TheMachineActions.MachineShootFromP4Action;
+import org.firstinspires.ftc.teamcode.Commands.StateActions.TheMachineActions.MachineShootFromP5Action;
 import org.firstinspires.ftc.teamcode.Commands.StateActions.TheMachineActions.MachineShootFromPoseAction;
 import org.firstinspires.ftc.teamcode.Commands.StateActions.TheMachineActions.MachineTestAction;
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.TheMachineRequests.MachineIdleRequest;
@@ -29,19 +32,24 @@ import org.firstinspires.ftc.teamcode.Commands.StateRequests.TheMachineRequests.
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.TheMachineRequests.MachinePrepP2Request;
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.TheMachineRequests.MachinePrepP3Request;
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.TheMachineRequests.MachinePrepP4Request;
+import org.firstinspires.ftc.teamcode.Commands.StateRequests.TheMachineRequests.MachinePrepP5Request;
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.TheMachineRequests.MachineRestRequest;
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.TheMachineRequests.MachineShakeRequest;
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.TheMachineRequests.MachineShootFromP1Request;
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.TheMachineRequests.MachineShootFromP2Request;
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.TheMachineRequests.MachineShootFromP3Request;
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.TheMachineRequests.MachineShootFromP4Request;
+import org.firstinspires.ftc.teamcode.Commands.StateRequests.TheMachineRequests.MachineShootFromP5Request;
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.TheMachineRequests.MachineShootFromPoseRequest;
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.TheMachineRequests.MachineTestRequest;
 import org.firstinspires.ftc.teamcode.Constants.RGBConstants;
+import org.firstinspires.ftc.teamcode.Container;
 import org.firstinspires.ftc.teamcode.Utils.AllStates;
 import org.firstinspires.ftc.teamcode.Utils.AllStates.MachineStates;
 import org.firstinspires.ftc.teamcode.Constants.TheMachineConstants;
 import org.firstinspires.ftc.teamcode.Utils.LimelightHandler;
+
+import java.util.Objects;
 
 /**
  * TheMachineSubsystem acts as a supervisor or a "super-subsystem" that coordinates
@@ -68,10 +76,12 @@ public class TheMachineSubsystem extends SubsystemBase {
     private final Command prepP2Action;
     private final Command prepP3Action;
     private final Command prepP4Action;
+    private final Command prepP5Action;
     private final Command shootFromP1Action;
     private final Command shootFromP2Action;
     private final Command shootFromP3Action;
     private final Command shootFromP4Action;
+    private final Command shootFromP5Action;
     private final Command shootFromPoseAction;
     private final Command intakeAction;
     private final Command outtakeAction;
@@ -108,10 +118,12 @@ public class TheMachineSubsystem extends SubsystemBase {
         prepP2Action = new MachinePrepP2Action(this);
         prepP3Action = new MachinePrepP3Action(this);
         prepP4Action = new MachinePrepP4Action(this);
+        prepP5Action = new MachinePrepP5Action(this);
         shootFromP1Action = new MachineShootFromP1Action(this);
         shootFromP2Action = new MachineShootFromP2Action(this);
         shootFromP3Action = new MachineShootFromP3Action(this);
         shootFromP4Action = new MachineShootFromP4Action(this);
+        shootFromP5Action = new MachineShootFromP5Action(this);
         shootFromPoseAction = new MachineShootFromPoseAction(this);
         intakeAction = new MachineIntakeAction(this);
         outtakeAction = new MachineOuttakeAction(this);
@@ -131,6 +143,8 @@ public class TheMachineSubsystem extends SubsystemBase {
         stateMachine();
         limelightHandler.updateResult();
         ledFeedforward();
+        if(Objects.equals(Container.colorCombination, "x"))
+            Container.colorCombination = limelightHandler.getCombination();
     }
 
     /**
@@ -159,6 +173,9 @@ public class TheMachineSubsystem extends SubsystemBase {
             case PREP_P4:
                 if(!prepP4Action.isScheduled()) prepP4Action.schedule();
                 break;
+            case PREP_P5:
+                if(!prepP5Action.isScheduled()) prepP5Action.schedule();
+                break;
             case SHOOT_FROM_P1:
                 if(!shootFromP1Action.isScheduled()) shootFromP1Action.schedule();
                 break;
@@ -170,6 +187,9 @@ public class TheMachineSubsystem extends SubsystemBase {
                 break;
             case SHOOT_FROM_P4:
                 if(!shootFromP4Action.isScheduled()) shootFromP4Action.schedule();
+                break;
+            case SHOOT_FROM_P5:
+                if(!shootFromP5Action.isScheduled()) shootFromP5Action.schedule();
                 break;
             case SHOOT_FROM_POSE:
                 if(!shootFromPoseAction.isScheduled()) shootFromPoseAction.schedule();
@@ -205,6 +225,7 @@ public class TheMachineSubsystem extends SubsystemBase {
             case PREP_P2:
             case PREP_P3:
             case PREP_P4:
+            case PREP_P5:
                 if (m_funnel.isFull()) color = RGBConstants.intakeFullColor;
                 else color = RGBConstants.prepColor;
                 break;
@@ -212,6 +233,7 @@ public class TheMachineSubsystem extends SubsystemBase {
             case SHOOT_FROM_P2:
             case SHOOT_FROM_P3:
             case SHOOT_FROM_P4:
+            case SHOOT_FROM_P5:
             case SHOOT_FROM_POSE:
                 color = RGBConstants.shooterNotReadyColor;
                 break;
@@ -321,6 +343,11 @@ public class TheMachineSubsystem extends SubsystemBase {
         return new MachineShootFromP4Request(this);
     }
 
+    public Command shootFromP5Request()
+    {
+        return new MachineShootFromP5Request(this);
+    }
+
     public Command prepP1Request()
     {
         return new MachinePrepP1Request(this);
@@ -340,6 +367,12 @@ public class TheMachineSubsystem extends SubsystemBase {
     {
         return new MachinePrepP4Request(this);
     }
+
+    public Command prepP5Request()
+    {
+        return new MachinePrepP5Request(this);
+    }
+
 
     /**
      * Delegates intake requests to the IntakeSubsystem.
@@ -410,6 +443,8 @@ public class TheMachineSubsystem extends SubsystemBase {
                 return m_shooter.shootP3Request();
             case SHOOT_P4:
                 return m_shooter.shootP4Request();
+            case SHOOT_P5:
+                return m_shooter.shootP5Request();
             case SHOOT_FROM_POSE:
                 return m_shooter.shootFromPoseRequest();
             case REVERSE:
@@ -447,6 +482,12 @@ public class TheMachineSubsystem extends SubsystemBase {
     {
         return m_shooter.waitForReady().withTimeout(TheMachineConstants.timeoutForShooterToBeReady);
     }
+
+    public Command waitForFeederToFeed()
+    {
+        return m_funnel.waitForFeed().andThen(new WaitCommand(TheMachineConstants.waitAfterFeed));
+    }
+
 
     /**
      * Checks if all relevant subsystems are ready.

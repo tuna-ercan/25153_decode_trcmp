@@ -2,6 +2,9 @@ package org.firstinspires.ftc.teamcode.Commands.StateActions.IntakeActions;
 
 import com.arcrobotics.ftclib.command.CommandBase;
 
+import org.firstinspires.ftc.teamcode.Constants.IntakeConstants;
+import org.firstinspires.ftc.teamcode.Container;
+import org.firstinspires.ftc.teamcode.Subsystems.FunnelSubsystem;
 import org.firstinspires.ftc.teamcode.Utils.AllStates;
 import org.firstinspires.ftc.teamcode.Subsystems.IntakeSubsystem;
 
@@ -14,6 +17,10 @@ public class IntakeIdleAction extends CommandBase
 
     private final IntakeSubsystem intakeSubsystem;
 
+    private long now;
+    private long startTime;
+    private final long intakeDelay;
+
     /**
      * Constructor for IntakeIdleAction.
      * @param intakeSubsystem The intake subsystem instance.
@@ -22,6 +29,8 @@ public class IntakeIdleAction extends CommandBase
     {
         this.intakeSubsystem = intakeSubsystem;
         addRequirements(intakeSubsystem);
+
+        intakeDelay = IntakeConstants.IntakeIdleDelay;
     }
 
     /**
@@ -30,7 +39,8 @@ public class IntakeIdleAction extends CommandBase
     @Override
     public void initialize()
     {
-        intakeSubsystem.stop();
+        startTime = System.currentTimeMillis();
+        now = startTime;
     }
 
     /**
@@ -40,7 +50,20 @@ public class IntakeIdleAction extends CommandBase
     @Override
     public void execute()
     {
-        intakeSubsystem.stop();
+        if(!Container.isTeleop && intakeSubsystem.getLastState() == AllStates.IntakeStates.INTAKE)
+        {
+            if (now - startTime <= intakeDelay)
+            {
+                intakeSubsystem.intake();
+            }
+            else if (now - startTime <= 1.5 * intakeDelay)
+            {
+                intakeSubsystem.outtake();
+            }
+            else intakeSubsystem.idle();
+            now = System.currentTimeMillis();
+        }
+        else intakeSubsystem.idle();
     }
 
     private boolean checkFinish()

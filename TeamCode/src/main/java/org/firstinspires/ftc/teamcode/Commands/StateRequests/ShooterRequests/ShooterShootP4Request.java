@@ -16,7 +16,10 @@ public class ShooterShootP4Request extends CommandBase {
     public void initialize() {
         shooterSubsystem.setState(AllStates.ShooterStates.SHOOT_P4);
     }
-
+    @Override
+    public void execute() {
+        shooterSubsystem.setState(AllStates.ShooterStates.SHOOT_P4);
+    }
     @Override
     public boolean isFinished() {
         return true;

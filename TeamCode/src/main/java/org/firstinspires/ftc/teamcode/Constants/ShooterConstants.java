@@ -31,9 +31,9 @@ public class ShooterConstants {
     public static double MaxHoodPosition = 0.18;
 
 
-    public static double KP = 0.0002 ; //attım
+    public static double KP = 0.00026 ; //attım
 
-    public static double KD = 0.00015; //attım
+    public static double KD = 0.0002; //attım
 
     public static PIDCoefficients LeftPIDCoefficients = new PIDCoefficients(KP, 0, KD);
     public static PIDCoefficients MiddlePIDCoefficients = new PIDCoefficients(KP, 0, KD);
@@ -46,25 +46,27 @@ public class ShooterConstants {
     public static double RpmTol = 50;
     public static double HoodTol = 0.0025;
 
-    public static double RestRPM = 2000;
-    public static double RestHoodPos = 3;
+    public static double RestRPM = 2400;
+    public static double RestRPMAuto = 2800;
+
+    public static double RestHoodPos = 5;
 
     public static double TestRpm = 2650;
-    public static double TestHoodPos = 0;
+    public static double TestHoodPos = 5;
 
     public static double P1Rpm = 2650;
     public static double P1HoodPos = 15;
 
-    public static double P2Rpm = 2575;
+    public static double P2Rpm = 2571;
     public static double P2HoodPos = 18;
 
     public static double P3Rpm = 2980;
     public static double P3HoodPos = 6;
 
-    public static double P4Rpm = 3300;
-    public static double P4HoodPos = 2;
-    public static double P5Rpm = 2800;
-    public static double P5HoodPos = 17;
+    public static double P4Rpm = 3450;
+    public static double P4HoodPos = 3;
+    public static double P5Rpm = 2850;
+    public static double P5HoodPos = 10;
 
 
 

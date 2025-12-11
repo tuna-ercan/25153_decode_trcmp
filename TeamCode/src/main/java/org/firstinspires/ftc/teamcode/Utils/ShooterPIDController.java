@@ -17,4 +17,19 @@ public class ShooterPIDController extends PIDController
         super(pidCoefficients.p, pidCoefficients.i, pidCoefficients.d);
     }
 
+    public void setPidCoefficients(PIDCoefficients pidCoefficients)
+    {
+        setPID(pidCoefficients.p, pidCoefficients.i, pidCoefficients.d);
+    }
+
+    public PIDCoefficients getPidCoefficients()
+    {
+        return new PIDCoefficients(getP(), getI(), getD());
+    }
+
+    public void  checkAndUpdateCoefficients(PIDCoefficients pidCoefficients)
+    {
+        if (pidCoefficients.p != getP() || pidCoefficients.i != getI() || pidCoefficients.d != getD()) setPidCoefficients(pidCoefficients);
+    }
+
 }

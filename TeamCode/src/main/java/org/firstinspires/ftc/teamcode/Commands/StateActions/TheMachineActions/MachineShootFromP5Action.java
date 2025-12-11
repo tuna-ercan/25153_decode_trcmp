@@ -18,6 +18,7 @@ public class MachineShootFromP5Action extends ParallelCommandGroup
 
         addCommands(
                 theMachineSubsystem.intakeRequest(AllStates.IntakeStates.IDLE),
+                theMachineSubsystem.funnelRequest(AllStates.FunnelStates.PREP),
                 new SequentialCommandGroup(
                         theMachineSubsystem.shooterRequest(AllStates.ShooterStates.SHOOT_P5),
                         theMachineSubsystem.waitForShooterToBeReady(),
@@ -40,7 +41,7 @@ public class MachineShootFromP5Action extends ParallelCommandGroup
 
     private boolean checkFinish()
     {
-        return theMachineSubsystem.getState() != AllStates.MachineStates.SHOOT_FROM_P4;
+        return theMachineSubsystem.getState() != AllStates.MachineStates.SHOOT_FROM_P5;
     }
 
     @Override

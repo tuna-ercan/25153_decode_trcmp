@@ -10,6 +10,8 @@ import org.firstinspires.ftc.teamcode.Subsystems.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.ShooterSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.TheMachineSubsystem;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.bylazar.telemetry.PanelsTelemetry;
 import com.bylazar.telemetry.JoinedTelemetry;
@@ -41,6 +43,7 @@ public class Mouth {
 
         PanelsFieldDrawing.init();
 
+        telemetry = new MultipleTelemetry(FtcDashboard.getInstance().getTelemetry(),telemetry);
         panelsTelemetry = PanelsTelemetry.INSTANCE.getFtcTelemetry();
         joinedTelemetry = new JoinedTelemetry(panelsTelemetry, telemetry);
 
@@ -73,6 +76,7 @@ public class Mouth {
 
         // Shooter
         joinedTelemetry.addData("Shooter-State", shooterSubsystem.getState());
+        joinedTelemetry.addData("Shooter-IsReady", shooterSubsystem.isReady());
 
         joinedTelemetry.addData("Shooter-RPM-Goal", shooterSubsystem.getGoalRPM());
         joinedTelemetry.addData("Shooter-RPM-Left", shooterSubsystem.getLeftRPM());

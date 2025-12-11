@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 /**
  * Constants related to the drivetrain hardware and control.
  */
-@Configurable
+//@Configurable
 public class DrivetrainConstants {
 
     @IgnoreConfigurable
@@ -53,7 +53,7 @@ public class DrivetrainConstants {
     /**
      * Tolerance for Heading in degrees/radians (depending on implementation, usually radians in PedroPathing).
      */
-    public static double TolH = 10;
+    public static double TolH = Math.toRadians(5);
 
     public static double autoDriveInterpolator = 0.9;
     public static double driveBrakingStrength = 0.9;

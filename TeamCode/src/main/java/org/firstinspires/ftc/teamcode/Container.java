@@ -25,9 +25,9 @@ public class Container
      * Current shooting combination
      * Updated by the LimelightHandler.
      */
-    public static String colorCombination = null;
+    public static String colorCombination = "x";
 
-    public static boolean useColor = false;
+    public static boolean useColor = true;
 
     public static double headingRadians = 0;
 

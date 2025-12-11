@@ -20,7 +20,7 @@ public class PedroConstants {
             .forwardZeroPowerAcceleration(-48.23)
             .lateralZeroPowerAcceleration(-39.946)
             .useSecondaryTranslationalPIDF(true)
-            .useSecondaryHeadingPIDF(true) // bu lazım --> yaptım işte
+            .useSecondaryHeadingPIDF(false) // bu lazım --> yaptım işte
             .useSecondaryDrivePIDF(true)
             .drivePIDFCoefficients(new FilteredPIDFCoefficients(0.006,0,0.00155,0.06,0.001)) //0.00255,0,0.00064,0.06,0.001
             .secondaryDrivePIDFCoefficients(new FilteredPIDFCoefficients(0.0235,0, 0.001089, 0.6, 0.001))
@@ -43,7 +43,7 @@ public class PedroConstants {
             .rightFrontMotorDirection(DrivetrainConstants.RightFrontDirection)
             .rightRearMotorDirection(DrivetrainConstants.RightBackDirection);
 
-    public static PathConstraints pathConstraints = new PathConstraints(0.99, 100, 1, 1);
+    public static PathConstraints pathConstraints = new PathConstraints(0.99, 100, 0.9, 1);
     public static PinpointConstants localizerConstants = new PinpointConstants()
             .forwardPodY(1.247) //inch old: -3.50881 1.247
             .strafePodX(-3.149) //inch old: -1.24755906

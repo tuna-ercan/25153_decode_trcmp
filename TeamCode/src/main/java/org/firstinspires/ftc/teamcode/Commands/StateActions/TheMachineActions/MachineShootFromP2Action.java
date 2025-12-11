@@ -18,6 +18,7 @@ public class MachineShootFromP2Action extends ParallelCommandGroup
 
         addCommands(
                 theMachineSubsystem.intakeRequest(AllStates.IntakeStates.IDLE),
+                theMachineSubsystem.funnelRequest(AllStates.FunnelStates.PREP),
                 new SequentialCommandGroup(
                         theMachineSubsystem.shooterRequest(AllStates.ShooterStates.SHOOT_P2),
                         theMachineSubsystem.waitForShooterToBeReady(),

@@ -25,7 +25,7 @@ public class AllStates {
         OUTTAKE,
         PARK,
         SHAKE,
-        TEST
+        PREP_P5, SHOOT_FROM_P5, TEST
     }
 
     /**

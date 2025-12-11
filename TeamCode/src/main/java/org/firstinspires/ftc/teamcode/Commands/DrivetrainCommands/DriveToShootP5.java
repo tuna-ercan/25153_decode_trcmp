@@ -56,6 +56,12 @@ public class DriveToShootP5 extends CommandBase {
         {
             m_drive.followPathTeleop(path.get());
         }
+
+        if (m_drive.atPose(goalPosition) && !m_drive.isBusy() && !m_drive.headingReached())
+        {
+            m_drive.getFollower().turnTo(goalPosition.getHeading());
+        }
+
     }
 
     @Override

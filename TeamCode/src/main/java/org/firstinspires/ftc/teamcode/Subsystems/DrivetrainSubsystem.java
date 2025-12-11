@@ -15,6 +15,7 @@ import org.firstinspires.ftc.teamcode.Commands.DrivetrainCommands.DriveToShootP1
 import org.firstinspires.ftc.teamcode.Commands.DrivetrainCommands.DriveToShootP2;
 import org.firstinspires.ftc.teamcode.Commands.DrivetrainCommands.DriveToShootP3;
 import org.firstinspires.ftc.teamcode.Commands.DrivetrainCommands.DriveToShootP4;
+import org.firstinspires.ftc.teamcode.Commands.DrivetrainCommands.DriveToShootP5;
 import org.firstinspires.ftc.teamcode.Utils.AllStates.DrivetrainStates;
 import org.firstinspires.ftc.teamcode.Constants.DrivetrainConstants;
 import org.firstinspires.ftc.teamcode.PedroFiles.PedroConstants;
@@ -44,6 +45,8 @@ public class DrivetrainSubsystem extends SubsystemBase
     private final Command driveToShootP3;
     private final Command driveToShootP4;
 
+    private final Command driveToShootP5;
+
 
 
 
@@ -70,6 +73,7 @@ public class DrivetrainSubsystem extends SubsystemBase
         driveToShootP2 = new DriveToShootP2(this);
         driveToShootP3 = new DriveToShootP3(this);
         driveToShootP4 = new DriveToShootP4(this);
+        driveToShootP5 = new DriveToShootP5(this);
     }
 
     @Override
@@ -312,5 +316,10 @@ public class DrivetrainSubsystem extends SubsystemBase
     public Command driveToShootP4()
     {
         return driveToShootP4;
+    }
+
+    public Command driveToShootP5()
+    {
+        return driveToShootP5;
     }
 }

@@ -26,11 +26,11 @@ public class DriveToPoseAuto extends CommandBase {
      * Constructor for DriveToShootP1.
      * @param drive The DrivetrainSubsystem instance.
      */
-    public DriveToPoseAuto(DrivetrainSubsystem drive)
+    public DriveToPoseAuto(DrivetrainSubsystem drive, Pose goal)
     {
         this.m_drive = drive;
 
-        goalPosition = (Container.isBlue ? BluePositions.SHOOT_P1 : RedPositions.SHOOT_P1);
+        goalPosition = goal;
 
         path = () -> m_drive.pathBuilder() //Lazy Curve Generation
                 .addPath(new Path(new BezierLine(m_drive::getPose, goalPosition)))

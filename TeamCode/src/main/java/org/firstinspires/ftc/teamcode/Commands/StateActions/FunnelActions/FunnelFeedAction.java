@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Commands.StateActions.FunnelActions;
 
 import com.arcrobotics.ftclib.command.CommandBase;
 
+import org.firstinspires.ftc.teamcode.Container;
 import org.firstinspires.ftc.teamcode.Utils.AllStates;
 import org.firstinspires.ftc.teamcode.Constants.FunnelConstants;
 import org.firstinspires.ftc.teamcode.Subsystems.FunnelSubsystem;
@@ -16,10 +17,10 @@ public class FunnelFeedAction extends CommandBase
     private final FunnelSubsystem funnelSubsystem;
     private long now;
     private long startTime;
-    private final long leftDelay;
-    private final long middleDelay;
-    private final long rightDelay;
-    private final long maxDelay;
+    private long leftDelay;
+    private long middleDelay;
+    private long rightDelay;
+    private long maxDelay;
     /**
      * Constructor for FunnelFeedAction.
      * @param funnelSubsystem The funnel subsystem instance.
@@ -29,10 +30,14 @@ public class FunnelFeedAction extends CommandBase
         addRequirements(funnelSubsystem);
         this.funnelSubsystem = funnelSubsystem;
 
-        leftDelay = 0;
-        middleDelay = FunnelConstants.FeedDelay*2;
-        rightDelay = FunnelConstants.FeedDelay;
+        funnelSubsystem.setFunnelFeedOrderByColor();
+        int[] feedOrder = funnelSubsystem.getFunnelFeedOrder();
+
+        leftDelay = FunnelConstants.FeedDelay*feedOrder[0];
+        middleDelay = FunnelConstants.FeedDelay*feedOrder[1];
+        rightDelay = FunnelConstants.FeedDelay*feedOrder[2];
         maxDelay = FunnelConstants.FeedDelay*5;
+
     }
 
     /**
@@ -43,6 +48,13 @@ public class FunnelFeedAction extends CommandBase
     {
         startTime = System.currentTimeMillis();
         now = startTime;
+
+        int[] feedOrder = funnelSubsystem.getFunnelFeedOrder();
+        funnelSubsystem.setFunnelFeedOrderByColor();
+        leftDelay = FunnelConstants.FeedDelay*feedOrder[0];
+        middleDelay = FunnelConstants.FeedDelay*feedOrder[1];
+        rightDelay = FunnelConstants.FeedDelay*feedOrder[2];
+        maxDelay = FunnelConstants.FeedDelay*5;
     }
 
     /**

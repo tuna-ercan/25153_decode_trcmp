@@ -136,8 +136,8 @@ public class IntakeSubsystem extends SubsystemBase {
         return new IntakeTestRequest(this);
     }
 
-    public void stop() {
-        intakeMotor.setPower(0);
+    public void idle() {
+        stop();
     }
 
     public void intake() {
@@ -154,5 +154,9 @@ public class IntakeSubsystem extends SubsystemBase {
 
     public void test() {
         intakeMotor.setPower(IntakeConstants.IntakeTestPower);
+    }
+
+    public void stop() {
+        intakeMotor.setPower(0);
     }
 }

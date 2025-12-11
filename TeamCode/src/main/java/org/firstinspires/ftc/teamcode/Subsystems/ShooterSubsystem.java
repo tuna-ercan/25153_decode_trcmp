@@ -21,6 +21,7 @@ import org.firstinspires.ftc.teamcode.Commands.StateActions.ShooterActions.Shoot
 import org.firstinspires.ftc.teamcode.Commands.StateActions.ShooterActions.ShooterShootP2Action;
 import org.firstinspires.ftc.teamcode.Commands.StateActions.ShooterActions.ShooterShootP3Action;
 import org.firstinspires.ftc.teamcode.Commands.StateActions.ShooterActions.ShooterShootP4Action;
+import org.firstinspires.ftc.teamcode.Commands.StateActions.ShooterActions.ShooterShootP5Action;
 import org.firstinspires.ftc.teamcode.Commands.StateActions.ShooterActions.ShooterTestAction;
 import org.firstinspires.ftc.teamcode.Commands.StateActions.ShooterActions.ShooterZeroAction;
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.ShooterRequests.ShooterRestRequest;
@@ -31,6 +32,7 @@ import org.firstinspires.ftc.teamcode.Commands.StateRequests.ShooterRequests.Sho
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.ShooterRequests.ShooterShootP2Request;
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.ShooterRequests.ShooterShootP3Request;
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.ShooterRequests.ShooterShootP4Request;
+import org.firstinspires.ftc.teamcode.Commands.StateRequests.ShooterRequests.ShooterShootP5Request;
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.ShooterRequests.ShooterTestRequest;
 import org.firstinspires.ftc.teamcode.Commands.StateRequests.ShooterRequests.ShooterZeroRequest;
 import org.firstinspires.ftc.teamcode.Utils.AllStates.ShooterStates;
@@ -58,9 +60,9 @@ public class ShooterSubsystem extends SubsystemBase {
     private final DcMotorEx middleMotor;
     private final Servo hoodServo;
 
-    private final PIDController leftPID;
-    private final PIDController middlePID;
-    private final PIDController rightPID;
+    private final ShooterPIDController leftPID;
+    private final ShooterPIDController middlePID;
+    private final ShooterPIDController rightPID;
 
     private final double restRpm;
     private final double p1Rpm;
@@ -96,6 +98,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private final Command shootP2Action;
     private final Command shootP3Action;
     private final Command shootP4Action;
+    private final Command shootP5Action;
     private final Command shootFromPoseAction;
     private final Command reverseAction;
     private final Command shakeAction;
@@ -161,6 +164,7 @@ public class ShooterSubsystem extends SubsystemBase {
         shootP2Action = new ShooterShootP2Action(this);
         shootP3Action = new ShooterShootP3Action(this);
         shootP4Action = new ShooterShootP4Action(this);
+        shootP5Action = new ShooterShootP5Action(this);
         shootFromPoseAction = new ShooterShootFromPoseAction(this);
         reverseAction = new ShooterReverseAction(this);
         shakeAction = new ShooterShakeAction(this);
@@ -170,6 +174,11 @@ public class ShooterSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         stateMachine();
+
+
+        //leftPID.checkAndUpdateCoefficients(ShooterConstants.LeftPIDCoefficients);
+        //middlePID.checkAndUpdateCoefficients(ShooterConstants.MiddlePIDCoefficients);
+        //rightPID.checkAndUpdateCoefficients(ShooterConstants.RightPIDCoefficients);
     }
 
     /**
@@ -194,6 +203,9 @@ public class ShooterSubsystem extends SubsystemBase {
                 break;
             case SHOOT_P4:
                 if(!shootP4Action.isScheduled()) shootP4Action.schedule();
+                break;
+            case SHOOT_P5:
+                if(!shootP5Action.isScheduled()) shootP5Action.schedule();
                 break;
             case SHOOT_FROM_POSE:
                 if(!shootFromPoseAction.isScheduled()) shootFromPoseAction.schedule();
@@ -242,6 +254,7 @@ public class ShooterSubsystem extends SubsystemBase {
     public Command shootP2Request() { return new ShooterShootP2Request(this); }
     public Command shootP3Request() { return new ShooterShootP3Request(this); }
     public Command shootP4Request() { return new ShooterShootP4Request(this); }
+    public Command shootP5Request() { return new ShooterShootP5Request(this); }
     public Command shootFromPoseRequest() { return new ShooterShootFromPoseRequest(this); }
     public Command reverseRequest() { return new ShooterReverseRequest(this); }
     public Command shakeRequest() { return new ShooterShakeRequest(this); }
@@ -411,7 +424,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     private void setIsReadyByChecking()
     {
-        setIsReady(checkRPM(goalRPM) && checkHood(goalHood));
+        setIsReady(checkRPM(goalRPM));
     }
 
     public void zero()
@@ -429,7 +442,10 @@ public class ShooterSubsystem extends SubsystemBase {
     {
         setIsReadyByChecking();
         setHoodPosition(ShooterConstants.RestHoodPos);
-        controlMotorRPM(ShooterConstants.RestRPM);
+
+        if(!Container.isTeleop) controlMotorRPM(ShooterConstants.RestRPMAuto);
+        else controlMotorRPM(ShooterConstants.RestRPM);
+
     }
 
     public void shootP1()
