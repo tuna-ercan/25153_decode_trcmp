@@ -20,11 +20,12 @@ public class PedroConstants {
             .forwardZeroPowerAcceleration(-48.23)
             .lateralZeroPowerAcceleration(-39.946)
             .useSecondaryTranslationalPIDF(true)
-            .useSecondaryHeadingPIDF(false) // bu lazım
+            .useSecondaryHeadingPIDF(true) // bu lazım --> yaptım işte
             .useSecondaryDrivePIDF(true)
             .drivePIDFCoefficients(new FilteredPIDFCoefficients(0.006,0,0.00155,0.06,0.001)) //0.00255,0,0.00064,0.06,0.001
             .secondaryDrivePIDFCoefficients(new FilteredPIDFCoefficients(0.0235,0, 0.001089, 0.6, 0.001))
             .headingPIDFCoefficients(new PIDFCoefficients(0.75,0,0.032,0.017))
+            .secondaryHeadingPIDFCoefficients(new PIDFCoefficients(1.5,0,0.05,0.01))
             .translationalPIDFCoefficients(new PIDFCoefficients(0.11,0,0.0095,0.008))
             .secondaryTranslationalPIDFCoefficients(new PIDFCoefficients(0.0875,0,0.032,0.012))
             .mass(16.2);

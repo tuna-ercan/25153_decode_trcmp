@@ -10,6 +10,7 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.bylazar.telemetry.JoinedTelemetry;
 import com.bylazar.telemetry.PanelsTelemetry;
 import com.bylazar.telemetry.TelemetryManager;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Container;
@@ -20,6 +21,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.ShooterSubsystem;
 import org.firstinspires.ftc.teamcode.Utils.PanelsFieldDrawing;
 
 @TeleOp(name = "TEST_SUBSYSTEM")
+@Disabled
 public class TestOpModeForSubsystem extends CommandOpMode {
     private TelemetryManager.TelemetryWrapper panelsTelemetry;
     private JoinedTelemetry joinedTelemetry;
