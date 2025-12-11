@@ -205,7 +205,8 @@ public class TheMachineSubsystem extends SubsystemBase {
             case PREP_P2:
             case PREP_P3:
             case PREP_P4:
-                color = RGBConstants.prepColor;
+                if (m_funnel.isFull()) color = RGBConstants.intakeFullColor;
+                else color = RGBConstants.prepColor;
                 break;
             case SHOOT_FROM_P1:
             case SHOOT_FROM_P2:
@@ -215,7 +216,7 @@ public class TheMachineSubsystem extends SubsystemBase {
                 color = RGBConstants.shooterNotReadyColor;
                 break;
             case INTAKE:
-                color = RGBConstants.intakeColor;
+                 color = RGBConstants.intakeColor;
                 break;
             case OUTTAKE:
                 color = RGBConstants.outtakeColor;

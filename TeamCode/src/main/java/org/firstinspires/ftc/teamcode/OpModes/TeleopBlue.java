@@ -43,6 +43,9 @@ public class TeleopBlue extends CommandOpMode {
     @Override
     public void initialize()
     {
+        Container.isBlue = true;
+        Container.isTeleop = true;
+
         m_drive = new DrivetrainSubsystem(hardwareMap);
         m_machine = new TheMachineSubsystem(hardwareMap);
         mouth = new Mouth(m_machine,m_drive, telemetry);
@@ -77,8 +80,6 @@ public class TeleopBlue extends CommandOpMode {
         initOpCommand = new InstantCommand(() -> {
             m_drive.startTeleopDrive();
             m_machine.funnelRequest(AllStates.FunnelStates.HOME);
-            Container.isBlue = true;
-            Container.isTeleop = true;
         });
 
         periodicOpCommand = new RunCommand(() -> {
@@ -104,7 +105,7 @@ public class TeleopBlue extends CommandOpMode {
                 .whenHeld(driveAndShootP2)
                 .whenReleased(m_machine.restRequest());
 
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN)
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.A)
                 .whenHeld(driveAndShootP3)
                 .whenReleased(m_machine.restRequest());
 

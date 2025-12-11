@@ -40,10 +40,33 @@ public class TeleopRed extends CommandOpMode {
     @Override
     public void initialize()
     {
+        Container.isBlue = false;
+        Container.isTeleop = true;
         m_drive = new DrivetrainSubsystem(hardwareMap);
         m_machine = new TheMachineSubsystem(hardwareMap);
         mouth = new Mouth(m_machine,m_drive, telemetry);
 
+
+
+        gamepadEx1 = new GamepadEx(gamepad1);
+        gamepadEx2 = new GamepadEx(gamepad2);
+
+
+        initOpCommand = new InstantCommand(() -> {
+            m_drive.startTeleopDrive();
+            m_machine.funnelRequest(AllStates.FunnelStates.HOME);
+            Container.isBlue = false;
+            Container.isTeleop = true;
+        });
+
+        periodicOpCommand = new RunCommand(() -> {
+            m_drive.setTeleopDriveFieldCentric(gamepadEx1);
+            mouth.speak();
+        });
+
+        schedule(
+                initOpCommand.andThen(periodicOpCommand)
+        );
         x = m_drive.getFollower().pathBuilder()
                 .addPath(                        new BezierCurve(
                         new Pose(63.398, 11.073),
@@ -65,27 +88,8 @@ public class TeleopRed extends CommandOpMode {
         driveAndShootP4 = m_drive.driveToShootP4().alongWith(m_machine.prepP4Request()).withTimeout(1700    )
                 .andThen(m_machine.shootFromP4Request());
 
-        gamepadEx1 = new GamepadEx(gamepad1);
-        gamepadEx2 = new GamepadEx(gamepad2);
-
         configureBindingsGamepad1();
         configureBindingsGamepad2();
-
-        initOpCommand = new InstantCommand(() -> {
-            m_drive.startTeleopDrive();
-            m_machine.funnelRequest(AllStates.FunnelStates.HOME);
-            Container.isBlue = false;
-            Container.isTeleop = true;
-        });
-
-        periodicOpCommand = new RunCommand(() -> {
-            m_drive.setTeleopDriveFieldCentric(gamepadEx1);
-            mouth.speak();
-        });
-
-        schedule(
-                initOpCommand.andThen(periodicOpCommand)
-        );
     }
 
     public void configureBindingsGamepad1() {
@@ -101,7 +105,7 @@ public class TeleopRed extends CommandOpMode {
                 .whenHeld(driveAndShootP2)
                 .whenReleased(m_machine.restRequest());
 
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN)
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.A)
                 .whenHeld(driveAndShootP3)
                 .whenReleased(m_machine.restRequest());
 

@@ -17,7 +17,7 @@ public class IntakeConstants {
     /**
      * Power for the intake motor when intaking game elements.
      */
-    public static double IntakeIntakePower = 0.75;
+    public static double IntakeIntakePower = 0.6;
     
     /**
      * Power for the intake motor when ejecting game elements (reverse).

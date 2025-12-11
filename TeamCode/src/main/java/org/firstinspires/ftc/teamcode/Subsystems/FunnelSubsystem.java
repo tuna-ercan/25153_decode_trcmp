@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Commands.StateActions.FunnelActions.FunnelFeedAction;
 import org.firstinspires.ftc.teamcode.Commands.StateActions.FunnelActions.FunnelHomeAction;
 import org.firstinspires.ftc.teamcode.Commands.StateActions.FunnelActions.FunnelPrepAction;
@@ -232,6 +233,17 @@ public class FunnelSubsystem extends SubsystemBase
         normGreen = color.green / color.alpha;
         normBlue = color.blue / color.alpha;
         return new float[] {normRed,normGreen,normBlue};
+    }
+
+    public double getDistanceL(){return sensorL.getDistance(DistanceUnit.CM);}
+    public double getDistanceM(){return sensorM.getDistance(DistanceUnit.CM);}
+    public double getDistanceR(){return sensorR.getDistance(DistanceUnit.CM);}
+
+    public boolean isFull() {
+        if (getDistanceL() < FunnelConstants.distanceThresh && getDistanceM() < FunnelConstants.distanceThresh && getDistanceR() < FunnelConstants.distanceThresh) {
+            return true;
+        }
+        return false;
     }
 
     public void setPrePrepServoPrep() {

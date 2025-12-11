@@ -74,10 +74,10 @@ public class Mouth {
         // Shooter
         joinedTelemetry.addData("Shooter-State", shooterSubsystem.getState());
 
-        //panelsTelemetry.addData("Shooter-RPM-Goal", shooterSubsystem.getGoalRPM());
-        //panelsTelemetry.addData("Shooter-RPM-Left", shooterSubsystem.getLeftRPM());
-        panelsTelemetry.addData("Shooter-RPM-Middle", shooterSubsystem.getMiddleRPM());
-        //panelsTelemetry.addData("Shooter-RPM-Right", shooterSubsystem.getRightRPM());
+        joinedTelemetry.addData("Shooter-RPM-Goal", shooterSubsystem.getGoalRPM());
+        joinedTelemetry.addData("Shooter-RPM-Left", shooterSubsystem.getLeftRPM());
+        joinedTelemetry.addData("Shooter-RPM-Middle", shooterSubsystem.getMiddleRPM());
+        joinedTelemetry.addData("Shooter-RPM-Right", shooterSubsystem.getRightRPM());
         //panelsTelemetry.addData("Shooter-HOOD-Goal", shooterSubsystem.getGoalHood());
         panelsTelemetry.addData("Shooter-HOOD-Current", shooterSubsystem.getHoodPosition());
         //panelsTelemetry.addData("Shooter-IsReady", shooterSubsystem.isReady());

@@ -37,6 +37,9 @@ public class TestOpMode extends CommandOpMode {
     @Override
     public void initialize()
     {
+        Container.isBlue = true;
+        Container.isTeleop = true;
+
         m_drive = new DrivetrainSubsystem(hardwareMap);
         m_machine = new TheMachineSubsystem(hardwareMap);
         mouth = new Mouth(m_machine,m_drive, telemetry);
@@ -62,8 +65,6 @@ public class TestOpMode extends CommandOpMode {
         initOpCommand = new InstantCommand(() -> {
             m_drive.startTeleopDrive();
             m_machine.funnelRequest(AllStates.FunnelStates.HOME);
-            Container.isBlue = true;
-            Container.isTeleop = true;
         });
 
         periodicOpCommand = new RunCommand(() -> {

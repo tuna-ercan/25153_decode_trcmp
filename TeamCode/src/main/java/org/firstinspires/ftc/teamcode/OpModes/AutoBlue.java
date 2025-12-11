@@ -33,6 +33,8 @@ public class AutoBlue extends CommandOpMode {
     @Override
     public void initialize()
     {
+        Container.isBlue = true;
+        Container.isTeleop = false;
 
         m_machine = new TheMachineSubsystem(hardwareMap);
         m_drive = new DrivetrainSubsystem(hardwareMap);
@@ -44,8 +46,6 @@ public class AutoBlue extends CommandOpMode {
 
         initOpCommand = new InstantCommand(() -> {
             m_machine.funnelRequest(AllStates.FunnelStates.HOME);
-            Container.isBlue = true;
-            Container.isTeleop = false;
         });
 
         periodicOpCommand = new RunCommand(() -> {

@@ -1,9 +1,8 @@
 package org.firstinspires.ftc.teamcode.Commands.AutoCommands;
 
-import static org.firstinspires.ftc.teamcode.Utils.AllStates.MachineStates.PREP_P1;
-
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
+import com.arcrobotics.ftclib.command.WaitCommand;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.BezierCurve;
 import com.pedropathing.geometry.BezierLine;
@@ -28,67 +27,51 @@ public class MainAutoCommandBlue extends SequentialCommandGroup {
 
         Paths paths = new Paths(drivetrain.getFollower());
 
-        driveAndShootP1 = new FollowPathAuto(drivetrain,paths.firstShootP1).alongWith(theMachineSubsystem.prepP1Request()).withTimeout(1700)
+        driveAndShootP1 = new FollowPathAuto(drivetrain,paths.Shoot1).alongWith(theMachineSubsystem.prepP1Request()).withTimeout(1700)
                 .andThen(theMachineSubsystem
                         .shootFromP1Request());
         addCommands(
                 driveAndShootP1,
+                new WaitCommand(2500),
                 theMachineSubsystem.intakeRequest(),
-                new FollowPathAuto(drivetrain,paths.secondPathIntake10),
-                new FollowPathAuto(drivetrain,paths.secondPathIntake11)
+                new FollowPathAuto(drivetrain,paths.Intake1),
+                new WaitCommand(750),
+                //new FollowPathAuto(drivetrain,paths.secondPathIntake11),
+                //new WaitCommand(500),
+                theMachineSubsystem.restRequest()
+                //new WaitCommand(250),
+                //driveAndShootP1
         );
     }
 
     public static class Paths {
 
-        public PathChain firstShootP1;
-        public PathChain secondPathIntake10;
-        public PathChain secondPathIntake11;
+        public PathChain Shoot1;
+        public PathChain Intake1;
 
         public Paths(Follower follower) {
-            firstShootP1 = follower
+            Shoot1 = follower
                     .pathBuilder()
                     .addPath(
                             new BezierCurve(
-                                    BluePositions.START_POSE,
-                                    new Pose(70.236, 65.195),
+                                    new Pose(61.335, 11.318),
+                                    new Pose(62.943, 58.415),
                                     new Pose(47.700, 95.300)
                             )
                     )
-                    .setLinearHeadingInterpolation(
-                            Math.toRadians(90),
-                            Math.toRadians(127.353251)
-                    )
+                    .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(132))
                     .build();
 
-            secondPathIntake10 = follower
-                    .pathBuilder()
-                    .addPath(
-                                new BezierLine(new Pose(56.000, 36.000), new Pose(54.949, 74.828))
-                    )
-                    .setTangentHeadingInterpolation()
-                    .build();
-            secondPathIntake10 = follower
+            Intake1 = follower
                     .pathBuilder()
                     .addPath(
                             new BezierCurve(
                                     new Pose(47.700, 95.300),
-                                    new Pose(43.183, 87.543),
-                                    new Pose(35.118, 87.039)
+                                    new Pose(57.811, 108.226),
+                                    new Pose(22.491, 85.736)
                             )
                     )
-                    .setLinearHeadingInterpolation(
-                            Math.toRadians(127.353251),
-                            Math.toRadians(30)
-                    )
-                    .build();
-
-            secondPathIntake11 = follower
-                    .pathBuilder()
-                    .addPath(
-                            new BezierLine(new Pose(35.118, 87.039), new Pose(15.291, 81.998))
-                    )
-                    .setLinearHeadingInterpolation(Math.toRadians(30), Math.toRadians(30))
+                    .setLinearHeadingInterpolation(Math.toRadians(132), Math.toRadians(30))
                     .build();
         }
     }

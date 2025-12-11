@@ -17,6 +17,7 @@ public class RGBConstants {
     public static double shooterReadyColor = 0.500;
     public static double shooterNotReadyColor = 0.420;
     public static double intakeColor = 0.611;
+    public static double intakeFullColor = 0.285;
     public static double outtakeColor = 0.285;
     public static double prepColor = 0.350;
     public static double idleColor = 0.720;
