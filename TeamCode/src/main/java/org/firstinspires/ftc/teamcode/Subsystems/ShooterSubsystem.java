@@ -460,6 +460,13 @@ public class ShooterSubsystem extends SubsystemBase {
         controlMotorRPM(ShooterConstants.P4Rpm);
     }
 
+    public void shootP5()
+    {
+        setIsReadyByChecking();
+        setHoodPosition(ShooterConstants.P5HoodPos);
+        controlMotorRPM(ShooterConstants.P5Rpm);
+    }
+
     public void shootFromPose()
     {
         setIsReadyByChecking();

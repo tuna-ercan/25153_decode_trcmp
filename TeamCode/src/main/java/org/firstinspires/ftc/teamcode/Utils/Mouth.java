@@ -55,9 +55,9 @@ public class Mouth {
         joinedTelemetry.addData("Drive-State", drivetrainSubsystem.getState());
         //joinedTelemetry.addData("Drive-IsBusy", drivetrainSubsystem.isBusy());
 
-        //panelsTelemetry.addData("Drive-Pose-X", drivetrainSubsystem.getPose().getX());
-        //panelsTelemetry.addData("Drive-Pose-Y", drivetrainSubsystem.getPose().getY());
-        //panelsTelemetry.addData("Drive-Pose-Heading", drivetrainSubsystem.getPose().getHeading());
+        panelsTelemetry.addData("Drive-Pose-X", drivetrainSubsystem.getPose().getX());
+        panelsTelemetry.addData("Drive-Pose-Y", drivetrainSubsystem.getPose().getY());
+        panelsTelemetry.addData("Drive-Pose-Heading", drivetrainSubsystem.getPose().getHeading());
         //panelsTelemetry.addData("Drive-Error-Heading", drivetrainSubsystem.getHeadingError());
         //panelsTelemetry.addData("Drive-Error-Drive", drivetrainSubsystem.getDriveError());
         //panelsTelemetry.addData("Drive-Error-Translational", drivetrainSubsystem.getTranslationalError());

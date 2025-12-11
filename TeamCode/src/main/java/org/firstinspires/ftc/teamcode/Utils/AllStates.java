@@ -76,6 +76,7 @@ public class AllStates {
         SHOOT_P2,
         SHOOT_P3,
         SHOOT_P4,
+        SHOOT_P5,
         SHOOT_FROM_POSE,
         REVERSE,
         SHAKE,

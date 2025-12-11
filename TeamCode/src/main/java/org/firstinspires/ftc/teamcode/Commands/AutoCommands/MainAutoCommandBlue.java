@@ -9,6 +9,7 @@ import com.pedropathing.geometry.Pose;
 import com.pedropathing.paths.PathChain;
 
 import org.firstinspires.ftc.teamcode.Commands.DrivetrainCommands.FollowPathAuto;
+import org.firstinspires.ftc.teamcode.Positions.BluePositions;
 import org.firstinspires.ftc.teamcode.Subsystems.DrivetrainSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.TheMachineSubsystem;
 
@@ -57,7 +58,7 @@ public class MainAutoCommandBlue extends SequentialCommandGroup {
                 driveAndShootP1_3,
                 new WaitCommand(2500),
                 theMachineSubsystem.intakeRequest(),
-                new FollowPathAuto(drivetrain,paths.Intake2),
+                new FollowPathAuto(drivetrain,paths.Intake3).andThen(new WaitCommand(300)).andThen(theMachineSubsystem.prepP4Request()),
                 new WaitCommand(350).alongWith(theMachineSubsystem.idleRequest()),
                 driveAndShootP1_4
                 );
@@ -129,23 +130,23 @@ public class MainAutoCommandBlue extends SequentialCommandGroup {
                     .addPath(
                             new BezierCurve(
                                     new Pose(47.700, 95.300),
-                                    new Pose(48.755, 75.623),
-                                    new Pose(19.472, 59.170)
+                                    new Pose(53.434, 81.208),
+                                    new Pose(17.509, 58.868)
                             )
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(134), Math.toRadians(40))
+                    .setLinearHeadingInterpolation(Math.toRadians(134), Math.toRadians(30))
                     .build();
 
             Shoot3 = follower
                     .pathBuilder()
                     .addPath(
                             new BezierCurve(
-                                    new Pose(19.472, 59.170),
-                                    new Pose(52.981, 63.396),
+                                    new Pose(17.509, 58.868),
+                                    new Pose(49.962, 75.019),
                                     new Pose(47.700, 95.300)
                             )
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(40), Math.toRadians(134))
+                    .setLinearHeadingInterpolation(Math.toRadians(30), Math.toRadians(134))
                     .build();
 
             Intake3 = follower
@@ -153,8 +154,8 @@ public class MainAutoCommandBlue extends SequentialCommandGroup {
                     .addPath(
                             new BezierCurve(
                                     new Pose(47.700, 95.300),
-                                    new Pose(54.340, 61.132),
-                                    new Pose(21.434, 35.170)
+                                    new Pose(57.509, 54.189),
+                                    new Pose(15.547, 34.868)
                             )
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(134), Math.toRadians(40))
@@ -164,8 +165,8 @@ public class MainAutoCommandBlue extends SequentialCommandGroup {
                     .pathBuilder()
                     .addPath(
                             new BezierCurve(
-                                    new Pose(21.434, 35.170),
-                                    new Pose(49.057, 39.547),
+                                    new Pose(15.547, 34.868),
+                                    new Pose(47.698, 38.189),
                                     new Pose(54.642, 13.585)
                             )
                     )
