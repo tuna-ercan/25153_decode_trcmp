@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Utils;
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.Container;
 import org.firstinspires.ftc.teamcode.Positions.BluePositions;
 import org.firstinspires.ftc.teamcode.Subsystems.DrivetrainSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.FunnelSubsystem;
@@ -88,6 +89,15 @@ public class Mouth {
 
         // Funnel
         joinedTelemetry.addData("Funnel-State", funnelSubsystem.getState());
+        joinedTelemetry.addData("Funnel-IsFull", funnelSubsystem.isFull());
+        String fComb = funnelSubsystem.getFunnelFeedOrder()[0] + " " + funnelSubsystem.getFunnelFeedOrder()[1] + " " + funnelSubsystem.getFunnelFeedOrder()[2];
+        joinedTelemetry.addData("FeedCombination", fComb);
+
+        String gComb = funnelSubsystem.getFunnelGreenRatioOrder()[0] + " " + funnelSubsystem.getFunnelGreenRatioOrder()[1] + " " + funnelSubsystem.getFunnelGreenRatioOrder()[2];
+        joinedTelemetry.addData("GreenCombination", gComb);
+
+        joinedTelemetry.addData("ColorCombination", Container.colorCombination);
+
         //joinedTelemetry.addData("SensorL", funnelSubsystem.getSensorL().getNormalizedColors().toColor());
         //joinedTelemetry.addData("SensorM", funnelSubsystem.getSensorM().getNormalizedColors().toColor());
         //joinedTelemetry.addData("SensorR", funnelSubsystem.getSensorR().getNormalizedColors().toColor());

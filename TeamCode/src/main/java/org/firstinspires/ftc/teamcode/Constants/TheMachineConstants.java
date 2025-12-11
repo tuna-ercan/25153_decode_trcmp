@@ -5,7 +5,7 @@ import com.bylazar.configurables.annotations.Configurable;
 /**
  * Constants for the "The Machine" super-subsystem.
  */
-@Configurable
+//@Configurable
 public class TheMachineConstants {
     /**
      * Time in milliseconds to wait for the shooter to reach target velocity/hood position

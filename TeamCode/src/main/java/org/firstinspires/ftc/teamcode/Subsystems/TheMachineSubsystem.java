@@ -226,7 +226,7 @@ public class TheMachineSubsystem extends SubsystemBase {
             case PREP_P3:
             case PREP_P4:
             case PREP_P5:
-                if (m_funnel.isFull()) color = RGBConstants.intakeFullColor;
+                if (!m_funnel.isFull()) color = RGBConstants.intakeFullColor;
                 else color = RGBConstants.prepColor;
                 break;
             case SHOOT_FROM_P1:

@@ -49,7 +49,7 @@ public class AutoBlue extends CommandOpMode {
         });
 
         periodicOpCommand = new RunCommand(() -> {
-            mouth.speak();
+            //mouth.speak();
         });
 
         autoCommand = new MainAutoCommandBlue(m_machine,m_drive);
