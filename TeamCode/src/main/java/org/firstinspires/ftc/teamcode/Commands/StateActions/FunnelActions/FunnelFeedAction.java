@@ -35,7 +35,7 @@ public class FunnelFeedAction extends CommandBase
         funnelSubsystem.setFunnelFeedOrderByColor();
         int[] feedOrder = funnelSubsystem.getFunnelFeedOrder();
 
-        feedDelay = (Container.shooterState == AllStates.ShooterStates.SHOOT_P4 ? FunnelConstants.FeedDelay*FunnelConstants.P4_DelayCoefficient : FunnelConstants.FeedDelay);
+        feedDelay = (Container.shooterState == AllStates.ShooterStates.SHOOT_P4 ? FunnelConstants.FeedDelayP4 : FunnelConstants.FeedDelay);
 
         leftDelay = feedDelay*feedOrder[0];
         middleDelay = feedDelay*feedOrder[1];
@@ -52,7 +52,7 @@ public class FunnelFeedAction extends CommandBase
     {
         startTime = System.currentTimeMillis();
         now = startTime;
-        feedDelay = (Container.shooterState == AllStates.ShooterStates.SHOOT_P4 ? FunnelConstants.FeedDelay*FunnelConstants.P4_DelayCoefficient : FunnelConstants.FeedDelay);
+        feedDelay = (Container.shooterState == AllStates.ShooterStates.SHOOT_P4 ? FunnelConstants.FeedDelayP4 : FunnelConstants.FeedDelay);
 
         int[] feedOrder = funnelSubsystem.getFunnelFeedOrder();
         funnelSubsystem.setFunnelFeedOrderByColor();

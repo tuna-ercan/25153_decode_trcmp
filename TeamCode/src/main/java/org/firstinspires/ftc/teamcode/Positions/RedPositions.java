@@ -30,7 +30,7 @@ public class RedPositions {
 
     public static Pose mirrorPose(Pose p)
     {
-        return new Pose(144-p.getX(), p.getY(), Math.PI - p.getHeading());
+        return new Pose(142-p.getX(), p.getY(), Math.PI - p.getHeading());
     }
 }
 

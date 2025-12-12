@@ -56,11 +56,12 @@ public class FunnelConstants {
     public static double RightTest = 0.5, MiddleTest = 0.5, LeftTest = 0.5, PrePrepTest =  0.62;
     public static double Tol = 0.001;
     public static long FeedDelay = 250;
+    public static long FeedDelayP4 = 425;
+
     public static long FeedColorDelay = 150;
     public static long PrepDelay = 150;
     public static long PrepWaitDelay = 200;
     public static long PrepColorDelay = 150;
     public static double distanceThresh = 5;
 
-    public static long P4_DelayCoefficient = (long) 1.7;
 }
