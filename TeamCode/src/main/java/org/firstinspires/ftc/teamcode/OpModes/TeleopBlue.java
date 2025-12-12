@@ -37,6 +37,8 @@ public class TeleopBlue extends CommandOpMode {
     private Command driveAndShootP2;
     private Command driveAndShootP3;
     private Command driveAndShootP4;
+    private Command manualShootP5;
+    private Command manualShootP2;
 
 
     private PathChain x;
@@ -63,6 +65,7 @@ public class TeleopBlue extends CommandOpMode {
         driveAndShootP5 = m_drive.driveToShootP5().alongWith(m_machine.prepP5Request()).withTimeout(2300)
                 .andThen(m_machine.shootFromP5Request());
 
+
         driveAndShootP2 = m_drive.driveToShootP2().alongWith(m_machine.prepP2Request()).withTimeout(2300)
                 .andThen(m_machine.shootFromP2Request());
 
@@ -71,6 +74,13 @@ public class TeleopBlue extends CommandOpMode {
 
         driveAndShootP4 = m_drive.driveToShootP4().alongWith(m_machine.prepP4Request()).withTimeout(2300)
                 .andThen(m_machine.shootFromP4Request());
+
+        manualShootP5 = m_machine.prepP5Request().withTimeout(2300)
+                .andThen(m_machine.shootFromP5Request());
+
+        manualShootP2 = m_machine.prepP2Request().withTimeout(2300)
+                .andThen(m_machine.shootFromP2Request());
+
 
 
         gamepadEx1 = new GamepadEx(gamepad1);
@@ -98,6 +108,11 @@ public class TeleopBlue extends CommandOpMode {
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.Y)
                 .whenPressed(m_machine.restRequest());
+
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
+                        .whenPressed(manualShootP2);
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
+                .whenPressed(manualShootP5);
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.B)
                 .whenHeld(driveAndShootP5)

@@ -81,9 +81,12 @@ public class DrivetrainSubsystem extends SubsystemBase
         lastState = DrivetrainStates.IDLE;
 
         follower = PedroConstants.createFollower(hardwareMap);
-        if(Container.isBlue) startPose = BluePositions.START_POSE;
-        else startPose = RedPositions.START_POSE;
-
+        if (!Container.isTeleop) {
+            if (Container.isBlue) startPose = BluePositions.START_POSE;
+            else startPose = RedPositions.START_POSE;
+        } else {
+            startPose = Container.autoEndPose;
+        }
         driveToShootP1 = new DriveToShootP1(this);
         driveToShootP2 = new DriveToShootP2(this);
         driveToShootP3 = new DriveToShootP3(this);

@@ -30,10 +30,13 @@ public class TeleopRed extends CommandOpMode {
 
     private Command periodicOpCommand;
 
-    private Command driveAndShootP1;
+    private Command driveAndShootP5;
     private Command driveAndShootP2;
     private Command driveAndShootP3;
     private Command driveAndShootP4;
+    private Command manualShootP5;
+    private Command manualShootP2;
+
 
     private PathChain x;
 
@@ -42,21 +45,50 @@ public class TeleopRed extends CommandOpMode {
     {
         Container.isBlue = false;
         Container.isTeleop = true;
+
         m_drive = new DrivetrainSubsystem(hardwareMap);
         m_machine = new TheMachineSubsystem(hardwareMap);
         mouth = new Mouth(m_machine,m_drive, telemetry);
+
+        x = m_drive.getFollower().pathBuilder()
+                .addPath(                        new BezierCurve(
+                        new Pose(63.398, 11.073),
+                        new Pose(63.849, 60.528),
+                        new Pose(50.566, 93.434)
+                ))
+                .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(136))
+                .build();
+
+        driveAndShootP5 = m_drive.driveToShootP5().alongWith(m_machine.prepP5Request()).withTimeout(2300)
+                .andThen(m_machine.shootFromP5Request());
+
+
+        driveAndShootP2 = m_drive.driveToShootP2().alongWith(m_machine.prepP2Request()).withTimeout(2300)
+                .andThen(m_machine.shootFromP2Request());
+
+        driveAndShootP3 = m_drive.driveToShootP3().alongWith(m_machine.prepP3Request()).withTimeout(2300)
+                .andThen(m_machine.shootFromP3Request());
+
+        driveAndShootP4 = m_drive.driveToShootP4().alongWith(m_machine.prepP4Request()).withTimeout(2300)
+                .andThen(m_machine.shootFromP4Request());
+
+        manualShootP5 = m_machine.prepP5Request().withTimeout(2300)
+                .andThen(m_machine.shootFromP5Request());
+
+        manualShootP2 = m_machine.prepP2Request().withTimeout(2300)
+                .andThen(m_machine.shootFromP2Request());
 
 
 
         gamepadEx1 = new GamepadEx(gamepad1);
         gamepadEx2 = new GamepadEx(gamepad2);
 
+        configureBindingsGamepad1();
+        configureBindingsGamepad2();
 
         initOpCommand = new InstantCommand(() -> {
             m_drive.startTeleopDrive();
             m_machine.funnelRequest(AllStates.FunnelStates.HOME);
-            Container.isBlue = false;
-            Container.isTeleop = true;
         });
 
         periodicOpCommand = new RunCommand(() -> {
@@ -67,29 +99,6 @@ public class TeleopRed extends CommandOpMode {
         schedule(
                 initOpCommand.andThen(periodicOpCommand)
         );
-        x = m_drive.getFollower().pathBuilder()
-                .addPath(                        new BezierCurve(
-                        new Pose(63.398, 11.073),
-                        new Pose(63.849, 60.528),
-                        new Pose(50.566, 93.434)
-                ))
-                .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(136))
-                .build();
-
-        driveAndShootP1 = m_drive.driveToShootP1().alongWith(m_machine.prepP1Request()).withTimeout(1700)
-                .andThen(m_machine.shootFromP1Request());
-
-        driveAndShootP2 = m_drive.driveToShootP2().alongWith(m_machine.prepP2Request()).withTimeout(1700)
-                .andThen(m_machine.shootFromP2Request());
-
-        driveAndShootP3 = m_drive.driveToShootP3().alongWith(m_machine.prepP3Request()).withTimeout(1700)
-                .andThen(m_machine.shootFromP3Request());
-
-        driveAndShootP4 = m_drive.driveToShootP4().alongWith(m_machine.prepP4Request()).withTimeout(1700    )
-                .andThen(m_machine.shootFromP4Request());
-
-        configureBindingsGamepad1();
-        configureBindingsGamepad2();
     }
 
     public void configureBindingsGamepad1() {
@@ -97,8 +106,13 @@ public class TeleopRed extends CommandOpMode {
         gamepadEx1.getGamepadButton(GamepadKeys.Button.Y)
                 .whenPressed(m_machine.restRequest());
 
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
+                        .whenPressed(manualShootP2);
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
+                .whenPressed(manualShootP5);
+
         gamepadEx1.getGamepadButton(GamepadKeys.Button.B)
-                .whenHeld(driveAndShootP1)
+                .whenHeld(driveAndShootP5)
                 .whenReleased(m_machine.restRequest());
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT)

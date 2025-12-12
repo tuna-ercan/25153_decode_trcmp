@@ -8,15 +8,9 @@ import com.pedropathing.geometry.BezierCurve;
 import com.pedropathing.geometry.Pose;
 import com.pedropathing.paths.PathChain;
 
-import org.firstinspires.ftc.teamcode.Commands.DrivetrainCommands.DriveToPoseAuto;
-import org.firstinspires.ftc.teamcode.Commands.DrivetrainCommands.DriveToShootP1;
-import org.firstinspires.ftc.teamcode.Commands.DrivetrainCommands.DriveToShootP2;
-import org.firstinspires.ftc.teamcode.Commands.DrivetrainCommands.DriveToShootP3;
-import org.firstinspires.ftc.teamcode.Commands.DrivetrainCommands.DriveToShootP4;
 import org.firstinspires.ftc.teamcode.Commands.DrivetrainCommands.DriveToShootP5;
 import org.firstinspires.ftc.teamcode.Commands.DrivetrainCommands.FollowPathAuto;
 import org.firstinspires.ftc.teamcode.Constants.TheMachineConstants;
-import org.firstinspires.ftc.teamcode.Positions.BluePositions;
 import org.firstinspires.ftc.teamcode.Subsystems.DrivetrainSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.TheMachineSubsystem;
 

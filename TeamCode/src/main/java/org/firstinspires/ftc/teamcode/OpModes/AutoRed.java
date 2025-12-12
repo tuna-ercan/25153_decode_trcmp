@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.Utils.AllStates;
 import org.firstinspires.ftc.teamcode.Utils.Mouth;
 
 @Autonomous(name = "AUTO")
-public class AutoBlue extends CommandOpMode {
+public class AutoRed extends CommandOpMode {
     private TheMachineSubsystem m_machine;
     private DrivetrainSubsystem m_drive;
     private Mouth mouth;
@@ -31,7 +31,7 @@ public class AutoBlue extends CommandOpMode {
     @Override
     public void initialize()
     {
-        Container.isBlue = true;
+        Container.isBlue = false;
         Container.isTeleop = false;
 
         m_machine = new TheMachineSubsystem(hardwareMap);
