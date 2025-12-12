@@ -48,7 +48,7 @@ public class FunnelConstants {
     public static double PosTol = 0.005;
 
     // Right -0.02 offset
-    public static double RightFeed = 0.455, MiddleFeed = 0.42, LeftFeed = 0.42;
+    public static double RightFeed = 0.45, MiddleFeed = 0.42, LeftFeed = 0.42;
     public static double RightPrep = 0.63, MiddlePrep = 0.6, LeftPrep = 0.6, PrePrepPrep = 0.45;
 
     public static double RightHome = 0.55, MiddleHome= 0.52, LeftHome = 0.52, PrePrepHome = 0.62;
@@ -62,4 +62,5 @@ public class FunnelConstants {
     public static long PrepColorDelay = 150;
     public static double distanceThresh = 5;
 
+    public static long P4_DelayCoefficient = (long) 1.7;
 }

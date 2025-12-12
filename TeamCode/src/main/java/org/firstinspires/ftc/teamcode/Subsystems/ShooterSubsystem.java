@@ -175,7 +175,7 @@ public class ShooterSubsystem extends SubsystemBase {
     public void periodic() {
         stateMachine();
 
-
+        Container.shooterState = getState();
         //leftPID.checkAndUpdateCoefficients(ShooterConstants.LeftPIDCoefficients);
         //middlePID.checkAndUpdateCoefficients(ShooterConstants.MiddlePIDCoefficients);
         //rightPID.checkAndUpdateCoefficients(ShooterConstants.RightPIDCoefficients);

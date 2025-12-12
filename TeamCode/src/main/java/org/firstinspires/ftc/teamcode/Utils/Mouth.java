@@ -57,9 +57,6 @@ public class Mouth {
         PanelsFieldDrawing.drawRobot(drivetrainSubsystem.getPose());
         PanelsFieldDrawing.sendPacket();
         joinedTelemetry.addData("Drive-State", drivetrainSubsystem.getState());
-        joinedTelemetry.addData("Drive-Error-X", drivetrainSubsystem.getXErrorPID());
-        joinedTelemetry.addData("Drive-Error-Y", drivetrainSubsystem.getYErrorPID());
-        joinedTelemetry.addData("Drive-Error-Heading", drivetrainSubsystem.getHeadingErrorPID());
         //joinedTelemetry.addData("Drive-IsBusy", drivetrainSubsystem.isBusy());
 
         //panelsTelemetry.addData("Drive-Pose-X", drivetrainSubsystem.getPose().getX());
@@ -99,7 +96,7 @@ public class Mouth {
         //String gComb = funnelSubsystem.getFunnelGreenRatioOrder()[0] + " " + funnelSubsystem.getFunnelGreenRatioOrder()[1] + " " + funnelSubsystem.getFunnelGreenRatioOrder()[2];
         //joinedTelemetry.addData("GreenCombination", gComb);
 
-        //joinedTelemetry.addData("ColorCombination", Container.colorCombination);
+        joinedTelemetry.addData("ColorCombination", Container.colorCombination);
 
         //joinedTelemetry.addData("SensorL", funnelSubsystem.getSensorL().getNormalizedColors().toColor());
         //joinedTelemetry.addData("SensorM", funnelSubsystem.getSensorM().getNormalizedColors().toColor());

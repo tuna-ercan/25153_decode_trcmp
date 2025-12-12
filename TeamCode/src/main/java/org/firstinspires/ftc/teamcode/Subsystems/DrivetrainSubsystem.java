@@ -4,6 +4,7 @@ package org.firstinspires.ftc.teamcode.Subsystems;
 import androidx.core.math.MathUtils;
 
 import com.arcrobotics.ftclib.command.Command;
+import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.controller.PIDFController;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
@@ -85,7 +86,8 @@ public class DrivetrainSubsystem extends SubsystemBase
             if (Container.isBlue) startPose = BluePositions.START_POSE;
             else startPose = RedPositions.START_POSE;
         } else {
-            startPose = Container.autoEndPose;
+            if (Container.autoEndPose == null) startPose = (Container.isBlue ? BluePositions.START_POSE: RedPositions.START_POSE);
+            else startPose = Container.autoEndPose;
         }
         driveToShootP1 = new DriveToShootP1(this);
         driveToShootP2 = new DriveToShootP2(this);
@@ -250,6 +252,26 @@ public class DrivetrainSubsystem extends SubsystemBase
                 false);
     }
 
+    public void setTeleopDriveFieldCentricBlue(GamepadEx gamepadEx)
+    {
+        follower.setTeleOpDrive(
+                -gamepadEx.getLeftY(),
+                gamepadEx.getLeftX(),
+                -gamepadEx.getRightX()*DrivetrainConstants.TeleopRotationCoefficient,
+                false);
+    }
+
+    public void setTeleopDriveFieldCentricRed(GamepadEx gamepadEx)
+    {
+        follower.setTeleOpDrive(
+                gamepadEx.getLeftY(),
+                -gamepadEx.getLeftX(),
+                -gamepadEx.getRightX()*DrivetrainConstants.TeleopRotationCoefficient,
+                false);
+    }
+
+
+
     /**
      * Sets the teleop drive controls to robot-centric mode.
      * @param gamepadEx The gamepad input.
@@ -410,5 +432,10 @@ public class DrivetrainSubsystem extends SubsystemBase
         pidfControllerX.checkAndUpdateCoefficients(DrivetrainConstants.xPID);
         pidfControllerY.checkAndUpdateCoefficients(DrivetrainConstants.yPID);
         pidfControllerHeading.checkAndUpdateCoefficients(DrivetrainConstants.headingPID);
+    }
+
+    public Command setRobotPose(Pose pose)
+    {
+        return new InstantCommand(() -> follower.setPose(pose));
     }
 }

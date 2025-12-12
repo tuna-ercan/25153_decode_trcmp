@@ -9,6 +9,7 @@ import com.arcrobotics.ftclib.command.WaitCommand;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.Commands.AutoCommands.MainAutoCommandBlue;
+import org.firstinspires.ftc.teamcode.Commands.AutoCommands.MainAutoCommandRed;
 import org.firstinspires.ftc.teamcode.Commands.AutoCommands.UpdatePoseCommand;
 import org.firstinspires.ftc.teamcode.Container;
 import org.firstinspires.ftc.teamcode.Subsystems.DrivetrainSubsystem;
@@ -16,7 +17,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.TheMachineSubsystem;
 import org.firstinspires.ftc.teamcode.Utils.AllStates;
 import org.firstinspires.ftc.teamcode.Utils.Mouth;
 
-@Autonomous(name = "AUTO")
+@Autonomous(name = "AUTO-Red")
 public class AutoRed extends CommandOpMode {
     private TheMachineSubsystem m_machine;
     private DrivetrainSubsystem m_drive;
@@ -25,8 +26,6 @@ public class AutoRed extends CommandOpMode {
 
     public Command periodicOpCommand;
     public SequentialCommandGroup autoCommand;
-
-    private Command driveAndShootP1;
 
     @Override
     public void initialize()
@@ -39,9 +38,6 @@ public class AutoRed extends CommandOpMode {
         mouth = new Mouth(m_machine,m_drive, telemetry);
 
 
-        driveAndShootP1 = m_drive.driveToShootP1().alongWith(m_machine.prepP1Request()).withTimeout(1700)
-                .andThen(m_machine.shootFromP1Request());
-
         initOpCommand = new InstantCommand(() -> {
             m_machine.funnelRequest(AllStates.FunnelStates.HOME);
         });
@@ -51,7 +47,7 @@ public class AutoRed extends CommandOpMode {
             new UpdatePoseCommand(m_drive);
         });
 
-        autoCommand = new MainAutoCommandBlue(m_machine,m_drive);
+        autoCommand = new MainAutoCommandRed(m_machine,m_drive);
 
         schedule(
                 initOpCommand.andThen(periodicOpCommand),

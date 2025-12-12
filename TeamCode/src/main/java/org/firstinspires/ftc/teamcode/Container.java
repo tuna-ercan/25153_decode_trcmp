@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode;
 import com.bylazar.configurables.annotations.Configurable;
 import com.pedropathing.geometry.Pose;
 
+import org.firstinspires.ftc.teamcode.Positions.BluePositions;
+import org.firstinspires.ftc.teamcode.Positions.RedPositions;
 import org.firstinspires.ftc.teamcode.Utils.AllStates;
 
 import java.util.List;
@@ -17,6 +19,9 @@ public class Container
      * Flag to indicate if the robot is on the Blue alliance.
      * Default is true.
      */
+
+    public static AllStates.ShooterStates shooterState = AllStates.ShooterStates.REST;
+
     public static boolean isBlue = true;
 
     public static boolean isTeleop = true;
@@ -35,7 +40,8 @@ public class Container
      * Current pose of the robot on the field.
      * Updated by the DrivetrainSubsystem.
      */
-    public static Pose robotPose = null;
+    public static Pose robotPose = (isBlue ? BluePositions.START_POSE : RedPositions.START_POSE);
+
 
     /**
      * The pose of the robot at the end of the autonomous period.

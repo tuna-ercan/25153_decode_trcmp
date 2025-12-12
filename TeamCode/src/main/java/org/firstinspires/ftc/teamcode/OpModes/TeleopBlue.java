@@ -40,6 +40,8 @@ public class TeleopBlue extends CommandOpMode {
     private Command manualShootP5;
     private Command manualShootP2;
 
+    private Command setRobotPoseLL;
+
 
     private PathChain x;
 
@@ -48,6 +50,7 @@ public class TeleopBlue extends CommandOpMode {
     {
         Container.isBlue = true;
         Container.isTeleop = true;
+        Container.colorCombination = "x";
 
         m_drive = new DrivetrainSubsystem(hardwareMap);
         m_machine = new TheMachineSubsystem(hardwareMap);
@@ -82,6 +85,7 @@ public class TeleopBlue extends CommandOpMode {
                 .andThen(m_machine.shootFromP2Request());
 
 
+        setRobotPoseLL = m_drive.setRobotPose(m_machine.getLLPoseMT());
 
         gamepadEx1 = new GamepadEx(gamepad1);
         gamepadEx2 = new GamepadEx(gamepad2);
@@ -95,13 +99,14 @@ public class TeleopBlue extends CommandOpMode {
         });
 
         periodicOpCommand = new RunCommand(() -> {
-            m_drive.setTeleopDriveFieldCentric(gamepadEx1);
+            m_drive.setTeleopDriveFieldCentricBlue(gamepadEx1);
             mouth.speak();
         });
 
         schedule(
                 initOpCommand.andThen(periodicOpCommand)
         );
+
     }
 
     public void configureBindingsGamepad1() {

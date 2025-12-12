@@ -10,9 +10,12 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.bylazar.telemetry.JoinedTelemetry;
 import com.bylazar.telemetry.PanelsTelemetry;
 import com.bylazar.telemetry.TelemetryManager;
+import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
+import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.teamcode.Container;
 import org.firstinspires.ftc.teamcode.Subsystems.DrivetrainSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.FunnelSubsystem;
@@ -108,6 +111,23 @@ public class TestOpModeForSubsystem extends CommandOpMode {
             joinedTelemetry.addData("L-Green", m_funnel.isGreenBallL());
             joinedTelemetry.addData("M-Green", m_funnel.isGreenBallM());
             joinedTelemetry.addData("R-Green", m_funnel.isGreenBallR());
+
+            Position camPose = m_machine.getLimelightHandler().getCamPose().getPosition();
+            Pose robotPose = m_drive.getPose();
+
+            Position cameraFromRobotMainFrame = new Position();
+            cameraFromRobotMainFrame.x = camPose.x - robotPose.getX();
+            cameraFromRobotMainFrame.y = camPose.y - robotPose.getY();
+            cameraFromRobotMainFrame.z = camPose.z;
+
+            Position cameraFromRobot = new Position();
+            cameraFromRobot.x = cameraFromRobotMainFrame.x*Math.cos(robotPose.getHeading()) - cameraFromRobotMainFrame.y*Math.sin(robotPose.getHeading());
+            cameraFromRobot.y = cameraFromRobotMainFrame.x*Math.sin(robotPose.getHeading()) + cameraFromRobotMainFrame.y*Math.cos(robotPose.getHeading());
+            cameraFromRobot.z = cameraFromRobotMainFrame.z;
+
+            joinedTelemetry.addData("CamX", cameraFromRobot.x);
+            joinedTelemetry.addData("CamY", cameraFromRobot.y);
+            joinedTelemetry.addData("CamZ", cameraFromRobot.z);
 
             //joinedTelemetry.addData("L-Green", m_funnel.getGreenL());
             //joinedTelemetry.addData("M-Green", m_funnel.getGreenM());

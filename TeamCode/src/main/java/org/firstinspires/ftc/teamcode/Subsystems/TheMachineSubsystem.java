@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Subsystems;
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.command.WaitCommand;
+import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -488,6 +489,10 @@ public class TheMachineSubsystem extends SubsystemBase {
         return m_funnel.waitForFeed().andThen(new WaitCommand(TheMachineConstants.waitAfterFeed));
     }
 
+    public Pose getLLPoseMT()
+    {
+        return limelightHandler.getPosePedro();
+    }
 
     /**
      * Checks if all relevant subsystems are ready.

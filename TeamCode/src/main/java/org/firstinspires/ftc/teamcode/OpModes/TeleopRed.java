@@ -45,6 +45,7 @@ public class TeleopRed extends CommandOpMode {
     {
         Container.isBlue = false;
         Container.isTeleop = true;
+        Container.colorCombination = "x";
 
         m_drive = new DrivetrainSubsystem(hardwareMap);
         m_machine = new TheMachineSubsystem(hardwareMap);
@@ -92,7 +93,7 @@ public class TeleopRed extends CommandOpMode {
         });
 
         periodicOpCommand = new RunCommand(() -> {
-            m_drive.setTeleopDriveFieldCentric(gamepadEx1);
+            m_drive.setTeleopDriveFieldCentricRed(gamepadEx1);
             mouth.speak();
         });
 

@@ -10,8 +10,6 @@ import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
@@ -55,24 +53,41 @@ public class LimelightHandler {
         Pose3D botpose = getPose();
         return FTCCoordinates.INSTANCE.convertToPedro(new Pose(botpose.getPosition().x*39.3700787 , botpose.getPosition().y*39.3700787 , botpose.getOrientation().getYaw(AngleUnit.RADIANS)));
     }
+
+    public Pose3D getCamPose()
+    {
+        ll.pipelineSwitch(1);
+        Pose3D camPose = new Pose3D(new Position(), new YawPitchRollAngles(AngleUnit.RADIANS,0,0,0, 0));
+        if (result != null){
+            if ( result.getFiducialResults().get(0).getCameraPoseTargetSpace() != null) camPose = result.getBotpose_MT2();}
+        return camPose;
+    }
+
+    public Pose getCamPosePedro()
+    {
+        Pose3D camPose = getCamPose();
+        return FTCCoordinates.INSTANCE.convertToPedro(new Pose(camPose.getPosition().x*39.3700787 , camPose.getPosition().y*39.3700787 , camPose.getOrientation().getYaw(AngleUnit.RADIANS)));
+    }
+
     public String getCombination() {
         ll.pipelineSwitch(0);
         String combination = "x";
         if (result != null) {
             List<LLResultTypes.FiducialResult> fiducials = result.getFiducialResults();
             for (LLResultTypes.FiducialResult fiducial : fiducials) {
-                int id = fiducial.getFiducialId(); // The ID number of the fiducial
-                if (id == 21) {
-                    combination = "GPP";
-                } else if (id == 22) {
-                    combination = "PGP";
-                } else {
-                    combination = "PPG";
-                }
+                    int id = fiducial.getFiducialId(); // The ID number of the fiducial
+                    if (id == 21) {
+                        combination = "GPP";
+                    } else if (id == 22) {
+                        combination = "PGP";
+                    } else if (id == 23){
+                        combination = "PPG";
+                    }
             }
         }
         return combination;
     }
+
 
     public LLResult getResult() {
         return result;

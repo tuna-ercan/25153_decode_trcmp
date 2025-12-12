@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.TheMachineSubsystem;
 import org.firstinspires.ftc.teamcode.Utils.AllStates;
 import org.firstinspires.ftc.teamcode.Utils.Mouth;
 
-@Autonomous(name = "AUTO")
+@Autonomous(name = "AUTO-Blue")
 public class AutoBlue extends CommandOpMode {
     private TheMachineSubsystem m_machine;
     private DrivetrainSubsystem m_drive;
@@ -26,7 +26,6 @@ public class AutoBlue extends CommandOpMode {
     public Command periodicOpCommand;
     public SequentialCommandGroup autoCommand;
 
-    private Command driveAndShootP1;
 
     @Override
     public void initialize()
@@ -37,10 +36,6 @@ public class AutoBlue extends CommandOpMode {
         m_machine = new TheMachineSubsystem(hardwareMap);
         m_drive = new DrivetrainSubsystem(hardwareMap);
         mouth = new Mouth(m_machine,m_drive, telemetry);
-
-
-        driveAndShootP1 = m_drive.driveToShootP1().alongWith(m_machine.prepP1Request()).withTimeout(1700)
-                .andThen(m_machine.shootFromP1Request());
 
         initOpCommand = new InstantCommand(() -> {
             m_machine.funnelRequest(AllStates.FunnelStates.HOME);
