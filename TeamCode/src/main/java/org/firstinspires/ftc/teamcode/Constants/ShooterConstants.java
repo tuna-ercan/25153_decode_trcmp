@@ -43,11 +43,11 @@ public class ShooterConstants {
     public static double MultiplierRight = 1;
     public static double MultiplierMiddle = 1;
 
-    public static double RpmTol = 35;
+    public static double RpmTol = 50;
     public static double HoodTol = 0.0025;
 
     public static double RestRPM = 2400;
-    public static double RestRPMAuto = 2800;
+    public static double RestRPMAuto = 2600;
 
     public static double RestHoodPos = 5;
 
@@ -66,7 +66,7 @@ public class ShooterConstants {
     public static double P4Rpm = 3450;
     public static double P4HoodPos = 3;
     public static double P5Rpm = 2850;
-    public static double P5HoodPos = 8.5;
+    public static double P5HoodPos = 8;
 
 
 

@@ -63,11 +63,11 @@ public class DrivetrainConstants {
 
     public static double autoDriveInterpolator = 0.8;
     public static double driveBrakingStrength = 0.9;
-    public static PIDFCoefficients xPID = new PIDFCoefficients(0.05,0,0.005 ,0);
-    public static PIDFCoefficients yPID = new PIDFCoefficients(0.07,0,0.005,0);
-    public static PIDFCoefficients headingPID = new PIDFCoefficients(0.9,0,0,0);
+    public static PIDFCoefficients xPID = new PIDFCoefficients(0.04,0,0.005 ,0);
+    public static PIDFCoefficients yPID = new PIDFCoefficients(0.04,0,0.005,0);
+    public static PIDFCoefficients headingPID = new PIDFCoefficients(0.8,0,0,0);
     public static double maxPowerX = 0.7, maxPowerY = 0.7, maxPowerHeading = 0.8;
 
     public static double TValuePathPid = 0.99;
-    public static long pidTimeout = 2500;
+    public static long pidTimeout = 800;
 }

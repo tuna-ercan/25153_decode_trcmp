@@ -47,9 +47,9 @@ public class MainAutoCommandBlue extends SequentialCommandGroup {
         driveAndShootP1_3 = new DriveToShootP5(drivetrain).alongWith(theMachineSubsystem.prepP5Request())
                 .andThen(theMachineSubsystem
                         .shootFromP5Request());
-        driveAndShootP1_4 = new DriveToShootP4(drivetrain).alongWith(theMachineSubsystem.prepP4Request())
-                .andThen(theMachineSubsystem
-                        .shootFromP4Request());
+        driveAndShootP1_4 = new DriveToShootP5(drivetrain).alongWith(theMachineSubsystem.prepP5Request())
+                .andThen(theMachineSubsystem.shootFromP5Request());
+
         addCommands(
                 driveAndShootP1_1,
                 theMachineSubsystem.waitForFeederToFeed(),
@@ -119,8 +119,8 @@ public class MainAutoCommandBlue extends SequentialCommandGroup {
                             )
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(40), Math.toRadians(90))
-                    .setTimeoutConstraint(40)
-                    .setTValueConstraint(0.9)
+                    .setTimeoutConstraint(0)
+                    .setTValueConstraint(0.8)
                     .build();
 
             Shoot2 = follower

@@ -48,14 +48,14 @@ public class FunnelConstants {
     public static double PosTol = 0.005;
 
     // Right -0.02 offset
-    public static double RightFeed = 0.45, MiddleFeed = 0.42, LeftFeed = 0.42;
+    public static double RightFeed = 0.455, MiddleFeed = 0.42, LeftFeed = 0.42;
     public static double RightPrep = 0.63, MiddlePrep = 0.6, LeftPrep = 0.6, PrePrepPrep = 0.45;
 
     public static double RightHome = 0.55, MiddleHome= 0.52, LeftHome = 0.52, PrePrepHome = 0.62;
     //public static double RightTest = 0.41, MiddleTest = 0.41, LeftTest = 0.41, PrePrepTest = 0.41;
     public static double RightTest = 0.5, MiddleTest = 0.5, LeftTest = 0.5, PrePrepTest =  0.62;
     public static double Tol = 0.001;
-    public static long FeedDelay = 220;
+    public static long FeedDelay = 250;
     public static long FeedColorDelay = 150;
     public static long PrepDelay = 150;
     public static long PrepWaitDelay = 200;
