@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 /**
  * Constants for the Funnel subsystem, including servo names, positions, and timing delays.
  */
-@Configurable
+//@Configurable
 public class FunnelConstants {
     @IgnoreConfigurable
     public static String ColorSensorL = "c1";

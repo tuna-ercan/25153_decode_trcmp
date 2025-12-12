@@ -9,6 +9,11 @@ import com.pedropathing.geometry.Pose;
 import com.pedropathing.paths.PathChain;
 
 import org.firstinspires.ftc.teamcode.Commands.DrivetrainCommands.DriveToPoseAuto;
+import org.firstinspires.ftc.teamcode.Commands.DrivetrainCommands.DriveToShootP1;
+import org.firstinspires.ftc.teamcode.Commands.DrivetrainCommands.DriveToShootP2;
+import org.firstinspires.ftc.teamcode.Commands.DrivetrainCommands.DriveToShootP3;
+import org.firstinspires.ftc.teamcode.Commands.DrivetrainCommands.DriveToShootP4;
+import org.firstinspires.ftc.teamcode.Commands.DrivetrainCommands.DriveToShootP5;
 import org.firstinspires.ftc.teamcode.Commands.DrivetrainCommands.FollowPathAuto;
 import org.firstinspires.ftc.teamcode.Constants.TheMachineConstants;
 import org.firstinspires.ftc.teamcode.Positions.BluePositions;
@@ -33,16 +38,16 @@ public class MainAutoCommandBlue extends SequentialCommandGroup {
 
 
 
-        driveAndShootP1_1 = new FollowPathAuto(drivetrain,paths.Shoot1).alongWith(theMachineSubsystem.prepP5Request()).withTimeout(2000)
+        driveAndShootP1_1 = new DriveToShootP5(drivetrain).alongWith(theMachineSubsystem.prepP5Request())
                 .andThen(theMachineSubsystem
                     .shootFromP5Request());
-        driveAndShootP1_2 = new FollowPathAuto(drivetrain,paths.Shoot2).alongWith(theMachineSubsystem.prepP5Request()).withTimeout(2000)
+        driveAndShootP1_2 = new DriveToShootP5(drivetrain).alongWith(theMachineSubsystem.prepP5Request())
                 .andThen(theMachineSubsystem
                         .shootFromP5Request());
-        driveAndShootP1_3 = new FollowPathAuto(drivetrain,paths.Shoot3).alongWith(theMachineSubsystem.prepP5Request()).withTimeout(2000)
+        driveAndShootP1_3 = new DriveToShootP5(drivetrain).alongWith(theMachineSubsystem.prepP5Request())
                 .andThen(theMachineSubsystem
                         .shootFromP5Request());
-        driveAndShootP1_4 = new FollowPathAuto(drivetrain,paths.Shoot4).alongWith(theMachineSubsystem.prepP4Request()).withTimeout(2300)
+        driveAndShootP1_4 = new DriveToShootP4(drivetrain).alongWith(theMachineSubsystem.prepP4Request())
                 .andThen(theMachineSubsystem
                         .shootFromP4Request());
         addCommands(
