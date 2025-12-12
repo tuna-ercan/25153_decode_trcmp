@@ -9,7 +9,6 @@ import com.arcrobotics.ftclib.command.WaitCommand;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.Commands.AutoCommands.MainAutoCommandBlue;
-import org.firstinspires.ftc.teamcode.Commands.AutoCommands.UpdatePoseCommand;
 import org.firstinspires.ftc.teamcode.Container;
 import org.firstinspires.ftc.teamcode.Subsystems.DrivetrainSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.TheMachineSubsystem;
@@ -43,8 +42,7 @@ public class AutoBlue extends CommandOpMode {
 
         periodicOpCommand = new RunCommand(() -> {
             //mouth.speak();
-            new UpdatePoseCommand(m_drive);
-        });
+            });
 
         autoCommand = new MainAutoCommandBlue(m_machine,m_drive);
 

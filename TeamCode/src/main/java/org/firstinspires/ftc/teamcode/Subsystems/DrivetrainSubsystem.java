@@ -102,6 +102,8 @@ public class DrivetrainSubsystem extends SubsystemBase
         follower.update();
         // This method will be called once per scheduler run
 
+
+
         //Setting the starting pose | Update follower
         if (!isStartPoseSet)
         {
@@ -117,6 +119,10 @@ public class DrivetrainSubsystem extends SubsystemBase
         //stateMachine();
 
         checkAndUpdatesPIDS();
+
+        if (!Container.isTeleop){
+            Container.autoEndPose = getPose();
+        }
     }
 
     /**
