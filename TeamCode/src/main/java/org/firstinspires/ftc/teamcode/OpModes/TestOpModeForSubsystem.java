@@ -20,7 +20,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.ShooterSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.TheMachineSubsystem;
 import org.firstinspires.ftc.teamcode.Utils.PanelsFieldDrawing;
-
+@Disabled
 @TeleOp(name = "TEST_SUBSYSTEM")
 public class TestOpModeForSubsystem extends CommandOpMode {
     private TelemetryManager.TelemetryWrapper panelsTelemetry;

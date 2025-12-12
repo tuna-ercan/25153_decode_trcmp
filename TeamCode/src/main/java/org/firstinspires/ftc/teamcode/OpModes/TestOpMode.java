@@ -44,8 +44,8 @@ public class TestOpMode extends CommandOpMode {
         m_machine = new TheMachineSubsystem(hardwareMap);
         mouth = new Mouth(m_machine,m_drive, telemetry);
 
-        driveAndShootP1 = m_drive.driveToShootP1().alongWith(m_machine.prepP1Request()).withTimeout(2000)
-                            .andThen(m_machine.shootFromP1Request());
+        driveAndShootP1 = m_drive.driveToShootP5().alongWith(m_machine.prepP5Request()).withTimeout(2000)
+                            .andThen(m_machine.shootFromP5Request());
 
         driveAndShootP2 = m_drive.driveToShootP2().alongWith(m_machine.prepP2Request()).withTimeout(2000)
                 .andThen(m_machine.shootFromP2Request());
@@ -85,7 +85,7 @@ public class TestOpMode extends CommandOpMode {
                 .whenPressed(m_machine.restRequest());
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.A)
-                .whenPressed(m_machine.shootFromP1Request());
+                .whenPressed(driveAndShootP1);
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.B)
                 .whenPressed(m_machine.testRequest());

@@ -10,38 +10,33 @@ import com.pedropathing.paths.PathChain;
 import org.firstinspires.ftc.robotcore.external.Supplier;
 import org.firstinspires.ftc.teamcode.Constants.DrivetrainConstants;
 import org.firstinspires.ftc.teamcode.Constants.TheMachineConstants;
-import org.firstinspires.ftc.teamcode.Container;
-import org.firstinspires.ftc.teamcode.Positions.BluePositions;
-import org.firstinspires.ftc.teamcode.Positions.RedPositions;
 import org.firstinspires.ftc.teamcode.Subsystems.DrivetrainSubsystem;
 
 /**
- * Command to drive the robot to Shooting Position 2 (P2).
+ * Command to drive the robot to Shooting Position 1 (P1).
  * Uses PedroPathing to generate a path on the fly.
  */
-public class DriveToShootP2 extends CommandBase {
-    private Supplier<PathChain> path;
-    private Pose goalPosition;
-    private Pose focusPose;
-    private DrivetrainSubsystem m_drive;
+public class DriveToPosePath extends CommandBase {
+    private final Supplier<PathChain> path;
+    private final Pose goalPosition;
+    private final DrivetrainSubsystem m_drive;
 
     /**
-     * Constructor for DriveToShootP2.
+     * Constructor for DriveToShootP1.
      * @param drive The DrivetrainSubsystem instance.
      */
-    public DriveToShootP2(DrivetrainSubsystem drive)
+    public DriveToPosePath(DrivetrainSubsystem drive, Pose goalPosition, double TValue)
     {
         this.m_drive = drive;
 
-        goalPosition = (Container.isBlue ? BluePositions.SHOOT_P2 : RedPositions.SHOOT_P2);
-
-        focusPose =  (Container.isBlue ? BluePositions.SHOOT_FOCUS_POINT : RedPositions.SHOOT_FOCUS_POINT);
+        this.goalPosition = goalPosition;
 
         path = () -> m_drive.pathBuilder() //Lazy Curve Generation
                 .addPath(new Path(new BezierLine(m_drive::getPose, goalPosition)))
-                .setHeadingInterpolation(HeadingInterpolator.linearFromPoint(m_drive.getFollower()::getHeading, goalPosition.getHeading(), DrivetrainConstants.autoDriveInterpolator))
+                 .setHeadingInterpolation(HeadingInterpolator.linearFromPoint(m_drive.getFollower()::getHeading, goalPosition.getHeading(), DrivetrainConstants.autoDriveInterpolator))
                 .setBrakingStrength(DrivetrainConstants.driveBrakingStrength)
                 .setTimeoutConstraint(TheMachineConstants.shootTimeoutConstraint)
+                .setTValueConstraint(TValue)
                 .build();
     }
 
@@ -52,19 +47,9 @@ public class DriveToShootP2 extends CommandBase {
     }
 
     @Override
-    public void execute()
-    {
-        if (!m_drive.isBusy() && !m_drive.atPose(goalPosition))
-        {
-            m_drive.followPathTeleop(path.get());
-        }
-
-    }
-
-    @Override
     public boolean isFinished()
     {
-        return (m_drive.atPose(goalPosition) && m_drive.headingReached());
+        return (!m_drive.isBusy());
     }
 
     @Override

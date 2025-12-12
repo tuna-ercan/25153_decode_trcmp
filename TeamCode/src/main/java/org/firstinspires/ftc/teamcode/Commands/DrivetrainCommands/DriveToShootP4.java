@@ -9,6 +9,7 @@ import com.pedropathing.paths.PathChain;
 
 import org.firstinspires.ftc.robotcore.external.Supplier;
 import org.firstinspires.ftc.teamcode.Constants.DrivetrainConstants;
+import org.firstinspires.ftc.teamcode.Constants.TheMachineConstants;
 import org.firstinspires.ftc.teamcode.Container;
 import org.firstinspires.ftc.teamcode.Positions.BluePositions;
 import org.firstinspires.ftc.teamcode.Positions.RedPositions;
@@ -38,8 +39,9 @@ public class DriveToShootP4 extends CommandBase {
 
         path = () -> m_drive.pathBuilder() //Lazy Curve Generation
                 .addPath(new Path(new BezierLine(m_drive::getPose, goalPosition)))
-                .setHeadingInterpolation(HeadingInterpolator.linearFromPoint(m_drive.getFollower()::getHeading, goalPosition.getHeading(), DrivetrainConstants.autoDriveInterpolator))//.setHeadingInterpolation(HeadingInterpolator.facingPoint(focusPose))
+                .setHeadingInterpolation(HeadingInterpolator.linearFromPoint(m_drive.getFollower()::getHeading, goalPosition.getHeading(), DrivetrainConstants.autoDriveInterpolator))
                 .setBrakingStrength(DrivetrainConstants.driveBrakingStrength)
+                .setTimeoutConstraint(TheMachineConstants.shootTimeoutConstraint)
                 .build();
     }
 
@@ -56,6 +58,7 @@ public class DriveToShootP4 extends CommandBase {
         {
             m_drive.followPathTeleop(path.get());
         }
+
     }
 
     @Override

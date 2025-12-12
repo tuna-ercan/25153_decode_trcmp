@@ -10,6 +10,7 @@ import com.pedropathing.paths.PathChain;
 
 import org.firstinspires.ftc.teamcode.Commands.DrivetrainCommands.DriveToPoseAuto;
 import org.firstinspires.ftc.teamcode.Commands.DrivetrainCommands.FollowPathAuto;
+import org.firstinspires.ftc.teamcode.Constants.TheMachineConstants;
 import org.firstinspires.ftc.teamcode.Positions.BluePositions;
 import org.firstinspires.ftc.teamcode.Subsystems.DrivetrainSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.TheMachineSubsystem;
@@ -41,7 +42,7 @@ public class MainAutoCommandBlue extends SequentialCommandGroup {
         driveAndShootP1_3 = new FollowPathAuto(drivetrain,paths.Shoot3).alongWith(theMachineSubsystem.prepP5Request()).withTimeout(2000)
                 .andThen(theMachineSubsystem
                         .shootFromP5Request());
-        driveAndShootP1_4 = new FollowPathAuto(drivetrain,paths.Shoot4).alongWith(theMachineSubsystem.prepP4Request()).withTimeout(2000)
+        driveAndShootP1_4 = new FollowPathAuto(drivetrain,paths.Shoot4).alongWith(theMachineSubsystem.prepP4Request()).withTimeout(2300)
                 .andThen(theMachineSubsystem
                         .shootFromP4Request());
         addCommands(
@@ -88,6 +89,7 @@ public class MainAutoCommandBlue extends SequentialCommandGroup {
                             )
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(130))
+                    .setTimeoutConstraint(TheMachineConstants.shootTimeoutConstraint)
                     .build();
 
             Intake1 = follower
@@ -126,6 +128,7 @@ public class MainAutoCommandBlue extends SequentialCommandGroup {
                             )
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(130))
+                    .setTimeoutConstraint(TheMachineConstants.shootTimeoutConstraint)
                     .build();
 
             Intake2 = follower
@@ -150,6 +153,7 @@ public class MainAutoCommandBlue extends SequentialCommandGroup {
                             )
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(30), Math.toRadians(130))
+                    .setTimeoutConstraint(TheMachineConstants.shootTimeoutConstraint)
                     .build();
 
             Intake3 = follower
@@ -174,6 +178,7 @@ public class MainAutoCommandBlue extends SequentialCommandGroup {
                             )
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(30), Math.toRadians(110.5))
+                    .setTimeoutConstraint(TheMachineConstants.shootTimeoutConstraint)
                     .build();
         }
     }

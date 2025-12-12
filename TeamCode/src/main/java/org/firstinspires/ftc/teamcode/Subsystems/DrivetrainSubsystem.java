@@ -1,10 +1,14 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
 
+import androidx.core.math.MathUtils;
+
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.SubsystemBase;
+import com.arcrobotics.ftclib.controller.PIDFController;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.pedropathing.follower.Follower;
+import com.pedropathing.geometry.BezierPoint;
 import com.pedropathing.geometry.Pose;
 import com.pedropathing.paths.PathBuilder;
 import com.pedropathing.paths.PathChain;
@@ -47,6 +51,10 @@ public class DrivetrainSubsystem extends SubsystemBase
 
     private final Command driveToShootP5;
 
+    private final PIDFController pidfControllerX;
+    private final PIDFController pidfControllerY;
+    private final PIDFController pidfControllerHeading;
+
 
 
 
@@ -61,6 +69,10 @@ public class DrivetrainSubsystem extends SubsystemBase
         parameters = new IMU.Parameters(DrivetrainConstants.RevHubOrientation);
         imu = hardwareMap.get(IMU.class, DrivetrainConstants.ImuName);
         imu.initialize(parameters);
+
+        pidfControllerX = new PIDFController(DrivetrainConstants.xPID.p,DrivetrainConstants.xPID.i,DrivetrainConstants.xPID.d,DrivetrainConstants.xPID.f);
+        pidfControllerY = new PIDFController(DrivetrainConstants.yPID.p,DrivetrainConstants.yPID.i,DrivetrainConstants.yPID.d,DrivetrainConstants.yPID.f);
+        pidfControllerHeading = new PIDFController(DrivetrainConstants.headingPID.p,DrivetrainConstants.headingPID.i,DrivetrainConstants.headingPID.d,DrivetrainConstants.headingPID.f);
 
         currentState = DrivetrainStates.IDLE;
         lastState = DrivetrainStates.IDLE;
@@ -242,7 +254,7 @@ public class DrivetrainSubsystem extends SubsystemBase
      */
     public void startTeleopDrive()
     {
-        follower.startTeleopDrive();
+        follower.startTeleopDrive(true);
         setState(DrivetrainStates.TELEOP);
     }
 
@@ -277,6 +289,36 @@ public class DrivetrainSubsystem extends SubsystemBase
     {
         setState(DrivetrainStates.TEST);
         follower.followPath(pc);
+    }
+
+    public boolean holdPoint(Pose pose)
+    {
+        follower.holdPoint(new BezierPoint(pose), pose.getHeading());
+        return true;
+    }
+
+    public boolean driveToPosePID(Pose pose){
+        Pose robotPose = getPose();
+        double powerX = pidfControllerX.calculate(robotPose.getX(), pose.getX());
+        double powerY = pidfControllerY.calculate(robotPose.getY(), pose.getY());
+        double powerHeading = pidfControllerHeading.calculate(robotPose.getHeading(), pose.getHeading());
+
+
+        powerX = MathUtils.clamp(powerX,-1,1);
+        powerY = MathUtils.clamp(powerY,-1,1);
+        powerHeading = MathUtils.clamp(powerHeading,-1,1);
+        follower.setTeleOpDrive(powerX,powerY,powerHeading);
+        return true;
+    }
+
+    public double angleWrap(double angle){
+        angle = Math.toDegrees(angle);
+        if (angle > 180){
+            angle -= 360;
+        } else if (angle <= -180) {
+            angle += 360;
+        }
+        return Math.toRadians(angle);
     }
 
 

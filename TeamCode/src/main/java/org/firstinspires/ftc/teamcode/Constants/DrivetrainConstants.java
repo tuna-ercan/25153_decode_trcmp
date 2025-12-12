@@ -5,6 +5,7 @@ import com.bylazar.configurables.annotations.IgnoreConfigurable;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
 /**
  * Constants related to the drivetrain hardware and control.
@@ -58,4 +59,8 @@ public class DrivetrainConstants {
     public static double autoDriveInterpolator = 0.9;
     public static double driveBrakingStrength = 0.9;
     public static boolean useVoltageCompensation = false;
+
+    public static PIDFCoefficients xPID = new PIDFCoefficients(0,0,0,0);
+    public static PIDFCoefficients yPID = new PIDFCoefficients(0,0,0,0);
+    public static PIDFCoefficients headingPID = new PIDFCoefficients(0,0,0,0);
 }

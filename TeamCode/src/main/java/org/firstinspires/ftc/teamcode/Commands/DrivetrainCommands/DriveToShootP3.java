@@ -9,6 +9,7 @@ import com.pedropathing.paths.PathChain;
 
 import org.firstinspires.ftc.robotcore.external.Supplier;
 import org.firstinspires.ftc.teamcode.Constants.DrivetrainConstants;
+import org.firstinspires.ftc.teamcode.Constants.TheMachineConstants;
 import org.firstinspires.ftc.teamcode.Container;
 import org.firstinspires.ftc.teamcode.Positions.BluePositions;
 import org.firstinspires.ftc.teamcode.Positions.RedPositions;
@@ -40,6 +41,7 @@ public class DriveToShootP3 extends CommandBase {
                 .addPath(new Path(new BezierLine(m_drive::getPose, goalPosition)))
                 .setHeadingInterpolation(HeadingInterpolator.linearFromPoint(m_drive.getFollower()::getHeading, goalPosition.getHeading(), DrivetrainConstants.autoDriveInterpolator))
                 .setBrakingStrength(DrivetrainConstants.driveBrakingStrength)
+                .setTimeoutConstraint(TheMachineConstants.shootTimeoutConstraint)
                 .build();
     }
 
