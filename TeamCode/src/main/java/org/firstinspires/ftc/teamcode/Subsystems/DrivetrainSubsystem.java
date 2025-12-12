@@ -26,7 +26,7 @@ import org.firstinspires.ftc.teamcode.PedroFiles.PedroConstants;
 import org.firstinspires.ftc.teamcode.Container;
 import org.firstinspires.ftc.teamcode.Positions.BluePositions;
 import org.firstinspires.ftc.teamcode.Positions.RedPositions;
-import org.firstinspires.ftc.teamcode.Utils.LimelightHandler;
+import org.firstinspires.ftc.teamcode.Utils.DrivePIDController;
 
 /**
  * Subsystem responsible for the robot's drivetrain.
@@ -41,6 +41,10 @@ public class DrivetrainSubsystem extends SubsystemBase
     private boolean isStartPoseSet = false;
     private boolean isBusy = false;
 
+    private double xError = 0;
+    private double yError = 0;
+    private double headingError = 0;
+
 
     private DrivetrainStates currentState;
     private DrivetrainStates lastState;
@@ -51,9 +55,9 @@ public class DrivetrainSubsystem extends SubsystemBase
 
     private final Command driveToShootP5;
 
-    private final PIDFController pidfControllerX;
-    private final PIDFController pidfControllerY;
-    private final PIDFController pidfControllerHeading;
+    private final DrivePIDController pidfControllerX;
+    private final DrivePIDController pidfControllerY;
+    private final DrivePIDController pidfControllerHeading;
 
 
 
@@ -70,10 +74,9 @@ public class DrivetrainSubsystem extends SubsystemBase
         imu = hardwareMap.get(IMU.class, DrivetrainConstants.ImuName);
         imu.initialize(parameters);
 
-        pidfControllerX = new PIDFController(DrivetrainConstants.xPID.p,DrivetrainConstants.xPID.i,DrivetrainConstants.xPID.d,DrivetrainConstants.xPID.f);
-        pidfControllerY = new PIDFController(DrivetrainConstants.yPID.p,DrivetrainConstants.yPID.i,DrivetrainConstants.yPID.d,DrivetrainConstants.yPID.f);
-        pidfControllerHeading = new PIDFController(DrivetrainConstants.headingPID.p,DrivetrainConstants.headingPID.i,DrivetrainConstants.headingPID.d,DrivetrainConstants.headingPID.f);
-
+        pidfControllerX = new DrivePIDController(DrivetrainConstants.xPID);
+        pidfControllerY = new DrivePIDController(DrivetrainConstants.yPID);
+        pidfControllerHeading = new DrivePIDController(DrivetrainConstants.headingPID);
         currentState = DrivetrainStates.IDLE;
         lastState = DrivetrainStates.IDLE;
 
@@ -107,6 +110,8 @@ public class DrivetrainSubsystem extends SubsystemBase
 
         Container.robotPose = follower.getPose();
         //stateMachine();
+
+        checkAndUpdatesPIDS();
     }
 
     /**
@@ -121,6 +126,7 @@ public class DrivetrainSubsystem extends SubsystemBase
             case TELEOP:
             case AUTO:
             case TEST:
+            case PID:
                 break;
         }
     }
@@ -152,6 +158,11 @@ public class DrivetrainSubsystem extends SubsystemBase
     public boolean atPose(Pose pose)
     {
         return follower.atPose(pose, DrivetrainConstants.TolX, DrivetrainConstants.TolY, DrivetrainConstants.TolH);
+    }
+
+    public boolean atPoseCoarse(Pose pose)
+    {
+        return follower.atPose(pose, DrivetrainConstants.TolcX, DrivetrainConstants.TolcY, DrivetrainConstants.TolcH);
     }
 
     /**
@@ -249,6 +260,12 @@ public class DrivetrainSubsystem extends SubsystemBase
                 true);
     }
 
+    public void setTeleopPid(double pX, double pY, double pH)
+    {
+        setState(DrivetrainStates.PID);
+        follower.setTeleOpDrive(pX, pY, pH, false);
+    }
+
     /**
      * Starts the teleop drive control and updates the state to TELEOP.
      */
@@ -297,19 +314,39 @@ public class DrivetrainSubsystem extends SubsystemBase
         return true;
     }
 
-    public boolean driveToPosePID(Pose pose){
+    public void driveToPosePID(Pose pose){
         Pose robotPose = getPose();
-        double powerX = pidfControllerX.calculate(robotPose.getX(), pose.getX());
-        double powerY = pidfControllerY.calculate(robotPose.getY(), pose.getY());
-        double powerHeading = pidfControllerHeading.calculate(robotPose.getHeading(), pose.getHeading());
 
+        xError = robotPose.getX() - pose.getX();
+        double powerX = pidfControllerX.calculate(xError);
 
-        powerX = MathUtils.clamp(powerX,-1,1);
-        powerY = MathUtils.clamp(powerY,-1,1);
-        powerHeading = MathUtils.clamp(powerHeading,-1,1);
-        follower.setTeleOpDrive(powerX,powerY,powerHeading);
-        return true;
+        yError = robotPose.getY() - pose.getY();
+        double powerY = pidfControllerY.calculate(yError);
+
+        headingError = angleWrap(robotPose.getHeading()-pose.getHeading());
+        double powerHeading = pidfControllerHeading.calculate(headingError);
+
+        powerX = MathUtils.clamp(powerX,-DrivetrainConstants.maxPowerX,DrivetrainConstants.maxPowerX);
+        powerY = MathUtils.clamp(powerY,-DrivetrainConstants.maxPowerY,DrivetrainConstants.maxPowerY);
+        powerHeading = MathUtils.clamp(powerHeading,-DrivetrainConstants.maxPowerHeading,DrivetrainConstants.maxPowerHeading);
+        setTeleopPid(powerX,powerY,powerHeading);
     }
+
+    public double getXErrorPID()
+    {
+        return xError;
+    }
+
+    public double getYErrorPID()
+    {
+        return yError;
+    }
+
+    public double getHeadingErrorPID()
+    {
+        return headingError;
+    }
+
 
     public double angleWrap(double angle){
         angle = Math.toDegrees(angle);
@@ -363,5 +400,12 @@ public class DrivetrainSubsystem extends SubsystemBase
     public Command driveToShootP5()
     {
         return driveToShootP5;
+    }
+
+    private void checkAndUpdatesPIDS()
+    {
+        pidfControllerX.checkAndUpdateCoefficients(DrivetrainConstants.xPID);
+        pidfControllerY.checkAndUpdateCoefficients(DrivetrainConstants.yPID);
+        pidfControllerHeading.checkAndUpdateCoefficients(DrivetrainConstants.headingPID);
     }
 }

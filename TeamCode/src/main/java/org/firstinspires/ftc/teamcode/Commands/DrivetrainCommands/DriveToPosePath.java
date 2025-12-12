@@ -47,9 +47,18 @@ public class DriveToPosePath extends CommandBase {
     }
 
     @Override
+    public void execute()
+    {
+        if (!m_drive.isBusy() && !m_drive.atPoseCoarse(goalPosition))
+        {
+            m_drive.followPathTeleop(path.get());
+        }
+    }
+
+    @Override
     public boolean isFinished()
     {
-        return (!m_drive.isBusy());
+        return (m_drive.atPoseCoarse(goalPosition));
     }
 
     @Override

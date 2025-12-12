@@ -37,7 +37,7 @@ public class AllStates {
         TELEOP,
         TELEOP_PATH,
         AUTO,
-        TEST
+        PID, TEST
 
     };
 

@@ -86,7 +86,7 @@ public class TeleopBlue extends CommandOpMode {
 
         periodicOpCommand = new RunCommand(() -> {
             m_drive.setTeleopDriveFieldCentric(gamepadEx1);
-            //mouth.speak();
+            mouth.speak();
         });
 
         schedule(

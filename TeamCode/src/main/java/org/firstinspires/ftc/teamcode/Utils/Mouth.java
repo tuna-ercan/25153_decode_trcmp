@@ -57,11 +57,14 @@ public class Mouth {
         PanelsFieldDrawing.drawRobot(drivetrainSubsystem.getPose());
         PanelsFieldDrawing.sendPacket();
         joinedTelemetry.addData("Drive-State", drivetrainSubsystem.getState());
+        joinedTelemetry.addData("Drive-Error-X", drivetrainSubsystem.getXErrorPID());
+        joinedTelemetry.addData("Drive-Error-Y", drivetrainSubsystem.getYErrorPID());
+        joinedTelemetry.addData("Drive-Error-Heading", drivetrainSubsystem.getHeadingErrorPID());
         //joinedTelemetry.addData("Drive-IsBusy", drivetrainSubsystem.isBusy());
 
-        panelsTelemetry.addData("Drive-Pose-X", drivetrainSubsystem.getPose().getX());
-        panelsTelemetry.addData("Drive-Pose-Y", drivetrainSubsystem.getPose().getY());
-        panelsTelemetry.addData("Drive-Pose-Heading", drivetrainSubsystem.getPose().getHeading());
+        //panelsTelemetry.addData("Drive-Pose-X", drivetrainSubsystem.getPose().getX());
+        //panelsTelemetry.addData("Drive-Pose-Y", drivetrainSubsystem.getPose().getY());
+        //panelsTelemetry.addData("Drive-Pose-Heading", drivetrainSubsystem.getPose().getHeading());
         //panelsTelemetry.addData("Drive-Error-Heading", drivetrainSubsystem.getHeadingError());
         //panelsTelemetry.addData("Drive-Error-Drive", drivetrainSubsystem.getDriveError());
         //panelsTelemetry.addData("Drive-Error-Translational", drivetrainSubsystem.getTranslationalError());
@@ -77,26 +80,26 @@ public class Mouth {
 
         // Shooter
         joinedTelemetry.addData("Shooter-State", shooterSubsystem.getState());
-        joinedTelemetry.addData("Shooter-IsReady", shooterSubsystem.isReady());
+        //joinedTelemetry.addData("Shooter-IsReady", shooterSubsystem.isReady());
 
-        joinedTelemetry.addData("Shooter-RPM-Goal", shooterSubsystem.getGoalRPM());
-        joinedTelemetry.addData("Shooter-RPM-Left", shooterSubsystem.getLeftRPM());
-        joinedTelemetry.addData("Shooter-RPM-Middle", shooterSubsystem.getMiddleRPM());
-        joinedTelemetry.addData("Shooter-RPM-Right", shooterSubsystem.getRightRPM());
+        //joinedTelemetry.addData("Shooter-RPM-Goal", shooterSubsystem.getGoalRPM());
+        //joinedTelemetry.addData("Shooter-RPM-Left", shooterSubsystem.getLeftRPM());
+        //joinedTelemetry.addData("Shooter-RPM-Middle", shooterSubsystem.getMiddleRPM());
+        //joinedTelemetry.addData("Shooter-RPM-Right", shooterSubsystem.getRightRPM());
         //panelsTelemetry.addData("Shooter-HOOD-Goal", shooterSubsystem.getGoalHood());
-        panelsTelemetry.addData("Shooter-HOOD-Current", shooterSubsystem.getHoodPosition());
+        //panelsTelemetry.addData("Shooter-HOOD-Current", shooterSubsystem.getHoodPosition());
         //panelsTelemetry.addData("Shooter-IsReady", shooterSubsystem.isReady());
 
         // Funnel
         joinedTelemetry.addData("Funnel-State", funnelSubsystem.getState());
-        joinedTelemetry.addData("Funnel-IsFull", funnelSubsystem.isFull());
-        String fComb = funnelSubsystem.getFunnelFeedOrder()[0] + " " + funnelSubsystem.getFunnelFeedOrder()[1] + " " + funnelSubsystem.getFunnelFeedOrder()[2];
-        joinedTelemetry.addData("FeedCombination", fComb);
+        //joinedTelemetry.addData("Funnel-IsFull", funnelSubsystem.isFull());
+        //String fComb = funnelSubsystem.getFunnelFeedOrder()[0] + " " + funnelSubsystem.getFunnelFeedOrder()[1] + " " + funnelSubsystem.getFunnelFeedOrder()[2];
+        //joinedTelemetry.addData("FeedCombination", fComb);
 
-        String gComb = funnelSubsystem.getFunnelGreenRatioOrder()[0] + " " + funnelSubsystem.getFunnelGreenRatioOrder()[1] + " " + funnelSubsystem.getFunnelGreenRatioOrder()[2];
-        joinedTelemetry.addData("GreenCombination", gComb);
+        //String gComb = funnelSubsystem.getFunnelGreenRatioOrder()[0] + " " + funnelSubsystem.getFunnelGreenRatioOrder()[1] + " " + funnelSubsystem.getFunnelGreenRatioOrder()[2];
+        //joinedTelemetry.addData("GreenCombination", gComb);
 
-        joinedTelemetry.addData("ColorCombination", Container.colorCombination);
+        //joinedTelemetry.addData("ColorCombination", Container.colorCombination);
 
         //joinedTelemetry.addData("SensorL", funnelSubsystem.getSensorL().getNormalizedColors().toColor());
         //joinedTelemetry.addData("SensorM", funnelSubsystem.getSensorM().getNormalizedColors().toColor());

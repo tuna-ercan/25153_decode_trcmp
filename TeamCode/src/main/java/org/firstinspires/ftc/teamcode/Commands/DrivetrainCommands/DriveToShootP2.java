@@ -58,7 +58,6 @@ public class DriveToShootP2 extends CommandBase {
         {
             m_drive.followPathTeleop(path.get());
         }
-
     }
 
     @Override

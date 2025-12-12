@@ -15,6 +15,6 @@ public class TheMachineConstants {
 
     public static long waitAfterFeed = 750;
 
-    public static double shootTimeoutConstraint = 1050;
+    public static double shootTimeoutConstraint = 100;
 
 }
