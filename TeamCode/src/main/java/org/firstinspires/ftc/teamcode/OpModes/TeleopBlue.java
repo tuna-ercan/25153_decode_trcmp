@@ -40,6 +40,7 @@ public class TeleopBlue extends CommandOpMode {
     private Command driveAndShootP4;
     private Command manualShootP5;
     private Command manualShootP2;
+    private Command shootFromPose;
 
     private Command setRobotPoseLL;
 
@@ -67,23 +68,23 @@ public class TeleopBlue extends CommandOpMode {
                 .build();
 
         driveAndShootP5 = m_drive.driveToShootP5().alongWith(m_machine.prepP5Request()).withTimeout(2300)
-                .andThen(m_machine.shootFromP5Request());
+                .andThen(m_machine.shootFromPoseRequest());
 
 
         driveAndShootP2 = m_drive.driveToShootP2().alongWith(m_machine.prepP2Request()).withTimeout(2300)
-                .andThen(m_machine.shootFromP2Request());
+                .andThen(m_machine.shootFromPoseRequest());
 
         driveAndShootP3 = m_drive.driveToShootP3().alongWith(m_machine.prepP3Request()).withTimeout(2300)
-                .andThen(m_machine.shootFromP3Request());
+                .andThen(m_machine.shootFromPoseRequest());
 
         driveAndShootP4 = m_drive.driveToShootP4().alongWith(m_machine.prepP4Request()).withTimeout(2300)
-                .andThen(m_machine.shootFromP4Request());
+                .andThen(m_machine.shootFromPoseRequest());
 
         manualShootP5 = new AimToFocus(m_drive).alongWith(m_machine.prepP5Request()).withTimeout(2300)
-                .andThen(m_machine.shootFromP5Request());
+                .andThen(m_machine.shootFromPoseRequest());
 
         manualShootP2 = m_machine.prepP2Request().withTimeout(2300)
-                .andThen(m_machine.shootFromP2Request());
+                .andThen(m_machine.shootFromPoseRequest());
 
 
         setRobotPoseLL = m_drive.setRobotPose(m_machine.getLLPoseMT());
@@ -118,11 +119,11 @@ public class TeleopBlue extends CommandOpMode {
                 })));
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
-                        .whenPressed(manualShootP2)
+                        .whenHeld(manualShootP2)
                         .whenReleased(m_machine.restRequest());
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
-                .whenPressed(manualShootP5)
+                .whenHeld(manualShootP5)
                 .whenReleased(m_machine.restRequest());
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.B)

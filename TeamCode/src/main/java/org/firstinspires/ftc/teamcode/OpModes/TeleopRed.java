@@ -11,6 +11,7 @@ import com.pedropathing.geometry.Pose;
 import com.pedropathing.paths.PathChain;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.Commands.DrivetrainCommands.AimToFocus;
 import org.firstinspires.ftc.teamcode.Container;
 import org.firstinspires.ftc.teamcode.Subsystems.DrivetrainSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.TheMachineSubsystem;
@@ -61,23 +62,23 @@ public class TeleopRed extends CommandOpMode {
                 .build();
 
         driveAndShootP5 = m_drive.driveToShootP5().alongWith(m_machine.prepP5Request()).withTimeout(2300)
-                .andThen(m_machine.shootFromP5Request());
+                .andThen(m_machine.shootFromPoseRequest());
 
 
         driveAndShootP2 = m_drive.driveToShootP2().alongWith(m_machine.prepP2Request()).withTimeout(2300)
-                .andThen(m_machine.shootFromP2Request());
+                .andThen(m_machine.shootFromPoseRequest());
 
         driveAndShootP3 = m_drive.driveToShootP3().alongWith(m_machine.prepP3Request()).withTimeout(2300)
-                .andThen(m_machine.shootFromP3Request());
+                .andThen(m_machine.shootFromPoseRequest());
 
         driveAndShootP4 = m_drive.driveToShootP4().alongWith(m_machine.prepP4Request()).withTimeout(2300)
-                .andThen(m_machine.shootFromP4Request());
+                .andThen(m_machine.shootFromPoseRequest());
 
-        manualShootP5 = m_machine.prepP5Request().withTimeout(2300)
-                .andThen(m_machine.shootFromP5Request());
+        manualShootP5 = new AimToFocus(m_drive).alongWith(m_machine.prepP5Request()).withTimeout(2300)
+                .andThen(m_machine.shootFromPoseRequest());
 
         manualShootP2 = m_machine.prepP2Request().withTimeout(2300)
-                .andThen(m_machine.shootFromP2Request());
+                .andThen(m_machine.shootFromPoseRequest());
 
 
 
@@ -109,12 +110,12 @@ public class TeleopRed extends CommandOpMode {
                 })));
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
-                        .whenPressed(manualShootP2)
-                .whenReleased(m_machine.restRequest());
+                        .whenHeld(manualShootP2)
+                        .whenReleased(m_machine.restRequest());
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
-                .whenPressed(manualShootP5)
-                        .whenReleased(m_machine.restRequest());
+                .whenHeld(manualShootP5)
+                .whenReleased(m_machine.restRequest());
 
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.B)

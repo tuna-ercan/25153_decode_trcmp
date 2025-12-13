@@ -377,6 +377,7 @@ public class ShooterSubsystem extends SubsystemBase {
                         && (Math.abs(lRpm-getLeftRPM()) < ShooterConstants.RpmTol));
     }
 
+
     /**
      * Checks if the hood is within tolerance of the goal position.
      * @param hood The target hood position.

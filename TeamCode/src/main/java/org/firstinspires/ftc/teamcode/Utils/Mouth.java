@@ -65,6 +65,13 @@ public class Mouth {
             joinedTelemetry.addData("ERROR-PID-Y", drivetrainSubsystem.getYErrorPID());
             joinedTelemetry.addData("ERROR-PID-H", drivetrainSubsystem.getHeadingErrorPID());
 
+            joinedTelemetry.addData("Shooter-RPM-Goal", shooterSubsystem.getGoalRPM());
+            joinedTelemetry.addData("Shooter-RPM-Left", shooterSubsystem.getLeftRPM());
+            joinedTelemetry.addData("Shooter-RPM-Middle", shooterSubsystem.getMiddleRPM());
+            joinedTelemetry.addData("Shooter-RPM-Right", shooterSubsystem.getRightRPM());
+            joinedTelemetry.addData("Shooter-HOOD-Goal", shooterSubsystem.getGoalHood());
+            joinedTelemetry.addData("Shooter-HOOD-Current", shooterSubsystem.getHoodPosition());
+
         }
 
         //joinedTelemetry.addData("Drive-IsBusy", drivetrainSubsystem.isBusy());

@@ -1,10 +1,7 @@
 package org.firstinspires.ftc.teamcode.Constants;
 
-import androidx.annotation.NonNull;
-
 import com.bylazar.configurables.annotations.Configurable;
 import com.bylazar.configurables.annotations.IgnoreConfigurable;
-import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.PIDCoefficients;
@@ -94,4 +91,25 @@ public class ShooterConstants {
     public static double hoodInterpolator(double x) {
         return ((0.0000892583*Math.pow(x, 3))+((-0.0252587)*Math.pow(x, 2))+((2.11195)*x)+(-36.69552));
     }
+
+    public static double getBluekY(double heading){
+        double h = (180-Math.toDegrees(heading));
+
+        return Math.exp(-Math.pow(((h-17.5)/2),2));
+    }
+
+    public static double getBlueFocusPointOffset(double heading){
+        return (10.16)*getBluekY(heading);
+    }
+
+    public static double getRedkY(double heading){
+        double h = (180-Math.toDegrees(heading));
+
+        return Math.exp(-Math.pow(((h-17.5)/2),2));
+    }
+
+    public static double getRedFocusPointOffset(double heading){
+        return (10.16)*getRedkY(heading);
+    }
+
 }

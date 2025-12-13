@@ -35,7 +35,7 @@ public class DriveToShootP2 extends SequentialCommandGroup {
         goalPosition = (Container.isBlue ? BluePositions.SHOOT_P2 : RedPositions.SHOOT_P2);
 
         addCommands(
-                new DriveToPosePathPid(m_drive, goalPosition)
+                new DriveToPosePathFocus(m_drive, goalPosition)
         );
 
     }

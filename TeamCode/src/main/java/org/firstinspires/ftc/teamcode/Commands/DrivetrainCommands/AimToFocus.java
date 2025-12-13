@@ -4,6 +4,7 @@ import com.arcrobotics.ftclib.command.CommandBase;
 import com.pedropathing.geometry.Pose;
 
 import org.firstinspires.ftc.teamcode.Constants.DrivetrainConstants;
+import org.firstinspires.ftc.teamcode.Constants.ShooterConstants;
 import org.firstinspires.ftc.teamcode.Container;
 import org.firstinspires.ftc.teamcode.Positions.BluePositions;
 import org.firstinspires.ftc.teamcode.Positions.RedPositions;
@@ -15,7 +16,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.DrivetrainSubsystem;
  */
 public class AimToFocus extends CommandBase {
     private final DrivetrainSubsystem m_drive;
-    private final Pose focus;
+    private Pose focus;
     private double atPoseCounter = 0;
 
     /**
@@ -32,6 +33,8 @@ public class AimToFocus extends CommandBase {
     public void execute()
     {
         double heading = calculateHeading();
+        if (Container.isBlue) this.focus = new Pose(focus.getX(),(focus.getY()-(ShooterConstants.getBlueFocusPointOffset(heading))), focus.getHeading());
+        else  this.focus = new Pose(focus.getX(),(focus.getY()-(ShooterConstants.getRedFocusPointOffset(heading))), focus.getHeading());
         m_drive.turnToPID(heading);
 
         if (m_drive.atHeading(heading)) atPoseCounter += 1;
