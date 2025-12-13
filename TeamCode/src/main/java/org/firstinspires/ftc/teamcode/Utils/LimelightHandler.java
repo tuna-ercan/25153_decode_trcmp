@@ -59,7 +59,7 @@ public class LimelightHandler {
         ll.pipelineSwitch(1);
         Pose3D camPose = new Pose3D(new Position(), new YawPitchRollAngles(AngleUnit.RADIANS,0,0,0, 0));
         if (result != null){
-            if ( result.getFiducialResults().get(0).getCameraPoseTargetSpace() != null) camPose = result.getBotpose_MT2();}
+            if ( result.getFiducialResults().get(0).getCameraPoseTargetSpace() != null) camPose = result.getFiducialResults().get(0).getCameraPoseTargetSpace();}
         return camPose;
     }
 

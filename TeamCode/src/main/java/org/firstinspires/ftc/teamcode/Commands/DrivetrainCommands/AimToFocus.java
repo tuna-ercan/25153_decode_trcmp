@@ -33,8 +33,8 @@ public class AimToFocus extends CommandBase {
     public void execute()
     {
         double heading = calculateHeading();
-        if (Container.isBlue) this.focus = new Pose(focus.getX(),(focus.getY()-(ShooterConstants.getBlueFocusPointOffset(heading))), focus.getHeading());
-        else  this.focus = new Pose(focus.getX(),(focus.getY()-(ShooterConstants.getRedFocusPointOffset(heading))), focus.getHeading());
+        if (Container.isBlue) this.focus = focus.withY(focus.getY()- ShooterConstants.getBlueFocusPointOffset(heading));
+        else  this.focus = focus.withY(focus.getY()- ShooterConstants.getRedFocusPointOffset(heading));
         m_drive.turnToPID(heading);
 
         if (m_drive.atHeading(heading)) atPoseCounter += 1;

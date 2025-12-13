@@ -95,7 +95,7 @@ public class ShooterConstants {
     public static double getBluekY(double heading){
         double h = (180-Math.toDegrees(heading));
 
-        return Math.exp(-Math.pow(((h-17.5)/2),2));
+        return Math.exp(-Math.pow(((h-15)/2),2));
     }
 
     public static double getBlueFocusPointOffset(double heading){
@@ -103,9 +103,9 @@ public class ShooterConstants {
     }
 
     public static double getRedkY(double heading){
-        double h = (180-Math.toDegrees(heading));
+        double h = (Math.toDegrees(heading));
 
-        return Math.exp(-Math.pow(((h-17.5)/2),2));
+        return Math.exp(-Math.pow(((h-15)/2),2));
     }
 
     public static double getRedFocusPointOffset(double heading){

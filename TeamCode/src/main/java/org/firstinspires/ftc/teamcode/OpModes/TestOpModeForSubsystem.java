@@ -10,8 +10,10 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.bylazar.telemetry.JoinedTelemetry;
 import com.bylazar.telemetry.PanelsTelemetry;
 import com.bylazar.telemetry.TelemetryManager;
+import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.teamcode.Commands.DrivetrainCommands.AimToHeadingPID;
 import org.firstinspires.ftc.teamcode.Container;
 import org.firstinspires.ftc.teamcode.Subsystems.DrivetrainSubsystem;
@@ -143,6 +145,24 @@ public class TestOpModeForSubsystem extends CommandOpMode {
             //joinedTelemetry.addData("M-Red", m_funnel.getRedM());
             //joinedTelemetry.addData("R-Red", m_funnel.getRedR());
             */
+
+            Position camPose = m_machine.getLimelightHandler().getCamPose().getPosition();
+            Pose robotPose = m_drive.getPose();
+
+            Position cameraFromRobotMainFrame = new Position();
+            cameraFromRobotMainFrame.x = camPose.x - robotPose.getX()*2.54/100;
+            cameraFromRobotMainFrame.y = camPose.y - robotPose.getY()*2.54/100;
+            cameraFromRobotMainFrame.z = camPose.z;
+
+            Position cameraFromRobot = new Position();
+            cameraFromRobot.x = cameraFromRobotMainFrame.x*Math.cos(robotPose.getHeading()) - cameraFromRobotMainFrame.y*Math.sin(robotPose.getHeading());
+            cameraFromRobot.y = cameraFromRobotMainFrame.x*Math.sin(robotPose.getHeading()) + cameraFromRobotMainFrame.y*Math.cos(robotPose.getHeading());
+            cameraFromRobot.z = cameraFromRobotMainFrame.z;
+
+            joinedTelemetry.addData("CamX", cameraFromRobot.x);
+            joinedTelemetry.addData("CamY", cameraFromRobot.y);
+            joinedTelemetry.addData("CamZ", cameraFromRobot.z);
+
 
             joinedTelemetry.addData("ERROR-PID-X", m_drive.getXErrorPID());
             joinedTelemetry.addData("ERROR-PID-Y", m_drive.getYErrorPID());

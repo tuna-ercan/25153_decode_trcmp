@@ -61,6 +61,10 @@ public class Mouth {
 
         if (DrivetrainConstants.ShowPIDError)
         {
+            joinedTelemetry.addData("Robot-X", drivetrainSubsystem.getPose().getX());
+            joinedTelemetry.addData("Robot-Y", drivetrainSubsystem.getPose().getY());
+            joinedTelemetry.addData("Robot-H", drivetrainSubsystem.getPose().getHeading());
+
             joinedTelemetry.addData("ERROR-PID-X", drivetrainSubsystem.getXErrorPID());
             joinedTelemetry.addData("ERROR-PID-Y", drivetrainSubsystem.getYErrorPID());
             joinedTelemetry.addData("ERROR-PID-H", drivetrainSubsystem.getHeadingErrorPID());
