@@ -34,15 +34,15 @@ public class MainAutoCommandRed extends SequentialCommandGroup {
 
         driveAndShootP1_1 = new DriveToShootP5(drivetrain).alongWith(theMachineSubsystem.prepP5Request())
                 .andThen(theMachineSubsystem
-                    .shootFromP5Request());
+                    .shootFromPoseRequest());
         driveAndShootP1_2 = new DriveToShootP5(drivetrain).alongWith(theMachineSubsystem.prepP5Request())
                 .andThen(theMachineSubsystem
-                        .shootFromP5Request());
+                        .shootFromPoseRequest());
         driveAndShootP1_3 = new DriveToShootP5(drivetrain).alongWith(theMachineSubsystem.prepP5Request())
                 .andThen(theMachineSubsystem
-                        .shootFromP5Request());
+                        .shootFromPoseRequest());
         driveAndShootP1_4 = new DriveToShootP5(drivetrain).alongWith(theMachineSubsystem.prepP5Request())
-                .andThen(theMachineSubsystem.shootFromP5Request());
+                .andThen(theMachineSubsystem.shootFromPoseRequest());
 
         addCommands(
                 driveAndShootP1_1,

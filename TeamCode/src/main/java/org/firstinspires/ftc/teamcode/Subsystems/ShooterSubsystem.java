@@ -40,7 +40,7 @@ import org.firstinspires.ftc.teamcode.Constants.ShooterConstants;
 import org.firstinspires.ftc.teamcode.Container;
 import org.firstinspires.ftc.teamcode.Positions.BluePositions;
 import org.firstinspires.ftc.teamcode.Positions.RedPositions;
-import org.firstinspires.ftc.teamcode.Utils.ShooterPIDController;
+import org.firstinspires.ftc.teamcode.Utils.ShooterPIDFController;
 
 import java.util.function.Supplier;
 
@@ -62,9 +62,9 @@ public class ShooterSubsystem extends SubsystemBase {
     private final DcMotorEx middleMotor;
     private final Servo hoodServo;
 
-    private final ShooterPIDController leftPID;
-    private final ShooterPIDController middlePID;
-    private final ShooterPIDController rightPID;
+    private final ShooterPIDFController leftPID;
+    private final ShooterPIDFController middlePID;
+    private final ShooterPIDFController rightPID;
 
     private final Supplier<Pose> poseSupplier;
 
@@ -91,6 +91,13 @@ public class ShooterSubsystem extends SubsystemBase {
     private double prevLOutput;
     private double prevMOutput;
     private double prevROutput;
+
+    private double prevLRPM;
+    private double prevMRPM;
+    private double prevRRPM;
+
+    private boolean checkedRPMOnce = false;
+
     private boolean isReady;
 
     private ShooterStates currentState;
@@ -134,9 +141,13 @@ public class ShooterSubsystem extends SubsystemBase {
         rightMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         rightMotor.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
 
-        leftPID = new ShooterPIDController(ShooterConstants.LeftPIDCoefficients);
-        middlePID = new ShooterPIDController(ShooterConstants.MiddlePIDCoefficients);
-        rightPID = new ShooterPIDController(ShooterConstants.RightPIDCoefficients);
+        leftPID = new ShooterPIDFController(ShooterConstants.LeftPIDFCoefficients);
+        middlePID = new ShooterPIDFController(ShooterConstants.MiddlePIDFCoefficients);
+        rightPID = new ShooterPIDFController(ShooterConstants.RightPIDFCoefficients);
+
+        prevLRPM = 0;
+        prevMRPM = 0;
+        prevRRPM = 0;
 
         focusPoint = (Container.isBlue ? BluePositions.SHOOT_FOCUS_POINT : RedPositions.SHOOT_FOCUS_POINT);
 
@@ -312,19 +323,44 @@ public class ShooterSubsystem extends SubsystemBase {
                 Math.floor(position*ShooterConstants.HoodGearRatio/ShooterConstants.ServoAngleCapacity * 10000) / 10000.0);
     }
 
-    public double getRightRPM()
+    public double getRightRPMRaw()
     {
         return (rightMotor.getVelocity() * 60 / 28);
     }
 
-    public double getMiddleRPM()
+    public double getMiddleRPMRaw()
     {
         return (middleMotor.getVelocity() * 60 / 28 );
     }
-    public double getLeftRPM()
+    public double getLeftRPMRaw()
     {
         return (leftMotor.getVelocity() * 60 / 28);
     }
+
+    public double getRightRPM()
+    {
+        double rpm = prevRRPM*ShooterConstants.LastRpmCoefficient + getRightRPMRaw()*(1-ShooterConstants.LastRpmCoefficient);
+        prevRRPM = getRightRPMRaw();
+
+        return rpm;
+    }
+
+    public double getMiddleRPM()
+    {
+        double rpm = prevMRPM*ShooterConstants.LastRpmCoefficient + getMiddleRPMRaw()*(1-ShooterConstants.LastRpmCoefficient);
+        prevMRPM = getMiddleRPMRaw();
+
+        return rpm;
+    }
+
+    public double getLeftRPM()
+    {
+        double rpm = prevLRPM*ShooterConstants.LastRpmCoefficient + getLeftRPMRaw()*(1-ShooterConstants.LastRpmCoefficient);
+        prevLRPM = getLeftRPMRaw();
+
+        return rpm;
+    }
+
 
     public double getHoodPosition()
     {
@@ -364,7 +400,7 @@ public class ShooterSubsystem extends SubsystemBase {
      * @param RPM The target RPM.
      * @return True if within tolerance.
      */
-    public boolean checkRPM(double RPM)
+    public boolean checkRPMRaw(double RPM)
     {
         double lRpm = RPM*ShooterConstants.MultiplierLeft;
         double mRpm = RPM*ShooterConstants.MultiplierMiddle;
@@ -375,6 +411,15 @@ public class ShooterSubsystem extends SubsystemBase {
                 (Math.abs(rRpm-getRightRPM()) < ShooterConstants.RpmTol)
                         && (Math.abs(mRpm-getMiddleRPM()) < ShooterConstants.RpmTol)
                         && (Math.abs(lRpm-getLeftRPM()) < ShooterConstants.RpmTol));
+    }
+
+    public boolean checkRPM(double RPM)
+    {
+        boolean lastChecked = checkedRPMOnce;
+
+        checkedRPMOnce = checkRPMRaw(RPM);
+
+        return lastChecked && checkedRPMOnce;
     }
 
 

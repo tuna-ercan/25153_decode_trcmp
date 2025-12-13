@@ -77,4 +77,6 @@ public class DrivetrainConstants {
 
     public static double TValuePathPid = 0.99;
     public static long pidTimeout = 800;
+
+    public static long AimTimeOut = 1800;
 }

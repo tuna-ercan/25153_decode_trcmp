@@ -13,6 +13,7 @@ import com.bylazar.telemetry.TelemetryManager;
 import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.teamcode.Commands.DrivetrainCommands.AimToHeadingPID;
 import org.firstinspires.ftc.teamcode.Container;
@@ -146,9 +147,15 @@ public class TestOpModeForSubsystem extends CommandOpMode {
             //joinedTelemetry.addData("R-Red", m_funnel.getRedR());
             */
 
+
+            joinedTelemetry.addData("Robot-X", m_drive.getPose().getX());
+            joinedTelemetry.addData("Robot-Y", m_drive.getPose().getY());
+            joinedTelemetry.addData("Robot-H", m_drive.getPose().getHeading());
+
             Position camPose = m_machine.getLimelightHandler().getCamPose().getPosition();
             Pose robotPose = m_drive.getPose();
 
+            /*
             Position cameraFromRobotMainFrame = new Position();
             cameraFromRobotMainFrame.x = camPose.x - robotPose.getX()*2.54/100;
             cameraFromRobotMainFrame.y = camPose.y - robotPose.getY()*2.54/100;
@@ -162,7 +169,19 @@ public class TestOpModeForSubsystem extends CommandOpMode {
             joinedTelemetry.addData("CamX", cameraFromRobot.x);
             joinedTelemetry.addData("CamY", cameraFromRobot.y);
             joinedTelemetry.addData("CamZ", cameraFromRobot.z);
+            */
 
+            Pose botPose = m_machine.getLLPoseMT();
+
+            joinedTelemetry.addData("Bot-X", botPose.getX());
+            joinedTelemetry.addData("Bot-Y",  botPose.getY());
+            joinedTelemetry.addData("Bot-H", botPose.getHeading());
+
+            Pose3D rawP = m_machine.rawPoseMT();
+
+            joinedTelemetry.addData("Raw-X", rawP.getPosition().x);
+            joinedTelemetry.addData("Raw-Y",   rawP.getPosition().y);
+            joinedTelemetry.addData("Raw-H",  rawP.getOrientation().getYaw());
 
             joinedTelemetry.addData("ERROR-PID-X", m_drive.getXErrorPID());
             joinedTelemetry.addData("ERROR-PID-Y", m_drive.getYErrorPID());

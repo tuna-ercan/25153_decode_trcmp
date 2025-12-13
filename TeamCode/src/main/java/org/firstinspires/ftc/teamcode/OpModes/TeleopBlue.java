@@ -15,6 +15,7 @@ import com.pedropathing.paths.PathChain;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Commands.DrivetrainCommands.AimToFocus;
+import org.firstinspires.ftc.teamcode.Constants.DrivetrainConstants;
 import org.firstinspires.ftc.teamcode.Container;
 import org.firstinspires.ftc.teamcode.Subsystems.DrivetrainSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.TheMachineSubsystem;
@@ -67,23 +68,23 @@ public class TeleopBlue extends CommandOpMode {
                 .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(136))
                 .build();
 
-        driveAndShootP5 = m_drive.driveToShootP5().alongWith(m_machine.prepP5Request()).withTimeout(2300)
+        driveAndShootP5 = m_drive.driveToShootP5().alongWith(m_machine.prepP5Request()).withTimeout(DrivetrainConstants.AimTimeOut)
                 .andThen(m_machine.shootFromPoseRequest());
 
 
-        driveAndShootP2 = m_drive.driveToShootP2().alongWith(m_machine.prepP2Request()).withTimeout(2300)
+        driveAndShootP2 = m_drive.driveToShootP2().alongWith(m_machine.prepP2Request()).withTimeout(DrivetrainConstants.AimTimeOut)
                 .andThen(m_machine.shootFromPoseRequest());
 
-        driveAndShootP3 = m_drive.driveToShootP3().alongWith(m_machine.prepP3Request()).withTimeout(2300)
+        driveAndShootP3 = m_drive.driveToShootP3().alongWith(m_machine.prepP3Request()).withTimeout(DrivetrainConstants.AimTimeOut)
                 .andThen(m_machine.shootFromPoseRequest());
 
-        driveAndShootP4 = m_drive.driveToShootP4().alongWith(m_machine.prepP4Request()).withTimeout(2300)
+        driveAndShootP4 = m_drive.driveToShootP4().alongWith(m_machine.prepP4Request()).withTimeout(DrivetrainConstants.AimTimeOut)
                 .andThen(m_machine.shootFromPoseRequest());
 
-        manualShootP5 = new AimToFocus(m_drive).alongWith(m_machine.prepP5Request()).withTimeout(2300)
+        manualShootP5 = new AimToFocus(m_drive).alongWith(m_machine.prepP5Request()).withTimeout(DrivetrainConstants.AimTimeOut)
                 .andThen(m_machine.shootFromPoseRequest());
 
-        manualShootP2 = m_machine.prepP2Request().withTimeout(2300)
+        manualShootP2 = m_machine.prepP2Request().withTimeout(DrivetrainConstants.AimTimeOut)
                 .andThen(m_machine.shootFromPoseRequest());
 
 
@@ -115,8 +116,10 @@ public class TeleopBlue extends CommandOpMode {
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.Y)
                 .whenPressed(m_machine.restRequest().andThen(new InstantCommand(()->{
-                    m_drive.zeroPose();
+                    m_drive.setRobotPose(m_machine.getLLPoseMT());
+                    //m_drive.zeroPose();
                 })));
+
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
                         .whenHeld(manualShootP2)

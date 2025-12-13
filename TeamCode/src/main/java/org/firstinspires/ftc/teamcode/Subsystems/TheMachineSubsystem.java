@@ -7,6 +7,7 @@ import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.teamcode.Commands.StateActions.TheMachineActions.MachineIdleAction;
 import org.firstinspires.ftc.teamcode.Commands.StateActions.TheMachineActions.MachineIntakeAction;
 import org.firstinspires.ftc.teamcode.Commands.StateActions.TheMachineActions.MachineOuttakeAction;
@@ -488,6 +489,11 @@ public class TheMachineSubsystem extends SubsystemBase {
     public Pose getLLPoseMT()
     {
         return limelightHandler.getPosePedro();
+    }
+
+    public Pose3D rawPoseMT()
+    {
+        return limelightHandler.getPose();
     }
 
     /**

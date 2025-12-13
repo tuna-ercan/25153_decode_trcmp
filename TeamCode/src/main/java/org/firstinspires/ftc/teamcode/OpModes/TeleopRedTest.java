@@ -19,8 +19,8 @@ import org.firstinspires.ftc.teamcode.Subsystems.TheMachineSubsystem;
 import org.firstinspires.ftc.teamcode.Utils.AllStates;
 import org.firstinspires.ftc.teamcode.Utils.Mouth;
 
-@TeleOp(name = "TeleopRed")
-public class TeleopRed extends CommandOpMode {
+@TeleOp(name = "ShootTest")
+public class TeleopRedTest extends CommandOpMode {
     private TheMachineSubsystem m_machine;
     private DrivetrainSubsystem m_drive;
     private Mouth mouth;
@@ -38,6 +38,8 @@ public class TeleopRed extends CommandOpMode {
     private Command driveAndShootP4;
     private Command manualShootP5;
     private Command manualShootP2;
+
+    private Command testShoot;
 
 
     private PathChain x;
@@ -82,6 +84,8 @@ public class TeleopRed extends CommandOpMode {
                 .andThen(m_machine.shootFromPoseRequest());
 
 
+        testShoot = new AimToFocus(m_drive).withTimeout(DrivetrainConstants.AimTimeOut).andThen(m_machine.testRequest());
+
 
         gamepadEx1 = new GamepadEx(gamepad1);
         gamepadEx2 = new GamepadEx(gamepad2);
@@ -112,7 +116,7 @@ public class TeleopRed extends CommandOpMode {
                 })));
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
-                        .whenHeld(manualShootP2)
+                        .whenHeld(testShoot)
                         .whenReleased(m_machine.restRequest());
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)

@@ -32,10 +32,11 @@ public class    AutoRed extends CommandOpMode {
     {
         Container.isBlue = false;
         Container.isTeleop = false;
+        Container.colorCombination = "x";
 
-        m_machine = new TheMachineSubsystem(hardwareMap, m_drive::getPose);
         m_drive = new DrivetrainSubsystem(hardwareMap);
-        mouth = new Mouth(m_machine,m_drive, telemetry);
+        m_machine = new TheMachineSubsystem(hardwareMap, m_drive::getPose);
+        //mouth = new Mouth(m_machine,m_drive, telemetry);
 
 
         initOpCommand = new InstantCommand(() -> {

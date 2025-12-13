@@ -44,14 +44,15 @@ public class LimelightHandler {
         ll.pipelineSwitch(1);
         Pose3D botpose = new Pose3D(new Position(), new YawPitchRollAngles(AngleUnit.RADIANS,0,0,0, 0));
         if (result != null){
-        if ( result.getBotpose_MT2() != null) botpose = result.getBotpose_MT2();}
+        if ( result.getBotpose() != null) botpose = result.getBotpose();}
         return botpose;
     }
 
 
     public Pose getPosePedro() {
         Pose3D botpose = getPose();
-        return FTCCoordinates.INSTANCE.convertToPedro(new Pose(botpose.getPosition().x*39.3700787 , botpose.getPosition().y*39.3700787 , botpose.getOrientation().getYaw(AngleUnit.RADIANS)));
+        Pose bot = FTCCoordinates.INSTANCE.convertToPedro(new Pose(botpose.getPosition().x*39.3700787 , botpose.getPosition().y*39.3700787 , botpose.getOrientation().getYaw(AngleUnit.RADIANS)));
+        return bot;
     }
 
     public Pose3D getCamPose()

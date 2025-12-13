@@ -5,6 +5,7 @@ import com.bylazar.configurables.annotations.IgnoreConfigurable;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.PIDCoefficients;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @Configurable
@@ -27,14 +28,16 @@ public class ShooterConstants {
     public static double MinHoodPosition = 0;
     public static double MaxHoodPosition = 0.18;
 
+    public static double LastRpmCoefficient = 0.5;
+
 
     public static double KP = 0.00026 ; //attım
 
     public static double KD = 0.0002; //attım
 
-    public static PIDCoefficients LeftPIDCoefficients = new PIDCoefficients(KP, 0, KD);
-    public static PIDCoefficients MiddlePIDCoefficients = new PIDCoefficients(KP, 0, KD);
-    public static PIDCoefficients RightPIDCoefficients = new PIDCoefficients(KP, 0, KD);
+    public static PIDFCoefficients LeftPIDFCoefficients = new PIDFCoefficients(KP, 0, KD, 0);
+    public static PIDFCoefficients MiddlePIDFCoefficients = new PIDFCoefficients(KP, 0, KD, 0);
+    public static PIDFCoefficients RightPIDFCoefficients = new PIDFCoefficients(KP, 0, KD, 0);
 
     public static double MultiplierLeft = 1;
     public static double MultiplierRight = 1;
