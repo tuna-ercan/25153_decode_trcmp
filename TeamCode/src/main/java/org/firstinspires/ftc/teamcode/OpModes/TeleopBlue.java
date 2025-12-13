@@ -112,12 +112,17 @@ public class TeleopBlue extends CommandOpMode {
     public void configureBindingsGamepad1() {
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.Y)
-                .whenPressed(m_machine.restRequest());
+                .whenPressed(m_machine.restRequest().andThen(new InstantCommand(()->{
+                    m_drive.zeroPose();
+                })));
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
-                        .whenPressed(manualShootP2);
+                        .whenPressed(manualShootP2)
+                        .whenReleased(m_machine.restRequest());
+
         gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
-                .whenPressed(manualShootP5);
+                .whenPressed(manualShootP5)
+                .whenReleased(m_machine.restRequest());
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.B)
                 .whenHeld(driveAndShootP5)

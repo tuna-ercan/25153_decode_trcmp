@@ -39,6 +39,7 @@ public class DrivetrainSubsystem extends SubsystemBase
     private final IMU imu;
     private final IMU.Parameters parameters;
     private final Pose startPose;
+    private final Pose zeroPose;
     private boolean isStartPoseSet = false;
     private boolean isBusy = false;
 
@@ -89,6 +90,10 @@ public class DrivetrainSubsystem extends SubsystemBase
             if (Container.autoEndPose == null) startPose = (Container.isBlue ? BluePositions.START_POSE: RedPositions.START_POSE);
             else startPose = Container.autoEndPose;
         }
+
+        if (Container.isBlue) zeroPose = BluePositions.ZERO_POSE;
+        else zeroPose = RedPositions.ZERO_POSE;
+
         driveToShootP1 = new DriveToShootP1(this);
         driveToShootP2 = new DriveToShootP2(this);
         driveToShootP3 = new DriveToShootP3(this);
@@ -291,6 +296,12 @@ public class DrivetrainSubsystem extends SubsystemBase
                 true);
     }
 
+    public void zeroPose() {
+        follower.setPose(zeroPose);
+    }
+
+
+
     public void setTeleopPid(double pX, double pY, double pH)
     {
         setState(DrivetrainStates.PID);
@@ -354,7 +365,7 @@ public class DrivetrainSubsystem extends SubsystemBase
         yError = robotPose.getY() - pose.getY();
         double powerY = pidfControllerY.calculate(yError);
 
-        headingError = angleWrap(robotPose.getHeading()-pose.getHeading());
+        headingError = angleWrap(Math.toDegrees(robotPose.getHeading()-pose.getHeading()));
         double powerHeading = pidfControllerHeading.calculate(headingError);
 
         powerX = MathUtils.clamp(powerX,-DrivetrainConstants.maxPowerX,DrivetrainConstants.maxPowerX);
@@ -380,13 +391,12 @@ public class DrivetrainSubsystem extends SubsystemBase
 
 
     public double angleWrap(double angle){
-        angle = Math.toDegrees(angle);
         if (angle > 180){
             angle -= 360;
         } else if (angle <= -180) {
             angle += 360;
         }
-        return Math.toRadians(angle);
+        return angle;
     }
 
 

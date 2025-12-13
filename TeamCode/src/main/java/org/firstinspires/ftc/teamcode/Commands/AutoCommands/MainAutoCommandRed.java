@@ -87,7 +87,7 @@ public class MainAutoCommandRed extends SequentialCommandGroup {
                                     new Pose(121.358, 86.038)
                             )
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(40), Math.toRadians(310)) //310 = -50 degreed
+                    .setLinearHeadingInterpolation(Math.toRadians(50), Math.toRadians(140)) //310 = -50 degreed
                     .build();
 
             Lever = follower
@@ -99,7 +99,7 @@ public class MainAutoCommandRed extends SequentialCommandGroup {
                                     new Pose(128.604, 79.094)
                             )
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(310), Math.toRadians(0))
+                    .setLinearHeadingInterpolation(Math.toRadians(140), Math.toRadians(90))
                     .setTimeoutConstraint(0)
                     .setTValueConstraint(0.8)
                     .build();
@@ -113,7 +113,7 @@ public class MainAutoCommandRed extends SequentialCommandGroup {
                                     new Pose(123.774, 56.453)
                             )
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(40), Math.toRadians(300)) //300 = -60
+                    .setLinearHeadingInterpolation(Math.toRadians(50), Math.toRadians(150)) //300 = -60
                     .build();
 
             Intake3 = follower
@@ -125,7 +125,7 @@ public class MainAutoCommandRed extends SequentialCommandGroup {
                                     new Pose(125.887, 34.113)
                             )
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(40), Math.toRadians(300)) //300 = -60
+                    .setLinearHeadingInterpolation(Math.toRadians(150), Math.toRadians(150)) //300 = -60
                     .build();
 
         }

@@ -60,12 +60,12 @@ public class ShooterConstants {
     public static double P2Rpm = 2600;
     public static double P2HoodPos = 18;
 
-    public static double P3Rpm = 2931;
-    public static double P3HoodPos = 13;
+    public static double P3Rpm = 2850;
+    public static double P3HoodPos = 15;
 
     public static double P4Rpm = 3400;
     public static double P4HoodPos = 7;
-    public static double P5Rpm = 2731;
+    public static double P5Rpm = 2800;
     public static double P5HoodPos = 18;
 
 

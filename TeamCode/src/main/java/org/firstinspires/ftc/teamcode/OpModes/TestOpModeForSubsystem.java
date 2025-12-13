@@ -16,6 +16,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
+import org.firstinspires.ftc.teamcode.Commands.DrivetrainCommands.AimToShootPID;
 import org.firstinspires.ftc.teamcode.Container;
 import org.firstinspires.ftc.teamcode.Subsystems.DrivetrainSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.FunnelSubsystem;
@@ -23,7 +24,6 @@ import org.firstinspires.ftc.teamcode.Subsystems.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.ShooterSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.TheMachineSubsystem;
 import org.firstinspires.ftc.teamcode.Utils.PanelsFieldDrawing;
-@Disabled
 @TeleOp(name = "TEST_SUBSYSTEM")
 public class TestOpModeForSubsystem extends CommandOpMode {
     private TelemetryManager.TelemetryWrapper panelsTelemetry;
@@ -49,10 +49,12 @@ public class TestOpModeForSubsystem extends CommandOpMode {
     //Follower follower;
 
 
-
     @Override
     public void initialize()
     {
+        Container.isBlue = false;
+        Container.isTeleop = true;
+        Container.colorCombination = "x";
         m_drive = new DrivetrainSubsystem(hardwareMap);
         m_machine = new TheMachineSubsystem(hardwareMap);
 
@@ -75,13 +77,15 @@ public class TestOpModeForSubsystem extends CommandOpMode {
 
         initOpCommand = new InstantCommand(() -> {
             Container.colorCombination = null;
-            //m_drive.startTeleopDrive();
+            m_drive.startTeleopDrive();
             PanelsFieldDrawing.init();
         });
 
 
         periodicOpCommand = new RunCommand(() -> {
-            //m_drive.setTeleopDriveFieldCentric(gamepadEx1);
+            m_drive.setTeleopDriveFieldCentricRed(gamepadEx1);
+
+            /*
             joinedTelemetry.addData("Funnel-State", m_funnel.getState());
             joinedTelemetry.addData("ColorCombination", Container.colorCombination);
 
@@ -116,8 +120,8 @@ public class TestOpModeForSubsystem extends CommandOpMode {
             Pose robotPose = m_drive.getPose();
 
             Position cameraFromRobotMainFrame = new Position();
-            cameraFromRobotMainFrame.x = camPose.x - robotPose.getX();
-            cameraFromRobotMainFrame.y = camPose.y - robotPose.getY();
+            cameraFromRobotMainFrame.x = camPose.x - robotPose.getX()*2.54/100;
+            cameraFromRobotMainFrame.y = camPose.y - robotPose.getY()*2.54/100;
             cameraFromRobotMainFrame.z = camPose.z;
 
             Position cameraFromRobot = new Position();
@@ -129,6 +133,10 @@ public class TestOpModeForSubsystem extends CommandOpMode {
             joinedTelemetry.addData("CamY", cameraFromRobot.y);
             joinedTelemetry.addData("CamZ", cameraFromRobot.z);
 
+            joinedTelemetry.addData("RightRPM", m_shoot.getRightRPM());
+            joinedTelemetry.addData("LeftRPM", m_shoot.getLeftRPM());
+            joinedTelemetry.addData("MiddleRPM", m_shoot.getMiddleRPM());
+
             //joinedTelemetry.addData("L-Green", m_funnel.getGreenL());
             //joinedTelemetry.addData("M-Green", m_funnel.getGreenM());
             //joinedTelemetry.addData("R-Green", m_funnel.getGreenR());
@@ -138,6 +146,12 @@ public class TestOpModeForSubsystem extends CommandOpMode {
             //joinedTelemetry.addData("L-Red", m_funnel.getRedL());
             //joinedTelemetry.addData("M-Red", m_funnel.getRedM());
             //joinedTelemetry.addData("R-Red", m_funnel.getRedR());
+            */
+
+            joinedTelemetry.addData("ERROR-PID-X", m_drive.getXErrorPID());
+            joinedTelemetry.addData("ERROR-PID-Y", m_drive.getYErrorPID());
+            joinedTelemetry.addData("ERROR-PID-H", m_drive.getHeadingErrorPID());
+
             joinedTelemetry.update();
 
             PanelsFieldDrawing.drawRobot(m_drive.getPose());
@@ -167,8 +181,11 @@ public class TestOpModeForSubsystem extends CommandOpMode {
                 .whenPressed(m_funnel.feedRequest());
 
 
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
+                .whileHeld(new AimToShootPID(m_drive, Math.PI));
 
-
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
+                .whileHeld(new AimToShootPID(m_drive, 0));
 
     }
     public void configureBindingsGamepad2() {

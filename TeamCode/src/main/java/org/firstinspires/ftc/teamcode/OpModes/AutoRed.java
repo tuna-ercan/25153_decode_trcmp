@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.Commands.AutoCommands.MainAutoCommandBlue;
 import org.firstinspires.ftc.teamcode.Commands.AutoCommands.MainAutoCommandRed;
-import org.firstinspires.ftc.teamcode.Commands.AutoCommands.UpdatePoseCommand;
+//import org.firstinspires.ftc.teamcode.Commands.AutoCommands.UpdatePoseCommand;
 import org.firstinspires.ftc.teamcode.Container;
 import org.firstinspires.ftc.teamcode.Subsystems.DrivetrainSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.TheMachineSubsystem;
@@ -18,7 +18,7 @@ import org.firstinspires.ftc.teamcode.Utils.AllStates;
 import org.firstinspires.ftc.teamcode.Utils.Mouth;
 
 @Autonomous(name = "AUTO-Red")
-public class AutoRed extends CommandOpMode {
+public class    AutoRed extends CommandOpMode {
     private TheMachineSubsystem m_machine;
     private DrivetrainSubsystem m_drive;
     private Mouth mouth;
@@ -44,7 +44,7 @@ public class AutoRed extends CommandOpMode {
 
         periodicOpCommand = new RunCommand(() -> {
             //mouth.speak();
-            new UpdatePoseCommand(m_drive);
+            //new UpdatePoseCommand(m_drive);
         });
 
         autoCommand = new MainAutoCommandRed(m_machine,m_drive);

@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 /**
  * Constants for the Funnel subsystem, including servo names, positions, and timing delays.
  */
-//@Configurable
+@Configurable
 public class FunnelConstants {
     @IgnoreConfigurable
     public static String ColorSensorL = "c1";
@@ -49,7 +49,7 @@ public class FunnelConstants {
 
     // Right -0.02 offset
     public static double RightFeed = 0.45, MiddleFeed = 0.42, LeftFeed = 0.42;
-    public static double RightPrep = 0.63, MiddlePrep = 0.6, LeftPrep = 0.6, PrePrepPrep = 0.45;
+    public static double RightPrep = 0.63, MiddlePrep = 0.6, LeftPrep = 0.6, PrePrepPrep = 0.43;
 
     public static double RightHome = 0.55, MiddleHome= 0.52, LeftHome = 0.52, PrePrepHome = 0.62;
     //public static double RightTest = 0.41, MiddleTest = 0.41, LeftTest = 0.41, PrePrepTest = 0.41;

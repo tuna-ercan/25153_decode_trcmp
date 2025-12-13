@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.Positions;
 import com.bylazar.configurables.annotations.Configurable;
 import com.pedropathing.geometry.Pose;
 
-@Configurable
+//@Configurable
 public class RedPositions {
 
     /*
@@ -19,6 +19,8 @@ public class RedPositions {
     */
 
     public static Pose START_POSE = mirrorPose(BluePositions.START_POSE);
+    public static Pose ZERO_POSE = new Pose(0.4,0,Math.toRadians(90));  //new Pose(63.437,11.28,Math.toRadians(90));
+
     public static Pose SHOOT_FOCUS_POINT = mirrorPose(BluePositions.SHOOT_FOCUS_POINT);
     public static Pose SHOOT_P1 = mirrorPose(BluePositions.SHOOT_P1);
     public static Pose SHOOT_P2 = mirrorPose(BluePositions.SHOOT_P2);

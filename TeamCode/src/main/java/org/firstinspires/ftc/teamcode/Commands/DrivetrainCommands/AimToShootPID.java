@@ -1,42 +1,36 @@
 package org.firstinspires.ftc.teamcode.Commands.DrivetrainCommands;
 
 import com.arcrobotics.ftclib.command.CommandBase;
-import com.pedropathing.geometry.BezierLine;
 import com.pedropathing.geometry.Pose;
-import com.pedropathing.paths.HeadingInterpolator;
-import com.pedropathing.paths.Path;
-import com.pedropathing.paths.PathChain;
 
-import org.firstinspires.ftc.robotcore.external.Supplier;
 import org.firstinspires.ftc.teamcode.Constants.DrivetrainConstants;
-import org.firstinspires.ftc.teamcode.Constants.ShooterConstants;
-import org.firstinspires.ftc.teamcode.Constants.TheMachineConstants;
 import org.firstinspires.ftc.teamcode.Subsystems.DrivetrainSubsystem;
 
 /**
  * Command to drive the robot to Shooting Position 1 (P1).
  * Uses PedroPathing to generate a path on the fly.
  */
-public class DriveToPosePID extends CommandBase {
-    private final Pose goalPosition;
+public class AimToShootPID extends CommandBase {
+    private  Pose goalPosition;
     private final DrivetrainSubsystem m_drive;
 
     private double atPoseCounter = 0;
+    private double heading;
 
     /**
      * Constructor for DriveToShootP1.
      * @param drive The DrivetrainSubsystem instance.
      */
-    public DriveToPosePID(DrivetrainSubsystem drive, Pose goalPosition)
+    public AimToShootPID(DrivetrainSubsystem drive, double heading)
     {
         this.m_drive = drive;
-
-        this.goalPosition = goalPosition;
+        this.heading = heading;
     }
 
     @Override
     public void execute()
     {
+        goalPosition = m_drive.getPose().withHeading(heading);
         m_drive.driveToPosePID(goalPosition);
         if (m_drive.atPose(goalPosition)) atPoseCounter += 1;
         else atPoseCounter = 0;

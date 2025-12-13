@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Utils;
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.Constants.DrivetrainConstants;
 import org.firstinspires.ftc.teamcode.Container;
 import org.firstinspires.ftc.teamcode.Positions.BluePositions;
 import org.firstinspires.ftc.teamcode.Subsystems.DrivetrainSubsystem;
@@ -57,6 +58,15 @@ public class Mouth {
         PanelsFieldDrawing.drawRobot(drivetrainSubsystem.getPose());
         PanelsFieldDrawing.sendPacket();
         joinedTelemetry.addData("Drive-State", drivetrainSubsystem.getState());
+
+        if (DrivetrainConstants.ShowPIDError)
+        {
+            joinedTelemetry.addData("ERROR-PID-X", drivetrainSubsystem.getXErrorPID());
+            joinedTelemetry.addData("ERROR-PID-Y", drivetrainSubsystem.getYErrorPID());
+            joinedTelemetry.addData("ERROR-PID-H", drivetrainSubsystem.getHeadingErrorPID());
+
+        }
+
         //joinedTelemetry.addData("Drive-IsBusy", drivetrainSubsystem.isBusy());
 
         //panelsTelemetry.addData("Drive-Pose-X", drivetrainSubsystem.getPose().getX());
