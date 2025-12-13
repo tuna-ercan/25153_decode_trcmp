@@ -4,45 +4,55 @@ import com.arcrobotics.ftclib.command.CommandBase;
 import com.pedropathing.geometry.Pose;
 
 import org.firstinspires.ftc.teamcode.Constants.DrivetrainConstants;
+import org.firstinspires.ftc.teamcode.Container;
+import org.firstinspires.ftc.teamcode.Positions.BluePositions;
+import org.firstinspires.ftc.teamcode.Positions.RedPositions;
 import org.firstinspires.ftc.teamcode.Subsystems.DrivetrainSubsystem;
 
 /**
  * Command to drive the robot to Shooting Position 1 (P1).
  * Uses PedroPathing to generate a path on the fly.
  */
-public class AimToShootPID extends CommandBase {
-    private  Pose goalPosition;
+public class AimToFocus extends CommandBase {
     private final DrivetrainSubsystem m_drive;
-
+    private final Pose focus;
     private double atPoseCounter = 0;
-    private double heading;
 
     /**
      * Constructor for DriveToShootP1.
      * @param drive The DrivetrainSubsystem instance.
      */
-    public AimToShootPID(DrivetrainSubsystem drive, double heading)
+    public AimToFocus(DrivetrainSubsystem drive)
     {
         this.m_drive = drive;
-        this.heading = heading;
+        this.focus = (Container.isBlue ? BluePositions.FOCUS_POINT : RedPositions.FOCUS_POINT);
     }
 
     @Override
     public void execute()
     {
-        goalPosition = m_drive.getPose().withHeading(heading);
-        m_drive.driveToPosePID(goalPosition);
-        if (m_drive.atPose(goalPosition)) atPoseCounter += 1;
-        else atPoseCounter = 0;
+        double heading = calculateHeading();
+        m_drive.turnToPID(heading);
 
+        if (m_drive.atHeading(heading)) atPoseCounter += 1;
+        else atPoseCounter = 0;
     }
 
-    public double getAtPoseCount()
+    private double calculateHeading()
+    {
+        Pose robotPose = m_drive.getPose();
+        double x = focus.getX() - robotPose.getX();
+        double y = focus.getY() - robotPose.getY();
+
+        return Math.atan2(y, x);
+    }
+
+    private double getAtPoseCount()
     {
         return atPoseCounter;
     }
 
-    public boolean checkPIDFinished()
+    private boolean checkPIDFinished()
     {
         return  (getAtPoseCount() >= DrivetrainConstants.atPoseCounterLimit);
         //        return m_drive.atPose(goalPosition);

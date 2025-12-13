@@ -181,6 +181,11 @@ public class DrivetrainSubsystem extends SubsystemBase
         return follower.atPose(pose, DrivetrainConstants.TolcX, DrivetrainConstants.TolcY, DrivetrainConstants.TolcH);
     }
 
+    public boolean atHeading(double heading)
+    {
+        return Math.abs(heading - follower.getHeading()) < DrivetrainConstants.TolH;
+    }
+
     /**
      * Checks if the robot has reached the target heading.
      * @return True if heading error is within tolerance.
@@ -372,6 +377,16 @@ public class DrivetrainSubsystem extends SubsystemBase
         powerY = MathUtils.clamp(powerY,-DrivetrainConstants.maxPowerY,DrivetrainConstants.maxPowerY);
         powerHeading = MathUtils.clamp(powerHeading,-DrivetrainConstants.maxPowerHeading,DrivetrainConstants.maxPowerHeading);
         setTeleopPid(powerX,powerY,powerHeading);
+    }
+
+    public void turnToPID(double heading){
+        Pose robotPose = getPose();
+
+        headingError = angleWrap(Math.toDegrees(robotPose.getHeading()-heading));
+        double powerHeading = pidfControllerHeading.calculate(headingError);
+
+        powerHeading = MathUtils.clamp(powerHeading,-DrivetrainConstants.maxPowerHeading,DrivetrainConstants.maxPowerHeading);
+        setTeleopPid(0,0,powerHeading);
     }
 
     public double getXErrorPID()

@@ -10,13 +10,9 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.bylazar.telemetry.JoinedTelemetry;
 import com.bylazar.telemetry.PanelsTelemetry;
 import com.bylazar.telemetry.TelemetryManager;
-import com.pedropathing.geometry.Pose;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
-import org.firstinspires.ftc.robotcore.external.navigation.Position;
-import org.firstinspires.ftc.teamcode.Commands.DrivetrainCommands.AimToShootPID;
+import org.firstinspires.ftc.teamcode.Commands.DrivetrainCommands.AimToHeadingPID;
 import org.firstinspires.ftc.teamcode.Container;
 import org.firstinspires.ftc.teamcode.Subsystems.DrivetrainSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.FunnelSubsystem;
@@ -182,10 +178,10 @@ public class TestOpModeForSubsystem extends CommandOpMode {
 
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
-                .whileHeld(new AimToShootPID(m_drive, Math.PI));
+                .whileHeld(new AimToHeadingPID(m_drive, Math.PI));
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
-                .whileHeld(new AimToShootPID(m_drive, 0));
+                .whileHeld(new AimToHeadingPID(m_drive, 0));
 
     }
     public void configureBindingsGamepad2() {

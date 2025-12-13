@@ -30,6 +30,8 @@ public class RedPositions {
     public static Pose SHOOT_TEST = mirrorPose(BluePositions.SHOOT_TEST);
     public static Pose SHOOT_TEST_FOCUS_POINT = mirrorPose(BluePositions.SHOOT_TEST_FOCUS_POINT);
 
+    public static Pose FOCUS_POINT = mirrorPose(BluePositions.FOCUS_POINT);
+
     public static Pose mirrorPose(Pose p)
     {
         return new Pose(142-p.getX(), p.getY(), Math.PI - p.getHeading());
