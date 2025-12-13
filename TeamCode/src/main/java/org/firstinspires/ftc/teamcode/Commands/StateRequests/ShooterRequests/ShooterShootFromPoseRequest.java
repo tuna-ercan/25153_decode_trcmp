@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Commands.StateRequests.ShooterRequests;
 
 import com.arcrobotics.ftclib.command.CommandBase;
+import com.pedropathing.geometry.Pose;
 
 import org.firstinspires.ftc.teamcode.Utils.AllStates;
 import org.firstinspires.ftc.teamcode.Subsystems.ShooterSubsystem;

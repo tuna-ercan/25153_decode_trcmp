@@ -42,6 +42,8 @@ import org.firstinspires.ftc.teamcode.Positions.BluePositions;
 import org.firstinspires.ftc.teamcode.Positions.RedPositions;
 import org.firstinspires.ftc.teamcode.Utils.ShooterPIDController;
 
+import java.util.function.Supplier;
+
 /**
  * Subsystem responsible for the shooter mechanism.
  * Controls flywheel motors and hood servo to shoot rings/game elements.
@@ -63,6 +65,8 @@ public class ShooterSubsystem extends SubsystemBase {
     private final ShooterPIDController leftPID;
     private final ShooterPIDController middlePID;
     private final ShooterPIDController rightPID;
+
+    private final Supplier<Pose> poseSupplier;
 
     private final double restRpm;
     private final double p1Rpm;
@@ -108,7 +112,9 @@ public class ShooterSubsystem extends SubsystemBase {
      * Creates a new ShooterSubsystem.
      * Initializes motors, servos, PIDs, and calculates preset values.
      */
-    public ShooterSubsystem(HardwareMap hardwareMap) {
+    public ShooterSubsystem(HardwareMap hardwareMap , Supplier<Pose> poseSupplier) {
+        this.poseSupplier = poseSupplier;
+
         leftMotor = hardwareMap.get(DcMotorEx.class, ShooterConstants.LeftMotorName);
         rightMotor = hardwareMap.get(DcMotorEx.class, ShooterConstants.RightMotorName);
         middleMotor = hardwareMap.get(DcMotorEx.class, ShooterConstants.MiddleMotorName);
@@ -402,24 +408,22 @@ public class ShooterSubsystem extends SubsystemBase {
         return  ShooterConstants.CalculateHoodFromDistance(distance);
     }
 
-    public static double rpmInterpolator(double x) {
-        double rpm = ((0.0072788*(x*x*x))+((-1.90187)*(x*x))+((166.47677)*x)+(-2030.0971));
-        return rpm;
-    }
-
-    public static double hoodInterpolator(double x) {
-        double hoodAngle = ((0.0000892583)*(x*x*x))+((-0.0252587)*(x*x))+((2.11195)*x)+(-36.69552);
-        return hoodAngle;
-    }
-
     private double calculateRpmFromCurrentPose()
     {
-        return calculateRpmFromPose(Container.robotPose);
+        Pose botPose = poseSupplier.get();
+        double robotY = botPose.getY();
+        double robotX = botPose.getX();
+        double distance = Math.sqrt(Math.pow(focusPoint.getX()-robotX,2) + Math.pow(focusPoint.getY()-robotY,2))*2.54;
+        return ShooterConstants.hoodInterpolator(distance);
     }
 
     private double calculateHoodFromCurrentPose()
     {
-        return calculateHoodFromPose(Container.robotPose);
+        Pose botPose = poseSupplier.get();
+        double robotY = botPose.getY();
+        double robotX = botPose.getX();
+        double distance = Math.sqrt(Math.pow(focusPoint.getX()-robotX,2) + Math.pow(focusPoint.getY()-robotY,2))*2.54;
+        return ShooterConstants.hoodInterpolator(distance);
     }
 
     public boolean isReady()
@@ -495,9 +499,13 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public void shootFromPose()
     {
+        Pose botPose = poseSupplier.get();
+        double robotY = botPose.getY();
+        double robotX = botPose.getX();
+        double distance = Math.sqrt(Math.pow(focusPoint.getX()-robotX,2) + Math.pow(focusPoint.getY()-robotY,2));
+        setHoodPosition(ShooterConstants.hoodInterpolator(distance));
+        controlMotorRPM(ShooterConstants.rpmInterpolator(distance));
         setIsReadyByChecking();
-        setHoodPosition(calculateHoodFromCurrentPose());
-        controlMotorRPM(calculateRpmFromCurrentPose());
     }
 
     public void reverse()
@@ -536,4 +544,5 @@ public class ShooterSubsystem extends SubsystemBase {
     {
         return new WaitUntilCommand(this::isReady);
     }
+
 }

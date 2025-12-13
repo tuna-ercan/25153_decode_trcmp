@@ -48,7 +48,7 @@ public class TeleopRed extends CommandOpMode {
         Container.colorCombination = "x";
 
         m_drive = new DrivetrainSubsystem(hardwareMap);
-        m_machine = new TheMachineSubsystem(hardwareMap);
+        m_machine = new TheMachineSubsystem(hardwareMap, m_drive::getPose);
         mouth = new Mouth(m_machine,m_drive, telemetry);
 
         x = m_drive.getFollower().pathBuilder()

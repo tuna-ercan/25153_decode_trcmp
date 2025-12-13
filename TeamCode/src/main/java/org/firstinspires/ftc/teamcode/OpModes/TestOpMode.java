@@ -41,7 +41,7 @@ public class TestOpMode extends CommandOpMode {
         Container.isTeleop = true;
 
         m_drive = new DrivetrainSubsystem(hardwareMap);
-        m_machine = new TheMachineSubsystem(hardwareMap);
+        m_machine = new TheMachineSubsystem(hardwareMap, m_drive::getPose);
         mouth = new Mouth(m_machine,m_drive, telemetry);
 
         driveAndShootP1 = m_drive.driveToShootP5().alongWith(m_machine.prepP5Request()).withTimeout(2000)

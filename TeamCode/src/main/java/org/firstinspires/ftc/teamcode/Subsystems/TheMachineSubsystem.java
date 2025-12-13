@@ -51,6 +51,7 @@ import org.firstinspires.ftc.teamcode.Constants.TheMachineConstants;
 import org.firstinspires.ftc.teamcode.Utils.LimelightHandler;
 
 import java.util.Objects;
+import java.util.function.Supplier;
 
 /**
  * TheMachineSubsystem acts as a supervisor or a "super-subsystem" that coordinates
@@ -94,19 +95,14 @@ public class TheMachineSubsystem extends SubsystemBase {
 
     private double color = 0;
 
-
-
-
-
-
     /**
      * Constructor initializes all subsystems and their corresponding commands.
      */
-    public TheMachineSubsystem(HardwareMap hardwareMap)
+    public TheMachineSubsystem(HardwareMap hardwareMap, Supplier<Pose> poseSupplier)
     {
         m_intake = new IntakeSubsystem(hardwareMap);
         m_funnel = new FunnelSubsystem(hardwareMap);
-        m_shooter = new ShooterSubsystem(hardwareMap);
+        m_shooter = new ShooterSubsystem(hardwareMap, poseSupplier);
         limelightHandler = new LimelightHandler(hardwareMap);
 
         currentState = MachineStates.IDLE;

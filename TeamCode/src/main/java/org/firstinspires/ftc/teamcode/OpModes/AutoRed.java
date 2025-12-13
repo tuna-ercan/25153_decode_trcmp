@@ -33,7 +33,7 @@ public class    AutoRed extends CommandOpMode {
         Container.isBlue = false;
         Container.isTeleop = false;
 
-        m_machine = new TheMachineSubsystem(hardwareMap);
+        m_machine = new TheMachineSubsystem(hardwareMap, m_drive::getPose);
         m_drive = new DrivetrainSubsystem(hardwareMap);
         mouth = new Mouth(m_machine,m_drive, telemetry);
 

@@ -10,6 +10,7 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.bylazar.telemetry.JoinedTelemetry;
 import com.bylazar.telemetry.PanelsTelemetry;
 import com.bylazar.telemetry.TelemetryManager;
+import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -24,7 +25,7 @@ public class zeroHood extends CommandOpMode {
     @Override
     public void initialize()
     {
-        m_shoot = new ShooterSubsystem(hardwareMap);
+        m_shoot = new ShooterSubsystem(hardwareMap, this::fakePose);
 
         initOpCommand = new InstantCommand(() -> {
             m_shoot.zeroHood();
@@ -33,6 +34,11 @@ public class zeroHood extends CommandOpMode {
 
 
         schedule(initOpCommand);
+    }
+
+    private Pose fakePose()
+    {
+        return new Pose(0,0,0);
     }
 
 }

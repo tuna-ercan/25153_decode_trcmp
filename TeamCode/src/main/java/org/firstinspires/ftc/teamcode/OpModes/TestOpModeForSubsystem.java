@@ -52,7 +52,7 @@ public class TestOpModeForSubsystem extends CommandOpMode {
         Container.isTeleop = true;
         Container.colorCombination = "x";
         m_drive = new DrivetrainSubsystem(hardwareMap);
-        m_machine = new TheMachineSubsystem(hardwareMap);
+        m_machine = new TheMachineSubsystem(hardwareMap, m_drive::getPose);
 
         m_shoot = m_machine.getShooterSubsystem();
         m_intake = m_machine.getIntakeSubsystem();

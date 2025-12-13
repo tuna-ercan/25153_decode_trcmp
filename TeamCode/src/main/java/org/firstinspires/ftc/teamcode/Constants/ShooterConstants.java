@@ -86,4 +86,12 @@ public class ShooterConstants {
     {
         return  0.0027 - (0.0025*(int)((distance-164)/20)); // 2600'ü değiştir, oto şut konumuna göre
     }
+
+    public static double rpmInterpolator(double x) {
+        return ((0.0072788*Math.pow(x, 3))+((-1.90187)*Math.pow(x, 2))+((166.47677)*x)+(-2030.0971));
+    }
+
+    public static double hoodInterpolator(double x) {
+        return ((0.0000892583*Math.pow(x, 3))+((-0.0252587)*Math.pow(x, 2))+((2.11195)*x)+(-36.69552));
+    }
 }

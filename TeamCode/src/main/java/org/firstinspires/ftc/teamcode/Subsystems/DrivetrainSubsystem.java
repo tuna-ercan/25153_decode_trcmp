@@ -183,7 +183,7 @@ public class DrivetrainSubsystem extends SubsystemBase
 
     public boolean atHeading(double heading)
     {
-        return Math.abs(heading - follower.getHeading()) < DrivetrainConstants.TolH;
+        return Math.abs(heading - follower.getHeading()) < DrivetrainConstants.PidTolH;
     }
 
     /**
