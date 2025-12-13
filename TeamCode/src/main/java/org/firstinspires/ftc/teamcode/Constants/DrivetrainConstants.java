@@ -60,7 +60,7 @@ public class DrivetrainConstants {
     /**
      * Tolerance for Heading in degrees/radians (depending on implementation, usually radians in PedroPathing).
      */
-    public static double TolH = Math.toRadians(1.5);
+    public static double TolH = Math.toRadians(0.9);
     public static double TolcH = Math.toRadians(30);
     public static double atPoseCounterLimit = 2;
 
@@ -68,7 +68,7 @@ public class DrivetrainConstants {
     public static double driveBrakingStrength = 0.9;
     public static PIDFCoefficients xPID = new PIDFCoefficients(0.04,0,0.005 ,0);
     public static PIDFCoefficients yPID = new PIDFCoefficients(0.04,0,0.005,0);
-    public static PIDFCoefficients headingPID = new PIDFCoefficients(0.022,0,0.0016,0);
+    public static PIDFCoefficients headingPID = new PIDFCoefficients(0.018,0,0.0024,0);
     public static double maxPowerX = 0.7, maxPowerY = 0.7, maxPowerHeading = 0.3, minPowerHeading = 0.01;
 
     public static double TValuePathPid = 0.99;

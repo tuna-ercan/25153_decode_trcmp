@@ -402,6 +402,16 @@ public class ShooterSubsystem extends SubsystemBase {
         return  ShooterConstants.CalculateHoodFromDistance(distance);
     }
 
+    public static double rpmInterpolator(double x) {
+        double rpm = ((0.0072788*(x*x*x))+((-1.90187)*(x*x))+((166.47677)*x)+(-2030.0971));
+        return rpm;
+    }
+
+    public static double hoodInterpolator(double x) {
+        double hoodAngle = ((0.0000892583)*(x*x*x))+((-0.0252587)*(x*x))+((2.11195)*x)+(-36.69552);
+        return hoodAngle;
+    }
+
     private double calculateRpmFromCurrentPose()
     {
         return calculateRpmFromPose(Container.robotPose);

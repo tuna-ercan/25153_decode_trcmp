@@ -14,6 +14,7 @@ import com.pedropathing.paths.Path;
 import com.pedropathing.paths.PathChain;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.Commands.DrivetrainCommands.AimToFocus;
 import org.firstinspires.ftc.teamcode.Container;
 import org.firstinspires.ftc.teamcode.Subsystems.DrivetrainSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.TheMachineSubsystem;
@@ -78,7 +79,7 @@ public class TeleopBlue extends CommandOpMode {
         driveAndShootP4 = m_drive.driveToShootP4().alongWith(m_machine.prepP4Request()).withTimeout(2300)
                 .andThen(m_machine.shootFromP4Request());
 
-        manualShootP5 = m_machine.prepP5Request().withTimeout(2300)
+        manualShootP5 = new AimToFocus(m_drive).alongWith(m_machine.prepP5Request()).withTimeout(2300)
                 .andThen(m_machine.shootFromP5Request());
 
         manualShootP2 = m_machine.prepP2Request().withTimeout(2300)
