@@ -18,7 +18,8 @@ public class MachineShootFromPoseAction extends ParallelCommandGroup
 
         addCommands(
                 theMachineSubsystem.intakeRequest(AllStates.IntakeStates.IDLE),
-                new SequentialCommandGroup(
+                theMachineSubsystem.funnelRequest(AllStates.FunnelStates.PREP),
+                    new SequentialCommandGroup(
                         theMachineSubsystem.shooterRequest(AllStates.ShooterStates.SHOOT_FROM_POSE),
                         theMachineSubsystem.waitForShooterToBeReady(),
                         theMachineSubsystem.funnelRequest(AllStates.FunnelStates.FEED)
