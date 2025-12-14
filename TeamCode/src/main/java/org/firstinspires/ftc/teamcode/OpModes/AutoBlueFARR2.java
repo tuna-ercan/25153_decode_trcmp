@@ -8,16 +8,16 @@ import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-import org.firstinspires.ftc.teamcode.Commands.AutoCommands.SecondAutoCommandRed;
-import org.firstinspires.ftc.teamcode.Commands.AutoCommands.SecondAutoCommandRedReal;
+import org.firstinspires.ftc.teamcode.Commands.AutoCommands.SecondAutoCommandBlue;
+import org.firstinspires.ftc.teamcode.Commands.AutoCommands.ThirdAutoCommandBlue;
 import org.firstinspires.ftc.teamcode.Container;
 import org.firstinspires.ftc.teamcode.Subsystems.DrivetrainSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.TheMachineSubsystem;
 import org.firstinspires.ftc.teamcode.Utils.AllStates;
 import org.firstinspires.ftc.teamcode.Utils.Mouth;
 
-@Autonomous(name = "AUTO-Red-FAR")
-public class AutoRedFARR extends CommandOpMode {
+@Autonomous(name = "AUTO-Blue-FAR2")
+public class AutoBlueFARR2 extends CommandOpMode {
     private TheMachineSubsystem m_machine;
     private DrivetrainSubsystem m_drive;
     private Mouth mouth;
@@ -30,7 +30,7 @@ public class AutoRedFARR extends CommandOpMode {
     @Override
     public void initialize()
     {
-        Container.isBlue = false;
+        Container.isBlue = true;
         Container.isTeleop = false;
 
         m_drive = new DrivetrainSubsystem(hardwareMap);
@@ -45,7 +45,7 @@ public class AutoRedFARR extends CommandOpMode {
             //mouth.speak();
             });
 
-        autoCommand = new SecondAutoCommandRedReal(m_machine,m_drive);
+        autoCommand = new ThirdAutoCommandBlue(m_machine,m_drive);
 
         schedule(
                 initOpCommand.andThen(periodicOpCommand),

@@ -79,7 +79,7 @@ public class TeleopBlue extends CommandOpMode {
                 .andThen(m_machine.shootFromPoseRequest());
 
         driveAndShootP4 = m_drive.driveToShootP4().alongWith(m_machine.prepP4Request()).withTimeout(DrivetrainConstants.AimTimeOut)
-                .andThen(m_machine.shootFromPoseRequest());
+                .andThen(m_machine.shootFromP4Request());
 
         manualShootP5 = new AimToFocus(m_drive).alongWith(m_machine.prepP5Request()).withTimeout(DrivetrainConstants.AimTimeOut)
                 .andThen(m_machine.shootFromPoseRequest());
@@ -156,7 +156,7 @@ public class TeleopBlue extends CommandOpMode {
                 .whenPressed(m_machine.intakeRequest());
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP)
-                .whenPressed(m_machine.getShooterSubsystem().zeroRequest());
+                .whenPressed(m_machine.getShooterSubsystem().zeroRequest().alongWith(m_machine.getIntakeSubsystem().idleRequest()));
 
     }
     public void configureBindingsGamepad2() {
