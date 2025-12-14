@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.arcrobotics.ftclib.command.Command;
+import com.arcrobotics.ftclib.command.InstantCommand;
 import com.bylazar.configurables.annotations.Configurable;
 import com.pedropathing.geometry.Pose;
 
@@ -48,4 +50,12 @@ public class Container
      * Used to transfer pose to TeleOp.
      */
     public static Pose autoEndPose = null;
+
+    public static boolean ShouldIShout = false;
+
+    public static Command ShoutTriggerComand()
+    {
+        return new InstantCommand(() -> {ShouldIShout = !ShouldIShout;});
+    }
+
 }

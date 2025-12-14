@@ -4,6 +4,7 @@ import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.tel
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Constants.DrivetrainConstants;
+import org.firstinspires.ftc.teamcode.Constants.TheMachineConstants;
 import org.firstinspires.ftc.teamcode.Container;
 import org.firstinspires.ftc.teamcode.Positions.BluePositions;
 import org.firstinspires.ftc.teamcode.Subsystems.DrivetrainSubsystem;
@@ -18,6 +19,7 @@ import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.bylazar.telemetry.PanelsTelemetry;
 import com.bylazar.telemetry.JoinedTelemetry;
 import com.bylazar.telemetry.TelemetryManager;
+import com.pedropathing.geometry.Pose;
 
 
 public class Mouth {
@@ -59,7 +61,7 @@ public class Mouth {
         PanelsFieldDrawing.sendPacket();
         joinedTelemetry.addData("Drive-State", drivetrainSubsystem.getState());
 
-        if (DrivetrainConstants.ShowPIDError)
+        if (Container.ShouldIShout)
         {
             joinedTelemetry.addData("Robot-X", drivetrainSubsystem.getPose().getX());
             joinedTelemetry.addData("Robot-Y", drivetrainSubsystem.getPose().getY());
@@ -75,6 +77,12 @@ public class Mouth {
             joinedTelemetry.addData("Shooter-RPM-Right", shooterSubsystem.getRightRPM());
             joinedTelemetry.addData("Shooter-HOOD-Goal", shooterSubsystem.getGoalHood());
             joinedTelemetry.addData("Shooter-HOOD-Current", shooterSubsystem.getHoodPosition());
+
+            Pose botPose = machineSubsystem.getLLPoseMT();
+
+            joinedTelemetry.addData("Bot-X", botPose.getX());
+            joinedTelemetry.addData("Bot-Y",  botPose.getY());
+            joinedTelemetry.addData("Bot-H", botPose.getHeading());
 
         }
 

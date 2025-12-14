@@ -36,7 +36,7 @@ public class TeleopRed extends CommandOpMode {
     private Command driveAndShootP2;
     private Command driveAndShootP3;
     private Command driveAndShootP4;
-    private Command manualShootP5;
+    private Command aimAndShoot;
     private Command manualShootP2;
 
 
@@ -75,11 +75,11 @@ public class TeleopRed extends CommandOpMode {
         driveAndShootP4 = m_drive.driveToShootP4().alongWith(m_machine.prepP4Request()).withTimeout(DrivetrainConstants.AimTimeOut)
                 .andThen(m_machine.shootFromPoseRequest());
 
-        manualShootP5 = new AimToFocus(m_drive).alongWith(m_machine.prepP5Request()).withTimeout(DrivetrainConstants.AimTimeOut)
+        aimAndShoot = new AimToFocus(m_drive).alongWith(m_machine.prepP5Request()).withTimeout(DrivetrainConstants.AimTimeOut)
                 .andThen(m_machine.shootFromPoseRequest());
 
         manualShootP2 = m_machine.prepP2Request().withTimeout(DrivetrainConstants.AimTimeOut)
-                .andThen(m_machine.shootFromPoseRequest());
+                .andThen(m_machine.shootFromP2Request());
 
 
 
@@ -116,7 +116,7 @@ public class TeleopRed extends CommandOpMode {
                         .whenReleased(m_machine.restRequest());
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
-                .whenHeld(manualShootP5)
+                .whenHeld(aimAndShoot)
                 .whenReleased(m_machine.restRequest());
 
 

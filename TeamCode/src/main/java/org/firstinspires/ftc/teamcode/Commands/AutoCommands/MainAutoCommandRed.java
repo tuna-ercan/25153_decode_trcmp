@@ -80,17 +80,14 @@ public class MainAutoCommandRed extends SequentialCommandGroup {
         public PathChain Intake3;
         public PathChain Lever;
 
-        public double xOffset = -1;
-
-
         public Paths(Follower follower) {
             Shoot1 = follower
                     .pathBuilder()
                     .addPath(
                             new BezierCurve(
-                                    new Pose(79.665 + xOffset, 11.319),
-                                    new Pose(81.057 + xOffset, 58.415),
-                                    new Pose(89.200 + xOffset, 82.000)
+                                    new Pose(79.665 + DrivetrainConstants.RedXOffset, 11.319),
+                                    new Pose(81.057 + DrivetrainConstants.RedXOffset, 58.415),
+                                    new Pose(89.200 + DrivetrainConstants.RedXOffset, 82.000)
                             )
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(46))
@@ -100,9 +97,9 @@ public class MainAutoCommandRed extends SequentialCommandGroup {
                     .pathBuilder()
                     .addPath(
                             new BezierCurve(
-                                    new Pose(89.200 + xOffset, 82.000),
-                                    new Pose(100.226 + xOffset, 113.962),
-                                    new Pose(121.509 + xOffset, 88.000)
+                                    new Pose(89.200 + DrivetrainConstants.RedXOffset, 82.000),
+                                    new Pose(100.226 + DrivetrainConstants.RedXOffset, 113.962),
+                                    new Pose(121.509 + DrivetrainConstants.RedXOffset, 88.000)
                             )
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(46), Math.toRadians(130))
@@ -112,9 +109,9 @@ public class MainAutoCommandRed extends SequentialCommandGroup {
                     .pathBuilder()
                     .addPath(
                             new BezierCurve(
-                                    new Pose(121.509 + xOffset, 88.000),
-                                    new Pose(101.434 + xOffset, 83.472),
-                                    new Pose(128.604 + xOffset, 79.094)
+                                    new Pose(121.509 + DrivetrainConstants.RedXOffset, 88.000),
+                                    new Pose(101.434 + DrivetrainConstants.RedXOffset, 83.472),
+                                    new Pose(128.604 + DrivetrainConstants.RedXOffset, 79.094)
                             )
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(130), Math.toRadians(90))
@@ -124,9 +121,9 @@ public class MainAutoCommandRed extends SequentialCommandGroup {
                     .pathBuilder()
                     .addPath(
                             new BezierCurve(
-                                    new Pose(128.604 + xOffset, 79.094),
-                                    new Pose(81.057 + xOffset, 73.811),
-                                    new Pose(89.200 + xOffset, 82.000)
+                                    new Pose(128.604 + DrivetrainConstants.RedXOffset, 79.094),
+                                    new Pose(81.057 + DrivetrainConstants.RedXOffset, 73.811),
+                                    new Pose(89.200 + DrivetrainConstants.RedXOffset, 82.000)
                             )
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(44))
@@ -136,9 +133,9 @@ public class MainAutoCommandRed extends SequentialCommandGroup {
                     .pathBuilder()
                     .addPath(
                             new BezierCurve(
-                                    new Pose(89.200 + xOffset, 82.000),
-                                    new Pose(98.472 + xOffset, 100.830),
-                                    new Pose(121.057 + xOffset, 61.736)
+                                    new Pose(89.200 + DrivetrainConstants.RedXOffset, 82.000),
+                                    new Pose(98.472 + DrivetrainConstants.RedXOffset, 100.830),
+                                    new Pose(121.057 + DrivetrainConstants.RedXOffset, 61.736)
                             )
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(44), Math.toRadians(120))
@@ -148,9 +145,9 @@ public class MainAutoCommandRed extends SequentialCommandGroup {
                     .pathBuilder()
                     .addPath(
                             new BezierCurve(
-                                    new Pose(121.057 + xOffset, 61.736),
-                                    new Pose(81.057 + xOffset, 65.057),
-                                    new Pose(89.200 + xOffset, 82.000)
+                                    new Pose(121.057 + DrivetrainConstants.RedXOffset, 61.736),
+                                    new Pose(81.057 + DrivetrainConstants.RedXOffset, 65.057),
+                                    new Pose(89.200 + DrivetrainConstants.RedXOffset, 82.000)
                             )
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(120), Math.toRadians(44))
@@ -160,9 +157,9 @@ public class MainAutoCommandRed extends SequentialCommandGroup {
                     .pathBuilder()
                     .addPath(
                             new BezierCurve(
-                                    new Pose(89.200 + xOffset, 82.000),
-                                    new Pose(114.566 + xOffset, 65.358),
-                                    new Pose(119.547 + xOffset, 34.415)
+                                    new Pose(89.200 + DrivetrainConstants.RedXOffset, 82.000),
+                                    new Pose(114.566 + DrivetrainConstants.RedXOffset, 65.358),
+                                    new Pose(119.547 + DrivetrainConstants.RedXOffset, 34.415)
                             )
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(44), Math.toRadians(120))
@@ -172,9 +169,9 @@ public class MainAutoCommandRed extends SequentialCommandGroup {
                     .pathBuilder()
                     .addPath(
                             new BezierCurve(
-                                    new Pose(119.547 + xOffset, 34.415),
-                                    new Pose(110.642 + xOffset, 17.358),
-                                    new Pose(89.200 + xOffset, 16.151)
+                                    new Pose(119.547 + DrivetrainConstants.RedXOffset, 34.415),
+                                    new Pose(110.642 + DrivetrainConstants.RedXOffset, 17.358),
+                                    new Pose(89.200 + DrivetrainConstants.RedXOffset, 16.151)
                             )
                     )
                     .setLinearHeadingInterpolation(Math.toRadians(120), Math.toRadians(69.5)).build();

@@ -79,4 +79,6 @@ public class DrivetrainConstants {
     public static long pidTimeout = 800;
 
     public static long AimTimeOut = 1800;
+
+    public static double RedXOffset = -1;
 }

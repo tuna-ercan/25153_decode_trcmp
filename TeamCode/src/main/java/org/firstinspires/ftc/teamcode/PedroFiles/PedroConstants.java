@@ -1,6 +1,7 @@
 
 package org.firstinspires.ftc.teamcode.PedroFiles;
 
+import com.bylazar.configurables.annotations.IgnoreConfigurable;
 import com.pedropathing.control.FilteredPIDFCoefficients;
 import com.pedropathing.control.PIDFCoefficients;
 import com.pedropathing.follower.Follower;
@@ -15,6 +16,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Constants.DrivetrainConstants;
 
+@IgnoreConfigurable
 public class PedroConstants {
     public static FollowerConstants followerConstants = new FollowerConstants()
             .forwardZeroPowerAcceleration(-48.23)
