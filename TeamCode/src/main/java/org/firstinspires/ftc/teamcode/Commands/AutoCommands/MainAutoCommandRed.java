@@ -10,6 +10,7 @@ import com.pedropathing.paths.PathChain;
 
 import org.firstinspires.ftc.teamcode.Commands.DrivetrainCommands.DriveToShootP5;
 import org.firstinspires.ftc.teamcode.Commands.DrivetrainCommands.FollowPathAuto;
+import org.firstinspires.ftc.teamcode.Constants.DrivetrainConstants;
 import org.firstinspires.ftc.teamcode.Constants.TheMachineConstants;
 import org.firstinspires.ftc.teamcode.Subsystems.DrivetrainSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.TheMachineSubsystem;
@@ -32,16 +33,16 @@ public class MainAutoCommandRed extends SequentialCommandGroup {
 
 
 
-        driveAndShootP1_1 = new DriveToShootP5(drivetrain).alongWith(theMachineSubsystem.prepP5Request())
+        driveAndShootP1_1 = new DriveToShootP5(drivetrain).alongWith(theMachineSubsystem.prepP5Request()).withTimeout(DrivetrainConstants.AimTimeOut*3)
                 .andThen(theMachineSubsystem
                     .shootFromPoseRequest());
-        driveAndShootP1_2 = new DriveToShootP5(drivetrain).alongWith(theMachineSubsystem.prepP5Request())
+        driveAndShootP1_2 = new DriveToShootP5(drivetrain).alongWith(theMachineSubsystem.prepP5Request()).withTimeout(DrivetrainConstants.AimTimeOut)
                 .andThen(theMachineSubsystem
                         .shootFromPoseRequest());
-        driveAndShootP1_3 = new DriveToShootP5(drivetrain).alongWith(theMachineSubsystem.prepP5Request())
+        driveAndShootP1_3 = new DriveToShootP5(drivetrain).alongWith(theMachineSubsystem.prepP5Request()).withTimeout(DrivetrainConstants.AimTimeOut)
                 .andThen(theMachineSubsystem
                         .shootFromPoseRequest());
-        driveAndShootP1_4 = new DriveToShootP5(drivetrain).alongWith(theMachineSubsystem.prepP5Request())
+        driveAndShootP1_4 = new DriveToShootP5(drivetrain).alongWith(theMachineSubsystem.prepP5Request()).withTimeout(DrivetrainConstants.AimTimeOut)
                 .andThen(theMachineSubsystem.shootFromPoseRequest());
 
         addCommands(
@@ -78,56 +79,102 @@ public class MainAutoCommandRed extends SequentialCommandGroup {
         public PathChain Lever;
 
         public Paths(Follower follower) {
+            Shoot1 = follower
+                    .pathBuilder()
+                    .addPath(
+                            new BezierCurve(
+                                    new Pose(79.665, 11.319),
+                                    new Pose(81.057, 58.415),
+                                    new Pose(89.200, 82.000)
+                            )
+                    )
+                    .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(46))
+                    .build();
+
             Intake1 = follower
                     .pathBuilder()
                     .addPath(
                             new BezierCurve(
-                                    new Pose(89.2, 82.000),
-                                    new Pose(86.642, 117.434),
-                                    new Pose(121.358, 86.038)
+                                    new Pose(89.200, 82.000),
+                                    new Pose(100.226, 113.962),
+                                    new Pose(121.509, 88.000)
                             )
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(50), Math.toRadians(140)) //310 = -50 degreed
+                    .setLinearHeadingInterpolation(Math.toRadians(46), Math.toRadians(130))
                     .build();
 
             Lever = follower
                     .pathBuilder()
                     .addPath(
                             new BezierCurve(
-                                    new Pose(121.358, 86.038),
+                                    new Pose(121.509, 88.000),
                                     new Pose(101.434, 83.472),
                                     new Pose(128.604, 79.094)
                             )
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(140), Math.toRadians(90))
-                    .setTimeoutConstraint(0)
-                    .setTValueConstraint(0.8)
+                    .setLinearHeadingInterpolation(Math.toRadians(130), Math.toRadians(90))
+                    .build();
+
+            Shoot2 = follower
+                    .pathBuilder()
+                    .addPath(
+                            new BezierCurve(
+                                    new Pose(128.604, 79.094),
+                                    new Pose(81.057, 73.811),
+                                    new Pose(89.200, 82.000)
+                            )
+                    )
+                    .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(44))
                     .build();
 
             Intake2 = follower
                     .pathBuilder()
                     .addPath(
                             new BezierCurve(
-                                    new Pose(89.2, 82.000),
-                                    new Pose(94.491, 91.019),
-                                    new Pose(123.774, 56.453)
+                                    new Pose(89.200, 82.000),
+                                    new Pose(99.472, 100.830),
+                                    new Pose(121.057, 61.736)
                             )
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(50), Math.toRadians(150)) //300 = -60
+                    .setLinearHeadingInterpolation(Math.toRadians(44), Math.toRadians(120))
+                    .build();
+
+            Shoot3 = follower
+                    .pathBuilder()
+                    .addPath(
+                            new BezierCurve(
+                                    new Pose(121.057, 61.736),
+                                    new Pose(81.057, 65.057),
+                                    new Pose(89.200, 82.000)
+                            )
+                    )
+                    .setLinearHeadingInterpolation(Math.toRadians(120), Math.toRadians(44))
                     .build();
 
             Intake3 = follower
                     .pathBuilder()
                     .addPath(
                             new BezierCurve(
-                                    new Pose(89.2, 82.000),
-                                    new Pose(86.491, 54.189),
-                                    new Pose(125.887, 34.113)
+                                    new Pose(89.200, 82.000),
+                                    new Pose(114.566, 65.358),
+                                    new Pose(119.547, 34.415)
                             )
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(150), Math.toRadians(150)) //300 = -60
+                    .setLinearHeadingInterpolation(Math.toRadians(44), Math.toRadians(120))
                     .build();
 
+            Shoot4 = follower
+                    .pathBuilder()
+                    .addPath(
+                            new BezierCurve(
+                                    new Pose(119.547, 34.415),
+                                    new Pose(110.642, 17.358),
+                                    new Pose(89.200, 16.151)
+                            )
+                    )
+                    .setLinearHeadingInterpolation(Math.toRadians(120), Math.toRadians(69.5)).build();
         }
     }
-}
+    }
+
+

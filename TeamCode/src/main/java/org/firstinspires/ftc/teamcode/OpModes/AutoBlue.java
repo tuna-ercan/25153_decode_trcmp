@@ -32,8 +32,8 @@ public class AutoBlue extends CommandOpMode {
         Container.isBlue = true;
         Container.isTeleop = false;
 
-        m_machine = new TheMachineSubsystem(hardwareMap, m_drive::getPose);
         m_drive = new DrivetrainSubsystem(hardwareMap);
+        m_machine = new TheMachineSubsystem(hardwareMap, m_drive::getPose);
         mouth = new Mouth(m_machine,m_drive, telemetry);
 
         initOpCommand = new InstantCommand(() -> {

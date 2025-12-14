@@ -11,7 +11,7 @@ import com.arcrobotics.ftclib.controller.PIDFController;
 /**
  * Constants related to the drivetrain hardware and control.
  */
-@Configurable
+//@Configurable
 public class DrivetrainConstants {
 
     @IgnoreConfigurable

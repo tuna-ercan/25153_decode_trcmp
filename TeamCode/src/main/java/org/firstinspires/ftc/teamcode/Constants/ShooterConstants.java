@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.PIDCoefficients;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@Configurable
+//@Configurable
 public class ShooterConstants {
     @IgnoreConfigurable
     public static String RightMotorName = "rightShooter";
@@ -46,8 +46,8 @@ public class ShooterConstants {
     public static double RpmTol = 50;
     public static double HoodTol = 0.0025;
 
-    public static double RestRPM = 2400;
-    public static double RestRPMAuto = 2600;
+    public static double RestRPM = 1000;
+    public static double RestRPMAuto = 2800;
 
     public static double RestHoodPos = 5;
 
@@ -76,6 +76,8 @@ public class ShooterConstants {
     public static double HoodGearRatio = 7;
  // Max hood angle 37 degrees
     public static double ServoAngleCapacity = 1800;
+
+    public static long ShooterRestDelay = 2000;
 
     public static double CalculateRpmFromDistance(double distance)
     {

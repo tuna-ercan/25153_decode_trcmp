@@ -193,9 +193,9 @@ public class ShooterSubsystem extends SubsystemBase {
         stateMachine();
 
         Container.shooterState = getState();
-        //leftPID.checkAndUpdateCoefficients(ShooterConstants.LeftPIDCoefficients);
-        //middlePID.checkAndUpdateCoefficients(ShooterConstants.MiddlePIDCoefficients);
-        //rightPID.checkAndUpdateCoefficients(ShooterConstants.RightPIDCoefficients);
+        leftPID.checkAndUpdateCoefficients(ShooterConstants.LeftPIDFCoefficients);
+        middlePID.checkAndUpdateCoefficients(ShooterConstants.MiddlePIDFCoefficients);
+        rightPID.checkAndUpdateCoefficients(ShooterConstants.RightPIDFCoefficients);
     }
 
     /**

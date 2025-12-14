@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Commands.StateActions.ShooterActions;
 
 import com.arcrobotics.ftclib.command.CommandBase;
 
+import org.firstinspires.ftc.teamcode.Constants.ShooterConstants;
 import org.firstinspires.ftc.teamcode.Utils.AllStates;
 import org.firstinspires.ftc.teamcode.Subsystems.ShooterSubsystem;
 
@@ -12,6 +13,10 @@ import org.firstinspires.ftc.teamcode.Subsystems.ShooterSubsystem;
 public class ShooterRestAction extends CommandBase {
     private final ShooterSubsystem shooterSubsystem;
 
+    private long now;
+    private long startTime;
+    private final long shooterRestDelay;
+
     /**
      * Constructor for ShooterRestAction.
      * @param shooterSubsystem The shooter subsystem instance.
@@ -19,16 +24,24 @@ public class ShooterRestAction extends CommandBase {
     public ShooterRestAction(ShooterSubsystem shooterSubsystem) {
         addRequirements(shooterSubsystem);
         this.shooterSubsystem = shooterSubsystem;
+        this.shooterRestDelay = ShooterConstants.ShooterRestDelay;
     }
 
     @Override
     public void initialize() {
-        shooterSubsystem.rest();
+        startTime = System.currentTimeMillis();
+        now = startTime;
+        //shooterSubsystem.rest();
     }
 
     @Override
     public void execute() {
-        shooterSubsystem.rest();
+        if (now - startTime <= shooterRestDelay)
+        {
+            shooterSubsystem.shootFromPose();
+        }
+        else  shooterSubsystem.rest();
+        now = System.currentTimeMillis();
     }
 
     private boolean checkFinish()

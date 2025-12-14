@@ -56,7 +56,7 @@ public class IntakeIdleAction extends CommandBase
             {
                 intakeSubsystem.intake();
             }
-            else if (now - startTime <= 1.5 * intakeDelay)
+            else if (now - startTime <= 1.25 * intakeDelay)
             {
                 intakeSubsystem.outtake();
             }
