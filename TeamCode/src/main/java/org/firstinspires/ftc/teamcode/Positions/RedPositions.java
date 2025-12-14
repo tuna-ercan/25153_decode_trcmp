@@ -32,6 +32,8 @@ public class RedPositions {
 
     public static Pose FOCUS_POINT = mirrorPose(BluePositions.FOCUS_POINT);
 
+    public static Pose SHOOT_P4_2 = mirrorPose(BluePositions.SHOOT_P4_2);
+
     public static Pose mirrorPose(Pose p)
     {
         return new Pose(141-p.getX(), p.getY(), Math.PI - p.getHeading());

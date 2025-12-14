@@ -111,6 +111,10 @@ public class TeleopRed extends CommandOpMode {
                     //m_drive.zeroPose();
                 })));
 
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN)
+                .whenPressed(Container.ShoutTriggerComand());
+
+
         gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
                         .whenHeld(manualShootP2)
                         .whenReleased(m_machine.restRequest());
@@ -143,6 +147,8 @@ public class TeleopRed extends CommandOpMode {
         gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_STICK_BUTTON)
                 .whenPressed(m_machine.intakeRequest());
 
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP)
+                .whenPressed(m_machine.getShooterSubsystem().zeroRequest());
     }
     public void configureBindingsGamepad2() {
 

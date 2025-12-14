@@ -8,10 +8,12 @@ import com.pedropathing.geometry.BezierCurve;
 import com.pedropathing.geometry.Pose;
 import com.pedropathing.paths.PathChain;
 
+import org.firstinspires.ftc.teamcode.Commands.DrivetrainCommands.DriveToPosePID;
 import org.firstinspires.ftc.teamcode.Commands.DrivetrainCommands.DriveToShootP5;
 import org.firstinspires.ftc.teamcode.Commands.DrivetrainCommands.FollowPathAuto;
 import org.firstinspires.ftc.teamcode.Constants.DrivetrainConstants;
 import org.firstinspires.ftc.teamcode.Constants.TheMachineConstants;
+import org.firstinspires.ftc.teamcode.Positions.BluePositions;
 import org.firstinspires.ftc.teamcode.Subsystems.DrivetrainSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.TheMachineSubsystem;
 
@@ -42,7 +44,9 @@ public class MainAutoCommandBlue extends SequentialCommandGroup {
         driveAndShootP1_3 = new DriveToShootP5(drivetrain).alongWith(theMachineSubsystem.prepP5Request()).withTimeout(DrivetrainConstants.AimTimeOut)
                 .andThen(theMachineSubsystem
                         .shootFromPoseRequest());
-        driveAndShootP1_4 = new DriveToShootP5(drivetrain).alongWith(theMachineSubsystem.prepP5Request()).withTimeout(DrivetrainConstants.AimTimeOut)
+        driveAndShootP1_4 = new DriveToShootP5(drivetrain).alongWith(theMachineSubsystem.prepP5Request())
+                        //.andThen(new DriveToPosePID(drivetrain, BluePositions.SHOOT_P5))
+                .withTimeout(DrivetrainConstants.AimTimeOut*2)
                 .andThen(theMachineSubsystem.shootFromPoseRequest());
 
         addCommands(
@@ -50,7 +54,7 @@ public class MainAutoCommandBlue extends SequentialCommandGroup {
                 theMachineSubsystem.waitForFeederToFeed(),
                 theMachineSubsystem.intakeRequest(),
                 new FollowPathAuto(drivetrain,paths.Intake1),
-                new FollowPathAuto(drivetrain,paths.Lever),
+                //new FollowPathAuto(drivetrain,paths.Lever),
                 new WaitCommand(250),
                 driveAndShootP1_2,
                 theMachineSubsystem.waitForFeederToFeed(),
@@ -61,8 +65,8 @@ public class MainAutoCommandBlue extends SequentialCommandGroup {
                 theMachineSubsystem.waitForFeederToFeed(),
                 theMachineSubsystem.intakeRequest(),
                 new FollowPathAuto(drivetrain,paths.Intake3),
-                new WaitCommand(200),
-                driveAndShootP1_4
+                new WaitCommand(200)
+                //,driveAndShootP1_4
                 );
     }
 

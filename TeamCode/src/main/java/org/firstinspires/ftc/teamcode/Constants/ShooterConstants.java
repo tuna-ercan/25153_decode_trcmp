@@ -47,6 +47,9 @@ public class ShooterConstants {
     public static double HoodTol = 0.0025;
 
     public static double RestRPM = 1000;
+    public static double RestRPMFar = 3000;
+
+    public static double farDistanceY = 50;
     public static double RestRPMAuto = 2800;
 
     public static double RestHoodPos = 5;

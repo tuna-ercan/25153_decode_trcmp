@@ -137,6 +137,9 @@ public class TeleopBlue extends CommandOpMode {
                 .whenHeld(driveAndShootP2)
                 .whenReleased(m_machine.restRequest());
 
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN)
+                        .whenPressed(Container.ShoutTriggerComand());
+
         gamepadEx1.getGamepadButton(GamepadKeys.Button.A)
                 .whenHeld(driveAndShootP3)
                 .whenReleased(m_machine.restRequest());
@@ -151,6 +154,9 @@ public class TeleopBlue extends CommandOpMode {
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_STICK_BUTTON)
                 .whenPressed(m_machine.intakeRequest());
+
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP)
+                .whenPressed(m_machine.getShooterSubsystem().zeroRequest());
 
     }
     public void configureBindingsGamepad2() {

@@ -80,5 +80,5 @@ public class DrivetrainConstants {
 
     public static long AimTimeOut = 1800;
 
-    public static double RedXOffset = -1;
+    public static double RedXOffset = 1;
 }

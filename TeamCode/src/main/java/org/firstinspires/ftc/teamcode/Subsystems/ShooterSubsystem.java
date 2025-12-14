@@ -68,7 +68,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     private final Supplier<Pose> poseSupplier;
 
-    private final double restRpm;
+    private double restRpm;
     private final double p1Rpm;
     private final double p2Rpm;
     private final double p3Rpm;
@@ -493,7 +493,7 @@ public class ShooterSubsystem extends SubsystemBase {
         setGoalRPM(0);
 
         //setHoodPosition(ShooterConstants.TestHoodPos);
-        setHoodPosition(0);
+        setHoodPosition(30);
 
         setIsReady(true);
     }
@@ -503,8 +503,17 @@ public class ShooterSubsystem extends SubsystemBase {
         setIsReadyByChecking();
         setHoodPosition(ShooterConstants.RestHoodPos);
 
+        if (Container.isTeleop) {
+            Pose botPose = poseSupplier.get();
+            if ((poseSupplier.get().getY()<ShooterConstants.farDistanceY)){
+                restRpm = ShooterConstants.RestRPMFar;
+            } else {
+                restRpm = ShooterConstants.RestRPM;
+            }
+        }
+
         if(!Container.isTeleop) controlMotorRPM(ShooterConstants.RestRPMAuto);
-        else controlMotorRPM(ShooterConstants.RestRPM);
+        else controlMotorRPM(restRpm);
 
     }
 
