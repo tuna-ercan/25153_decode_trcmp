@@ -61,8 +61,7 @@ public class Mouth {
         PanelsFieldDrawing.sendPacket();
         joinedTelemetry.addData("Drive-State", drivetrainSubsystem.getState());
 
-        if (Container.ShouldIShout)
-        {
+        if (Container.ShouldIShout)       {
             joinedTelemetry.addData("Robot-X", drivetrainSubsystem.getPose().getX());
             joinedTelemetry.addData("Robot-Y", drivetrainSubsystem.getPose().getY());
             joinedTelemetry.addData("Robot-H", drivetrainSubsystem.getPose().getHeading());
