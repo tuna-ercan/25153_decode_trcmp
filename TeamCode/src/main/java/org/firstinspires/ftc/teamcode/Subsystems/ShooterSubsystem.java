@@ -42,6 +42,7 @@ import org.firstinspires.ftc.teamcode.Positions.BluePositions;
 import org.firstinspires.ftc.teamcode.Positions.RedPositions;
 import org.firstinspires.ftc.teamcode.Utils.ShooterPIDFController;
 
+import java.sql.Time;
 import java.util.function.Supplier;
 
 /**
@@ -93,8 +94,14 @@ public class ShooterSubsystem extends SubsystemBase {
     private double prevROutput;
 
     private double prevLRPM;
+    private double prevLPos;
+    private double prevLPosTime;
     private double prevMRPM;
+    private double prevMPos;
     private double prevRRPM;
+    private double prevRPos;
+    private double prevRPosTime;
+
 
     private boolean checkedRPMOnce = false;
 
@@ -169,8 +176,12 @@ public class ShooterSubsystem extends SubsystemBase {
         p4Hood = calculateHoodFromPose(p4Pose);
 
         prevROutput = 0;
+        prevRPos = 0;
         prevMOutput = 0;
+        prevMPos = 0;
         prevLOutput = 0;
+        prevLPos = 0;
+        prevLPosTime = 0;
 
         currentState = ShooterStates.ZERO;
         lastState = ShooterStates.ZERO;
@@ -323,18 +334,43 @@ public class ShooterSubsystem extends SubsystemBase {
                 Math.floor(position*ShooterConstants.HoodGearRatio/ShooterConstants.ServoAngleCapacity * 10000) / 10000.0);
     }
 
+    public double getRightRPMRawT()
+    {
+        double currentP = rightMotor.getCurrentPosition();
+        double now = System.currentTimeMillis();
+        double rpm = (currentP - prevRPos) / (now - prevRPosTime) * 1000  / 8192;
+        prevRPos = currentP;
+        prevRPosTime = now;
+        return rpm;
+    }
+
     public double getRightRPMRaw()
     {
-        return (rightMotor.getVelocity() * 60 / 28);
+        return (rightMotor.getVelocity() * 60 / ShooterConstants.RightTicks);
     }
 
     public double getMiddleRPMRaw()
     {
-        return (middleMotor.getVelocity() * 60 / 28 );
+        return (middleMotor.getVelocity() * 60 / ShooterConstants.MiddleTicks );
     }
+    public double getLeftRPMRawT()
+    {
+        double currentP = leftMotor.getCurrentPosition();
+        double now = System.currentTimeMillis();
+        double deltaTime = (now - prevLPosTime) / 1000;
+        double rpm = (((currentP - prevLPos)/deltaTime)/ShooterConstants.LeftTicks) * 60;
+        prevLPos = currentP;
+        prevLPosTime = now;
+        return rpm;
+    }
+
     public double getLeftRPMRaw()
     {
-        return (leftMotor.getVelocity() * 60 / 28);
+        return getLeftRPMRawT();
+        /*
+        double rpm = (leftMotor.getCurrentPosition() - prevLPosTime);
+        prevLPosTime = leftMotor.getCurrentPosition();
+        return (leftMotor.getVelocity() * 60 / ShooterConstants.LeftTicks)*/
     }
 
     public double getRightRPM()

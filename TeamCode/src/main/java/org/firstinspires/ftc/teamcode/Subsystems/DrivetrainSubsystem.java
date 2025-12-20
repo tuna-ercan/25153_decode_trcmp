@@ -104,7 +104,7 @@ public class DrivetrainSubsystem extends SubsystemBase
     @Override
     public void periodic()
     {
-        follower.update();
+        // follower.update();
         // This method will be called once per scheduler run
 
 

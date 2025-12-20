@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.PIDCoefficients;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
 
-//@Configurable
+@Configurable
 public class ShooterConstants {
     @IgnoreConfigurable
     public static String RightMotorName = "rightShooter";
@@ -29,6 +29,10 @@ public class ShooterConstants {
     public static double MaxHoodPosition = 0.18;
 
     public static double LastRpmCoefficient = 0.5;
+
+    public static double RightTicks = 28;
+    public static double LeftTicks = 28;
+    public static double MiddleTicks = 28;
 
 
     public static double KP = 0.00026 ; //attım
